@@ -1,14 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import { render } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider as UrqlProvider } from "urql";
+import { Auth0Provider } from "./utils/Auth0";
+import client from "./utils/urqlClient";
+import "./index.css";
+import {
+  OAUTH_AUDIENCE,
+  OAUTH_CLIENT_ID,
+  OAUTH_DOMAIN,
+  OAUTH_REDIRECT_URL
+} from "./constants";
+import Routes from "./Routes";
+import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(
+render(
   <React.StrictMode>
-    <App />
+    <UrqlProvider value={client}>
+      <Router>
+        <Auth0Provider
+          domain={OAUTH_DOMAIN}
+          client_id={OAUTH_CLIENT_ID}
+          audience={OAUTH_AUDIENCE}
+          redirect_uri={OAUTH_REDIRECT_URL}
+        >
+          <Routes />
+        </Auth0Provider>
+      </Router>
+    </UrqlProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

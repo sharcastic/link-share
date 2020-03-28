@@ -1,8 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useAuth0 } from "../../utils/Auth0";
+import logo from "../../assets/logo.svg";
+import "./App.css";
 
 function App() {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const onClick = async () => {
+    await loginWithRedirect({});
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +23,9 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={onClick} disabled={isAuthenticated}>
+          {isAuthenticated ? "AUTHORIZED!" : "Click for Auth"}
+        </button>
       </header>
     </div>
   );
