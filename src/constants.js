@@ -1,10 +1,6 @@
 export const OAUTH_DOMAIN = "linkshare.au.auth0.com";
 export const OAUTH_CLIENT_ID = "OiQpOQkpE8y3xVsPhDi4TGPhiHd01cxO";
 export const OAUTH_AUDIENCE = "hasura";
-/* export const OAUTH_REDIRECT_URL =
-  process.env.NODE_ENV === "production"
-    ? "http://localhost:5000/callback"
-    : "http://localhost:3000/callback"; */
 export const OAUTH_REDIRECT_URL = `${process.env.REACT_APP_BASE_PATH}/callback`;
 export const GRAPHQL_ENDPOINT =
   "https://link-share-graphql.herokuapp.com/v1/graphql";
