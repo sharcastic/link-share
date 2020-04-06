@@ -16,18 +16,18 @@ import * as serviceWorker from "./serviceWorker";
 
 render(
   <React.StrictMode>
-    <UrqlProvider value={client}>
-      <Router>
-        <Auth0Provider
-          domain={OAUTH_DOMAIN}
-          client_id={OAUTH_CLIENT_ID}
-          audience={OAUTH_AUDIENCE}
-          redirect_uri={OAUTH_REDIRECT_URL}
-        >
+    <Router>
+      <Auth0Provider
+        domain={OAUTH_DOMAIN}
+        client_id={OAUTH_CLIENT_ID}
+        audience={OAUTH_AUDIENCE}
+        redirect_uri={OAUTH_REDIRECT_URL}
+      >
+        <UrqlProvider value={client}>
           <Routes />
-        </Auth0Provider>
-      </Router>
-    </UrqlProvider>
+        </UrqlProvider>
+      </Auth0Provider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

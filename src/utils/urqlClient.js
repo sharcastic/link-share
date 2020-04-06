@@ -20,7 +20,9 @@ const subscriptionClient = new SubscriptionClient(
   GRAPHQL_SUBSCRIPTION_ENDPOINT,
   {
     reconnect: true,
-    connectionParams: setTokenInHeader
+    connectionParams: setTokenInHeader,
+    lazy: true,
+    reconnectionAttempts: 3
   }
 );
 
