@@ -62,7 +62,6 @@ export const Auth0Provider = ({
   const loginWithPopup = async (params = {}) => {
     if (!sessionStorage.getItem("user") || !sessionStorage.getItem("token")) {
       setPopupOpen(true);
-      debugger;
       try {
         await auth0Client.loginWithPopup(params);
       } catch (error) {
@@ -104,6 +103,7 @@ export const Auth0Provider = ({
   return (
     <Auth0Context.Provider
       value={{
+        clientLoaded: auth0Client ? true : false,
         isAuthenticated,
         user,
         loading,

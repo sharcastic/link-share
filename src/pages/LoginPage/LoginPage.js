@@ -4,9 +4,9 @@ import logo from "../../assets/logo.svg";
 import "./App.css";
 
 function App() {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, clientLoaded } = useAuth0();
   const onClick = async () => {
-    await loginWithRedirect({});
+    await loginWithRedirect();
   };
   return (
     <div className="App">
@@ -23,7 +23,7 @@ function App() {
         >
           Learn React
         </a>
-        <button onClick={onClick} disabled={isAuthenticated}>
+        <button onClick={onClick} disabled={!clientLoaded || isAuthenticated}>
           {isAuthenticated ? "AUTHORIZED!" : "Click for Auth"}
         </button>
       </header>
