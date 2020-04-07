@@ -1,8 +1,6 @@
 import React from "react";
-import { useQuery } from "urql";
-import { trialQuery } from "../../queries";
 
-const LinkPreview = ({ error, icon, title, description }) => {
+const LinkPreview = ({ preview: { error, icon, title, description } }) => {
   return (
     <div>
       {error ? (

@@ -1,12 +1,11 @@
 export const getFriendsQuery = `
 query ($user_id: String!) {
-  users(where: {id: {_eq: $user_id}}) {
-    connections {
-      user_connected {
-        name
-        email
-        id
-      }
+  connections(where: {user_id: {_eq: $user_id}}) {
+    id
+    user_connected {
+      id
+      name
+      email
     }
   }
 }
@@ -23,6 +22,13 @@ subscription ($user_id: String!){
       name
       id
     }
+    post_tagged_users {
+      id
+      user {
+        id
+        name
+      }
+    }
   }
 }
 `;
@@ -33,6 +39,31 @@ mutation ($userId: String!, $description: String!, $link: String!, $taggedUsers:
     returning {
       id
     }
+  }
+}
+`;
+
+export const updatePostMutation = `
+mutation ($description: String!, $link: String!, $postID: Int!, $addingTags: [post_tagged_users_insert_input!]!, $deletingTags: [Int!]!) {
+  update_links(where: {id: {_eq: $postID}}, _set: {description: $description, link: $link}) {
+    affected_rows
+  }
+  insert_post_tagged_users(objects: $addingTags) {
+    affected_rows
+  }
+  delete_post_tagged_users(where: {id: {_in: $deletingTags}}) {
+    affected_rows
+  }
+}
+`;
+
+export const deletePostMutation = `
+mutation ($postID: Int!) {
+  delete_post_tagged_users(where: {post_id: {_eq: $postID}}) {
+    affected_rows
+  }
+  delete_links(where: {id: {_eq: $postID}}) {
+    affected_rows
   }
 }
 `;

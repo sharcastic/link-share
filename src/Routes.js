@@ -4,6 +4,7 @@ import { useAuth0 } from "./utils/Auth0";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./pages/HomePage/Home";
 import Navbar from "./components/Navbar";
+import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
 
 const ProtectedRoute = ({ component: Component }) => {
   const { isAuthenticated } = useAuth0();
@@ -22,10 +23,15 @@ const RoutesComponent = () => {
   return (
     <>
       {isAuthenticated && <Navbar />}
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/home" element={<ProtectedRoute component={HomePage} />} />
-      </Routes>
+      <ProfileDetailsProvider>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/home"
+            element={<ProtectedRoute component={HomePage} />}
+          />
+        </Routes>
+      </ProfileDetailsProvider>
     </>
   );
 };
