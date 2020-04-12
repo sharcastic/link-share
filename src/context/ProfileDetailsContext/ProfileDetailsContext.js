@@ -3,7 +3,8 @@ import { createContext } from "react";
 const ProfileDetailsContext = createContext({
   connections: [],
   updateConnectionsAndRequests: () => {},
-  currentRequests: []
+  currentRequests: [],
+  acceptRequest: () => {}
 });
 
 export default ProfileDetailsContext;

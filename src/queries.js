@@ -99,7 +99,7 @@ mutation ($postID: Int!) {
 
 export const readNotificationMutation = `
 mutation ($notificationID: Int!) {
-  update_notifications(where: {id: {_eq: $notificationID}}, _set: {status: READ}) {
+  update_notifications(where: {id: {_eq: $notificationID}}, _set: {status: "READ"}) {
     affected_rows
   }
 }

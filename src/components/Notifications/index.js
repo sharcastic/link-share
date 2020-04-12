@@ -7,11 +7,11 @@ import NotificationItem from "./NotificationItem";
 
 const Notifications = ({ notifications }) => {
   const { user = {} } = useAuth0();
-  const { updateConnectionsAndRequests } = useContext(ProfileDetailsContext);
-  const [, addConnection] = useMutation(addConnectionMutation);
+  const { acceptRequest } = useContext(ProfileDetailsContext);
+  // const [, addConnection] = useMutation(addConnectionMutation);
   const [, markNotificationAsRead] = useMutation(readNotificationMutation);
   const [markedNotifications, setMarkedNotifications] = useState([]);
-  const onAcceptRequestClick = selectedNotification => {
+  /* const onAcceptRequestClick = selectedNotification => {
     addConnection({
       requestedUserID: selectedNotification.notification_created_by.id,
       userID: user.sub,
@@ -30,7 +30,9 @@ const Notifications = ({ notifications }) => {
         updateConnectionsAndRequests();
       }
     });
-  };
+  }; */
+  const onAcceptRequestClick = selectedNotification =>
+    acceptRequest(selectedNotification.notification_created_by.id);
   const onMarkAsReadClick = selectedNotification => {
     setMarkedNotifications([...markedNotifications, selectedNotification.id]);
     markNotificationAsRead({
