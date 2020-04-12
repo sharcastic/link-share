@@ -1,36 +1,13 @@
 import React, { useContext, useState } from "react";
 import { useMutation } from "urql";
-import { useAuth0 } from "../../utils/Auth0";
-import { addConnectionMutation, readNotificationMutation } from "../../queries";
+import { readNotificationMutation } from "../../queries";
 import ProfileDetailsContext from "../../context/ProfileDetailsContext/ProfileDetailsContext";
 import NotificationItem from "./NotificationItem";
 
 const Notifications = ({ notifications }) => {
-  const { user = {} } = useAuth0();
   const { acceptRequest } = useContext(ProfileDetailsContext);
-  // const [, addConnection] = useMutation(addConnectionMutation);
   const [, markNotificationAsRead] = useMutation(readNotificationMutation);
   const [markedNotifications, setMarkedNotifications] = useState([]);
-  /* const onAcceptRequestClick = selectedNotification => {
-    addConnection({
-      requestedUserID: selectedNotification.notification_created_by.id,
-      userID: user.sub,
-      connectionObject: [
-        {
-          user_id: selectedNotification.notification_created_by.id,
-          connected_user_id: user.sub
-        },
-        {
-          user_id: user.sub,
-          connected_user_id: selectedNotification.notification_created_by.id
-        }
-      ]
-    }).then(res => {
-      if (!res.error) {
-        updateConnectionsAndRequests();
-      }
-    });
-  }; */
   const onAcceptRequestClick = selectedNotification =>
     acceptRequest(selectedNotification.notification_created_by.id);
   const onMarkAsReadClick = selectedNotification => {

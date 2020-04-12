@@ -23,7 +23,7 @@ const ProfileProvider = ({ children }) => {
   const connectionsArr = [...connections.map(i => i.user_connected)];
   const updateConnectionsAndRequests = () =>
     reExecuteQuery({ requestPolicy: "network-only" });
-  const acceptRequest = requestedUserID => {
+  const acceptRequest = (requestedUserID, callback) => {
     addConnection({
       requestedUserID,
       userID: user.sub,
@@ -40,6 +40,9 @@ const ProfileProvider = ({ children }) => {
     }).then(res => {
       if (!res.error) {
         updateConnectionsAndRequests();
+        if (callback) {
+          callback();
+        }
       }
     });
   };

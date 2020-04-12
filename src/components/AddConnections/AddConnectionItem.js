@@ -5,12 +5,14 @@ import { useAuth0 } from "../../utils/Auth0";
 const AddConnectionsItem = ({
   connection,
   sendingRequests,
-  addConnectionClick,
-  currentRequests
+  addRequestClick,
+  currentRequests,
+  acceptRequestClick
 }) => {
   const { user = {} } = useAuth0();
   let receivedRequest, sentRequest;
-  const addConnection = () => addConnectionClick(connection);
+  const addRequest = () => addRequestClick(connection);
+  const acceptRequest = () => acceptRequestClick(connection);
   currentRequests.forEach(i => {
     if (i.sent_to_id === user.sub && i.sent_by_id === connection.id) {
       receivedRequest = true;
@@ -20,7 +22,7 @@ const AddConnectionsItem = ({
   }); // MEMO
   const renderButton = () => {
     if (receivedRequest) {
-      return <Button>Accept Request</Button>;
+      return <Button onClick={acceptRequest}>Accept Request</Button>;
     }
     if (sentRequest) {
       return <Button isDisabled>Request Pending!</Button>;
@@ -28,7 +30,7 @@ const AddConnectionsItem = ({
     return (
       <Button
         isLoading={sendingRequests.find(j => j === connection.id)}
-        onClick={addConnection}
+        onClick={addRequest}
       >
         Add Friend
       </Button>

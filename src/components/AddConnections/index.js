@@ -13,7 +13,8 @@ const AddConnections = () => {
   const {
     connections,
     currentRequests,
-    updateConnectionsAndRequests
+    updateConnectionsAndRequests,
+    acceptRequest
   } = useContext(ProfileDetailsContext);
   const debouncedSearchTerm = useDebounce(connectionsSearchValue, 500);
   const [, sendRequest] = useMutation(addRequestMutation);
@@ -22,7 +23,7 @@ const AddConnections = () => {
     variables: { searchTerm: `%${debouncedSearchTerm}%`, userID: user.sub },
     pause: !debouncedSearchTerm || !user.sub
   });
-  const addConnectionClick = connection => {
+  const addRequestClick = connection => {
     setSendingRequests([...sendingRequests, connection.id]);
     sendRequest({
       requestedUserID: connection.id,
@@ -34,6 +35,7 @@ const AddConnections = () => {
       }
     });
   };
+  const acceptRequestClick = connection => acceptRequest(connection.id);
   const {
     data: { users: searchData = [] } = {},
     fetching: searchLoading
@@ -59,7 +61,8 @@ const AddConnections = () => {
                 <AddConnectionItem
                   connection={i}
                   sendingRequests={sendingRequests}
-                  addConnectionClick={addConnectionClick}
+                  addRequestClick={addRequestClick}
+                  acceptRequestClick={acceptRequestClick}
                   currentRequests={currentRequests}
                   key={i.id}
                 />
