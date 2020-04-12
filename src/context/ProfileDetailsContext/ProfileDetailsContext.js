@@ -1,7 +1,9 @@
 import { createContext } from "react";
 
 const ProfileDetailsContext = createContext({
-  friends: []
+  connections: [],
+  updateConnectionsAndRequests: () => {},
+  currentRequests: []
 });
 
 export default ProfileDetailsContext;

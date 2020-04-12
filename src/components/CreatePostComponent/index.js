@@ -21,7 +21,7 @@ const CreatePostComponent = ({
   changeEditedPost
 }) => {
   const { user = {} } = useAuth0();
-  const { friends } = useContext(ProfileDetailsContext);
+  const { connections } = useContext(ProfileDetailsContext);
   const [preview, setPreview] = useState({});
   const [linkText, setLinkText] = useState(linkFromProps);
   const [description, setDescription] = useState(descriptionFromProps);
@@ -44,7 +44,13 @@ const CreatePostComponent = ({
       userId: user.sub,
       description,
       link: linkText,
-      taggedUsers: selectedUsers.map(i => ({ user_id: i.id }))
+      taggedUsers: selectedUsers.map(i => ({ user_id: i.id })),
+      notifications: selectedUsers.map(i => ({
+        targeted_user_id: i.id,
+        status: "UNREAD",
+        type: "TAGGED_POST",
+        created_by_id: user.sub
+      }))
     }).then(res => {
       if (!res.error) {
         setLinkText("");
@@ -65,20 +71,27 @@ const CreatePostComponent = ({
     users === undefined ? setUsersSelected([]) : setUsersSelected(users);
   const onUpdatePost = () => {
     const newlyTaggedUsers = selectedUsers.map(i => i.id);
-    const deletingTags = selectedUsersFromProps.reduce((acc, user) => {
+    const removedUsers = selectedUsersFromProps.reduce((acc, user) => {
       const index = newlyTaggedUsers.indexOf(user.id);
       if (index > -1) {
         newlyTaggedUsers.splice(index, 1);
         return acc;
       }
-      return [...acc, user.tagId];
+      return [...acc, user.id];
     }, []);
     updatePost({
       postID,
       description,
       link: linkText,
-      deletingTags,
-      addingTags: newlyTaggedUsers.map(i => ({ user_id: i, post_id: postID }))
+      removedUsers,
+      addingTags: newlyTaggedUsers.map(i => ({ user_id: i, post_id: postID })),
+      addNotifications: newlyTaggedUsers.map(i => ({
+        targeted_user_id: i,
+        status: "UNREAD",
+        type: "TAGGED_POST",
+        created_by_id: user.sub,
+        content_id: postID
+      }))
     }).then(res => {
       if (!res.error) {
         changeEditedPost();
@@ -109,7 +122,7 @@ const CreatePostComponent = ({
           />
           {preview.responseReceived && <LinkPreview preview={preview} />}
           <UserPicker
-            options={friends.map(i => ({ ...i, type: "user" }))}
+            options={connections.map(i => ({ ...i, type: "user" }))}
             onChange={onUsersSelectedChange}
             userId={user.sub}
             value={selectedUsers}
