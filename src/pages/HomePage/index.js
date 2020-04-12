@@ -18,7 +18,6 @@ const handleFeedPostsSubscription = (_, response) => {
 
 const handleNotificationsSubscription = (_, response, connections) => {
   if (connections) {
-    console.log(response.notifications);
     return response.notifications;
   }
   return [];
@@ -27,7 +26,6 @@ const handleNotificationsSubscription = (_, response, connections) => {
 const Home = () => {
   const { user = {} } = useAuth0();
   const { connections } = useContext(ProfileDetailsContext);
-
   const [postsSubscriptionResponse] = useSubscription(
     {
       query: getPostsForFeedSubscriptionQuery,
@@ -43,6 +41,8 @@ const Home = () => {
     },
     (_, data) => handleNotificationsSubscription(_, data, connections)
   );
+
+  console.log(notificationsSubscriptionResponse.data);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

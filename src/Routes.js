@@ -1,10 +1,11 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAuth0 } from "./utils/Auth0";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import HomePage from "./pages/HomePage/Home";
+import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
 import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
 
 const ProtectedRoute = ({ component: Component }) => {
   const { isAuthenticated } = useAuth0();
@@ -24,13 +25,15 @@ const RoutesComponent = () => {
     <>
       {isAuthenticated && <Navbar />}
       <ProfileDetailsProvider>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route
-            path="/home"
-            element={<ProtectedRoute component={HomePage} />}
-          />
-        </Routes>
+        <Suspense fallback={<div>Loading your route...!</div>}>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route
+              path="/home"
+              element={<ProtectedRoute component={HomePage} />}
+            />
+          </Routes>
+        </Suspense>
       </ProfileDetailsProvider>
     </>
   );

@@ -5,6 +5,7 @@ import ProfileDetailsContext from "../../context/ProfileDetailsContext/ProfileDe
 import { useAuth0 } from "../../utils/Auth0";
 import AddConnectionItem from "./AddConnectionItem";
 import { searchUsersQuery, addRequestMutation } from "../../queries";
+import Textfield from "../Textbox";
 
 const AddConnections = () => {
   const { user = {} } = useAuth0();
@@ -49,7 +50,7 @@ const AddConnections = () => {
   return (
     <div>
       <div>Add Connections</div>
-      <input
+      <Textfield
         value={connectionsSearchValue}
         onChange={e => setSearchValue(e.target.value)}
       />

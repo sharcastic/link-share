@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, lazy, Suspense } from "react";
 import Button from "@atlaskit/button";
 import { useMutation } from "urql";
 import { callServerless } from "../../utils/network";
@@ -11,7 +11,9 @@ import {
   deletePostMutation
 } from "../../queries";
 import LinkPreview from "../LinkPreview";
-import UserPicker from "../UserPicker";
+// import UserPicker from "../UserPicker";
+
+const OtherUserPicker = lazy(() => import("../UserPicker"));
 
 const CreatePostComponent = ({
   description: descriptionFromProps = "",
@@ -30,6 +32,7 @@ const CreatePostComponent = ({
   const [updatePostResult, updatePost] = useMutation(updatePostMutation);
   const [deletePostResult, deletePost] = useMutation(deletePostMutation);
   useEffect(() => {
+    import("../UserPicker").then(console.log("Lazy loaded UserPicker"));
     if (postID !== undefined) {
       getPreviewDetails();
     }
@@ -114,14 +117,14 @@ const CreatePostComponent = ({
         onBlur={getPreviewDetails}
       />
       {linkText && (
-        <>
+        <Suspense fallback={<div>Loading CreatePost Components</div>}>
           <Textbox
             value={description}
             onChange={onDescriptionChange}
             placeholder="Say something about what you’re sharing"
           />
           {preview.responseReceived && <LinkPreview preview={preview} />}
-          <UserPicker
+          <OtherUserPicker
             options={connections.map(i => ({ ...i, type: "user" }))}
             onChange={onUsersSelectedChange}
             userId={user.sub}
@@ -159,7 +162,7 @@ const CreatePostComponent = ({
               {selectedUsers.length === 0 ? "Save Link" : "Share Link"}
             </Button>
           )}
-        </>
+        </Suspense>
       )}
     </div>
   );
