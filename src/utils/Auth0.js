@@ -20,6 +20,15 @@ export const Auth0Provider = ({
   const [popupOpen, setPopupOpen] = useState(false);
   const [accessToken, setAccessToken] = useState();
   const navigate = useNavigate();
+  const logoutUser = () => {
+    setIsAuthenticated(false);
+    setUser();
+    setAccessToken();
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("tokenObject");
+    sessionStorage.removeItem("accessToken");
+    navigate("/");
+  };
 
   useEffect(() => {
     const initAuth0 = async () => {
@@ -35,9 +44,14 @@ export const Auth0Provider = ({
       const userInSession = JSON.parse(sessionStorage.getItem("user"));
       const tokenInSession = JSON.parse(sessionStorage.getItem("tokenObject"));
       if (userInSession && tokenInSession) {
-        setIsAuthenticated(true);
-        setUser(userInSession);
-        setAccessToken(tokenInSession);
+        const tokenExpiry = tokenInSession.exp;
+        if (tokenExpiry && tokenExpiry > Date.now() / 1000) {
+          setIsAuthenticated(true);
+          setUser(userInSession);
+          setAccessToken(tokenInSession);
+        } else {
+          logoutUser();
+        }
       } else {
         const isAuthenticated = await auth0FromHook.isAuthenticated();
         setIsAuthenticated(isAuthenticated);
@@ -115,7 +129,8 @@ export const Auth0Provider = ({
         loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
         getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
-        logout: (...p) => auth0Client.logout(...p)
+        logout: (...p) => auth0Client.logout(...p),
+        logoutUser
       }}
     >
       {children}

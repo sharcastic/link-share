@@ -24,7 +24,7 @@ const handleNotificationsSubscription = (_, response, connections) => {
 };
 
 const Home = () => {
-  const { user = {} } = useAuth0();
+  const { user = {}, logoutUser } = useAuth0();
   const { connections } = useContext(ProfileDetailsContext);
   const [postsSubscriptionResponse] = useSubscription(
     {
@@ -55,6 +55,7 @@ const Home = () => {
       <CreatePostComponent />
       <HomeFeed posts={postsSubscriptionResponse.data} />
       <AddConnections />
+      <button onClick={logoutUser}>Logout User!</button>
     </div>
   );
 };
