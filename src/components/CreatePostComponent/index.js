@@ -11,9 +11,8 @@ import {
   deletePostMutation
 } from "../../queries";
 import LinkPreview from "../LinkPreview";
-// import UserPicker from "../UserPicker";
 
-const OtherUserPicker = lazy(() => import("../UserPicker"));
+const UserPicker = lazy(() => import("../UserPicker"));
 
 const CreatePostComponent = ({
   description: descriptionFromProps = "",
@@ -65,6 +64,7 @@ const CreatePostComponent = ({
   const onLinkTextChange = e => setLinkText(e.target.value);
   const onDescriptionChange = e => setDescription(e.target.value);
   const getPreviewDetails = async () => {
+    setPreview({ responseReceived: false });
     const response = await callServerless(linkText);
     if (response) {
       setPreview(response);
@@ -109,7 +109,7 @@ const CreatePostComponent = ({
     });
   };
   return (
-    <div>
+    <div data-testid="CreatePost">
       <Textbox
         value={linkText}
         onChange={onLinkTextChange}
@@ -123,12 +123,14 @@ const CreatePostComponent = ({
             onChange={onDescriptionChange}
             placeholder="Say something about what you’re sharing"
           />
-          {preview.responseReceived && <LinkPreview preview={preview} />}
-          <OtherUserPicker
-            options={connections.map(i => ({ ...i, type: "user" }))}
+          <LinkPreview preview={preview} />
+          <UserPicker
+            // options={connections.map(i => ({ ...i, type: "user" }))}
+            options={[]}
             onChange={onUsersSelectedChange}
             userId={user.sub}
             value={selectedUsers}
+            placeholder="Add people to tag"
           />
           {postID !== undefined ? (
             <div>

@@ -44,18 +44,3 @@ const AddConnectionsItem = ({
 };
 
 export default AddConnectionsItem;
-
-/*
-
-{currentRequests.find(j => j.sent_to_id === connection.id) ? (
-        <Button isDisabled>Request Pending!</Button>
-      ) : (
-        <Button
-          isLoading={sendingRequests.find(j => j === connection.id)}
-          onClick={addConnection}
-        >
-          Add Friend
-        </Button>
-      )}
-
-      */

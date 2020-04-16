@@ -15,10 +15,10 @@ const NotificationItem = ({
   const getNotificationText = notification => {
     switch (notification.type) {
       case TAGGED_POST: {
-        return `${notification.notification_created_by.name} tagged you in a post.  `;
+        return `${notification.notification_created_by.name} tagged you in a post.`;
       }
       case REQUEST_RECEIVED: {
-        return `${notification.notification_created_by.name} sent you a connection request.  `;
+        return `${notification.notification_created_by.name} sent you a connection request.`;
       }
       default: {
         return "Unknown type of Notification";
@@ -28,7 +28,7 @@ const NotificationItem = ({
   return (
     <li>
       <span>{getNotificationText(data)}</span>
-      {data.type === "REQUEST_RECEIVED" && (
+      {data.type === REQUEST_RECEIVED && (
         <Button onClick={onAcceptRequest}>Accept Request</Button>
       )}
       {data.status === "UNREAD" && (

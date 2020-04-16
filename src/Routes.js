@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAuth0 } from "./utils/Auth0";
 import LoginPage from "./pages/LoginPage";
-import Navbar from "./components/Navbar";
 import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -23,7 +22,6 @@ const RoutesComponent = () => {
   }
   return (
     <>
-      {isAuthenticated && <Navbar />}
       <ProfileDetailsProvider>
         <Suspense fallback={<div>Loading your route...!</div>}>
           <Routes>

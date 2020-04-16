@@ -28,24 +28,30 @@ const HomeFeedElement = ({
           changeEditedPost={changeEditedPost}
         />
       ) : (
-        <>
+        <div data-testid="HomeFeedItem">
           <a href={link}>{link}</a>
           <span> | Description -> {description}</span>
           <span> | Created by -> {author.name}</span>
           <span>
             {" "}
             |{" "}
-            {post_tagged_users.length > 0
-              ? `Shared with -> ${post_tagged_users.reduce(
+            {post_tagged_users.length > 0 ? (
+              <span data-testid="HomeFeedItem--sharedWith">
+                `Shared with -> $
+                {post_tagged_users.reduce(
                   (acc, i) => `${acc}${i.user.name} | `,
                   ""
-                )}`
-              : "Not Shared to anyone else | "}
+                )}
+                `
+              </span>
+            ) : (
+              <span> "Not Shared to anyone else |"</span>
+            )}
           </span>
           {author.id === user.sub && editedPost === undefined && (
             <span onClick={onEditPostClick}>Edit Post</span>
           )}
-        </>
+        </div>
       )}
     </div>
   );

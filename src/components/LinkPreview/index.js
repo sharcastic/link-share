@@ -1,6 +1,14 @@
 import React from "react";
 
-const LinkPreview = ({ preview: { error, image, title, description } }) => {
+const LinkPreview = ({
+  preview: { error, image, title, description, responseReceived }
+}) => {
+  if (responseReceived === undefined) {
+    return null;
+  }
+  if (responseReceived === false) {
+    return <div>Loading Preview!</div>;
+  }
   return (
     <div>
       {error ? (
