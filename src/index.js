@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider as UrqlProvider } from "urql";
 import { Auth0Provider } from "./utils/Auth0";
 import client from "./utils/urqlClient";
-import "./index.css";
+import "./index.scss";
 import {
   OAUTH_AUDIENCE,
   OAUTH_CLIENT_ID,

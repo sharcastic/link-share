@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useAuth0 } from "./utils/Auth0";
 import LoginPage from "./pages/LoginPage";
 import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
+import Navbar from "./components/Navbar";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
@@ -25,6 +26,7 @@ const RoutesComponent = () => {
     <>
       <ProfileDetailsProvider>
         <Suspense fallback={<div>Loading your route...!</div>}>
+          <Navbar />
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route

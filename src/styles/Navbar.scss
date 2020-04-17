@@ -1,0 +1,61 @@
+@import "./variables.scss";
+
+.logo {
+  display: none;
+  @media screen and (orientation: landscape) {
+    display: block;
+    align-self: center;
+    padding: 32px 0;
+  }
+}
+
+.navbar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  @media screen and (orientation: landscape) {
+    position: relative;
+    height: 100vh;
+    width: 80px;
+    bottom: initial;
+    left: initial;
+    transform: initial;
+    overflow: initial;
+    border-radius: initial;
+    flex-direction: column;
+    background-color: $blue;
+  }
+  &__item {
+    cursor: pointer;
+    padding: 0 20px;
+    align-items: center;
+    background-color: $blue;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    &__title {
+      padding-bottom: 10px;
+    }
+  }
+  &__icon {
+    padding: 10px 0 5px;
+    fill: $white;
+    height: 20px;
+    width: 20px;
+    @media screen and (orientation: landscape) {
+      padding: 20px 0 10px 0;
+    }
+  }
+  .navbar__item--active {
+    background-color: $turquoise;
+    color: $blue;
+    & .navbar__icon {
+      fill: $blue;
+    }
+  }
+}
