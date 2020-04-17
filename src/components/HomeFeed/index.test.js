@@ -20,13 +20,13 @@ it("Renders the HomeFeed with some posts", () => {
   expect(element).toBeInTheDocument();
 });
 
-it("Renders the HomeFeed with some posts", () => {
+it("Renders the HomeFeed with no posts", () => {
   const { getByText } = render(<HomeFeed posts={[]} />);
   const element = getByText("No Posts to display!");
   expect(element).toBeInTheDocument();
 });
 
-it("Renders the HomeFeed when posts are not defined", () => {
+it("Renders the Loading text when posts are not defined", () => {
   const { getByText } = render(<HomeFeed />);
   const element = getByText("Loading POSTS!");
   expect(element).toBeInTheDocument();

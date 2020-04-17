@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
+const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
 
 const ProtectedRoute = ({ component: Component }) => {
   const { isAuthenticated } = useAuth0();
@@ -29,6 +30,10 @@ const RoutesComponent = () => {
             <Route
               path="/home"
               element={<ProtectedRoute component={HomePage} />}
+            />
+            <Route
+              path="/playground"
+              element={<ProtectedRoute component={PlaygroundPage} />}
             />
           </Routes>
         </Suspense>

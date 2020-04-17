@@ -42,8 +42,6 @@ const Home = () => {
     (_, data) => handleNotificationsSubscription(_, data, connections)
   );
 
-  console.log(notificationsSubscriptionResponse.data);
-
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       Home!

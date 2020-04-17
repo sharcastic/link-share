@@ -11,4 +11,5 @@ export const callServerless = async url => {
       return { error: "Preview cannot be generated", responseReceived: true };
     }
   }
+  return { responseReceived: true, error: "Link is not a valid URL" };
 };

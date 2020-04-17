@@ -5,14 +5,13 @@ import { callServerless } from "../../utils/network";
 import { useAuth0 } from "../../utils/Auth0";
 import ProfileDetailsContext from "../../context/ProfileDetailsContext/ProfileDetailsContext";
 import Textbox from "../Textbox";
+import Select from "../Select";
 import {
   createPostMutation,
   updatePostMutation,
   deletePostMutation
 } from "../../queries";
 import LinkPreview from "../LinkPreview";
-
-const UserPicker = lazy(() => import("../UserPicker"));
 
 const CreatePostComponent = ({
   description: descriptionFromProps = "",
@@ -31,7 +30,6 @@ const CreatePostComponent = ({
   const [updatePostResult, updatePost] = useMutation(updatePostMutation);
   const [deletePostResult, deletePost] = useMutation(deletePostMutation);
   useEffect(() => {
-    import("../UserPicker").then(console.log("Lazy loaded UserPicker"));
     if (postID !== undefined) {
       getPreviewDetails();
     }
@@ -63,15 +61,15 @@ const CreatePostComponent = ({
   };
   const onLinkTextChange = e => setLinkText(e.target.value);
   const onDescriptionChange = e => setDescription(e.target.value);
-  const getPreviewDetails = async () => {
+  const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
-    const response = await callServerless(linkText);
+    const response = await callServerless(text ? text : linkText);
     if (response) {
       setPreview(response);
     }
   };
   const onUsersSelectedChange = users =>
-    users === undefined ? setUsersSelected([]) : setUsersSelected(users);
+    users === null ? setUsersSelected([]) : setUsersSelected(users);
   const onUpdatePost = () => {
     const newlyTaggedUsers = selectedUsers.map(i => i.id);
     const removedUsers = selectedUsersFromProps.reduce((acc, user) => {
@@ -108,13 +106,32 @@ const CreatePostComponent = ({
       }
     });
   };
+  const options = connections.map(i => ({ ...i, value: i.id, label: i.name }));
+  const defaultOptions = selectedUsersFromProps.map(i => ({
+    ...i,
+    value: i.id,
+    label: i.name
+  }));
+  const onCustomInputEvent = type => event => {
+    console.log("TYPE", type);
+    console.log("EVENT", event);
+    const text =
+      type === "paste"
+        ? event.clipboardData.getData("text")
+        : event.dataTransfer.getData("text");
+    setLinkText(text);
+    event.preventDefault();
+    getPreviewDetails(text);
+  };
   return (
     <div data-testid="CreatePost">
       <Textbox
         value={linkText}
         onChange={onLinkTextChange}
         placeholder="Type a link or paste a link"
-        onBlur={getPreviewDetails}
+        onBlur={() => getPreviewDetails()}
+        onPaste={onCustomInputEvent("paste")}
+        onDrop={onCustomInputEvent("drop")}
       />
       {linkText && (
         <Suspense fallback={<div>Loading CreatePost Components</div>}>
@@ -124,13 +141,11 @@ const CreatePostComponent = ({
             placeholder="Say something about what you’re sharing"
           />
           <LinkPreview preview={preview} />
-          <UserPicker
-            // options={connections.map(i => ({ ...i, type: "user" }))}
-            options={[]}
+          <Select
+            options={options}
+            isMulti
             onChange={onUsersSelectedChange}
-            userId={user.sub}
-            value={selectedUsers}
-            placeholder="Add people to tag"
+            selectedOptions={defaultOptions}
           />
           {postID !== undefined ? (
             <div>

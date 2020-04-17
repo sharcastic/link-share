@@ -30,7 +30,6 @@ it("Renders the HomeFeedElement with no tagged users", () => {
     link: "https://9gag.com",
     description: "Some website",
     author: { id: 0, name: "Author" }
-    // post_tagged_users: []
   };
   const { getByTestId, getByText } = render(<HomeFeedElement post={post} />);
   const element = getByTestId("HomeFeedItem");
@@ -47,12 +46,10 @@ it("Renders the HomeFeedElement in Edit mode", () => {
     author: { id: 0, name: "Author" },
     post_tagged_users: [{ user: { name: "Tagged User" } }]
   };
-  const { getByTestId, getByText } = render(
+  const { getByTestId } = render(
     <HomeFeedElement post={post} editedPost={0} />
   );
   const element = getByTestId("CreatePost");
-  // const ButtonElement = getByText("Share Link");
-  // fireEvent.click(ButtonElement);
   expect(element).toBeInTheDocument();
 });
 

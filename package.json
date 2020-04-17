@@ -5,7 +5,6 @@
   "dependencies": {
     "@atlaskit/button": "^13.3.9",
     "@atlaskit/textfield": "^3.1.9",
-    "@atlaskit/user-picker": "^4.2.2",
     "@auth0/auth0-spa-js": "^1.6.5",
     "@urql/exchange-graphcache": "^2.3.0",
     "domino": "^2.1.4",

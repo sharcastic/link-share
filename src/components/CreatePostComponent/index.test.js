@@ -4,24 +4,18 @@ import {
   fireEvent,
   waitFor,
   prettyDOM,
-  getAllByPlaceholderText
+  getAllByPlaceholderText,
+  act
 } from "@testing-library/react";
 import { Provider } from "urql";
 import { never } from "wonka";
 import CreatePostComponent from "./index";
-import { element } from "prop-types";
 
 const mockClient = {
-  executeQuery: jest.fn(() => never),
-  executeMutation: jest.fn(() => never),
-  executeSubscription: jest.fn(() => never)
+  // executeQuery: jest.fn(() => never),
+  executeMutation: jest.fn(() => never)
+  // executeSubscription: jest.fn(() => never)
 };
-
-/*
-<Provider value={mockClient}>
-      <CreatePostComponent />
-    </Provider>
-*/
 
 jest.mock("../../utils/Auth0", () => ({
   useAuth0: jest
@@ -44,12 +38,12 @@ jest.mock("../../utils/network", () => ({
 }));
 
 it("Renders the CreatePostComponent and checks for LinkPreview Title", async () => {
-  const { getByPlaceholderText, getByText, getByTestId } = render(
-    <CreatePostComponent />
-  );
+  const { getByPlaceholderText, getByText } = render(<CreatePostComponent />);
   const linkTextElement = getByPlaceholderText("Type a link or paste a link");
   fireEvent.change(linkTextElement, {
-    target: { value: "https://google.com" }
+    target: {
+      value: "https://google.com"
+    }
   });
   const descriptionElement = getByPlaceholderText(
     "Say something about what you’re sharing"
@@ -57,10 +51,45 @@ it("Renders the CreatePostComponent and checks for LinkPreview Title", async () 
   fireEvent.change(descriptionElement, {
     target: { value: "new description" }
   });
-  fireEvent.blur(linkTextElement);
-  waitFor(() => {
-    const el = getByText("Title");
-    console.log(prettyDOM(getByTestId("CreatePost")));
-    expect(el).toBeInTheDocument();
+
+  act(() => {
+    fireEvent.blur(linkTextElement);
   });
+  const el = getByText("Title");
+  expect(el).toBeInTheDocument();
+});
+
+it("Renders the CreatePostComponent in edit mode and clicks on cancel edit", async () => {
+  const changeEditedPost = jest.fn();
+  const { getByText } = render(
+    <CreatePostComponent
+      description="description"
+      link="https://google.com"
+      postID={0}
+      changeEditedPost={changeEditedPost}
+    />
+  );
+  const element = getByText("Cancel Editing Post");
+  fireEvent.click(element);
+  expect(changeEditedPost).toBeCalledWith();
+  // expect(element).toBeInTheDocument();
+});
+
+it("Renders the CreatePostComponent in edit mode and clicks on delete button", async () => {
+  const changeEditedPost = jest.fn();
+  const { getByText } = render(
+    <Provider value={mockClient}>
+      <CreatePostComponent
+        description="description"
+        link="https://google.com"
+        postID={0}
+        changeEditedPost={changeEditedPost}
+      />
+    </Provider>
+  );
+  const element = getByText("Delete Post");
+  fireEvent.click(element);
+  expect(mockClient.executeMutation).toBeCalled();
+  // expect(changeEditedPost).toBeCalledWith();
+  // expect(element).toBeInTheDocument();
 });
