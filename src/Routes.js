@@ -22,6 +22,17 @@ const RoutesComponent = () => {
   if (isAuthenticated === undefined) {
     return <div>Loading Application</div>;
   }
+  if (isAuthenticated === false) {
+    return (
+      <Suspense fallback={<div>Loading your route...!</div>}>
+        <div className="page-container">
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+          </Routes>
+        </div>
+      </Suspense>
+    );
+  }
   return (
     <ProfileDetailsProvider>
       <Suspense fallback={<div>Loading your route...!</div>}>

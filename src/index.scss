@@ -1,3 +1,5 @@
+@import "./styles/variables.scss";
+
 body {
   margin: 0;
   padding: 0;
@@ -10,6 +12,10 @@ body {
   @media screen and (orientation: landscape) {
     font-size: 16px;
   }
+}
+
+svg {
+  fill: $blue;
 }
 
 #root {
