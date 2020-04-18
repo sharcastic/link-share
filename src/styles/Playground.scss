@@ -53,13 +53,14 @@
         img {
           width: 100%;
           height: auto;
+          border-radius: 8px;
         }
         &__background {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
-          height: 100%;
+          height: 99%;
           background: linear-gradient(
             180deg,
             rgba(0, 0, 0, 0.5) 0%,
@@ -130,7 +131,6 @@
           }
           &__text {
             overflow: scroll;
-            padding-right: 0.5rem;
             white-space: nowrap;
             color: #27ae8e;
             width: 73vw;
@@ -143,9 +143,10 @@
             }
           }
           &__copyIcon {
-            padding: 0.25rem;
+            padding: 0.25rem 0.5rem 0.25rem 0.75rem;
             width: 24px;
             height: 24px;
+            cursor: pointer;
           }
         }
       }
