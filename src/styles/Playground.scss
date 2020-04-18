@@ -120,19 +120,32 @@
       &__info {
         &__url {
           display: flex;
+          align-items: center;
+          justify-content: space-between;
           &__httpsIcon {
             fill: $turquoise;
+            width: 20px;
+            height: 20px;
+            padding: 0.25rem;
           }
           &__text {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-width: 0;
-            padding-right: 5px;
+            overflow: scroll;
+            padding-right: 0.5rem;
             white-space: nowrap;
-            font-size: 0.8rem;
-            color: $turquoise;
+            color: #27ae8e;
+            width: 73vw;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            font-size: 1rem;
+            &::-webkit-scrollbar {
+              display: none;
+            }
           }
           &__copyIcon {
+            padding: 0.25rem;
+            width: 24px;
+            height: 24px;
           }
         }
       }
