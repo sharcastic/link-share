@@ -1,0 +1,45 @@
+@import "./variables.scss";
+
+.playground-page {
+  position: relative;
+  .header-title {
+    margin: 0;
+  }
+  .header-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    @media screen and (orientation: landscape) {
+      top: 35px;
+      right: 35px;
+    }
+  }
+  .notifications-button {
+    margin-right: 20px;
+    @media screen and (orientation: landscape) {
+      margin-right: 30px;
+      svg {
+        height: 30px;
+        width: 30px;
+      }
+    }
+  }
+  .profile-button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    img {
+      height: 25px;
+      width: 25px;
+      border-radius: 25px;
+      @media screen and (orientation: landscape) {
+        height: 50px;
+        width: 50px;
+        border-radius: 50px;
+      }
+    }
+  }
+}

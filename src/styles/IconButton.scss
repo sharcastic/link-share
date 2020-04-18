@@ -1,0 +1,10 @@
+@import "./variables.scss";
+
+.icon-button {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  fill: $blue;
+  outline: none;
+  cursor: pointer;
+}

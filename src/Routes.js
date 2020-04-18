@@ -23,10 +23,10 @@ const RoutesComponent = () => {
     return <div>Loading Application</div>;
   }
   return (
-    <>
-      <ProfileDetailsProvider>
-        <Suspense fallback={<div>Loading your route...!</div>}>
-          <Navbar />
+    <ProfileDetailsProvider>
+      <Suspense fallback={<div>Loading your route...!</div>}>
+        <Navbar />
+        <div className="page-container">
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route
@@ -38,9 +38,9 @@ const RoutesComponent = () => {
               element={<ProtectedRoute component={PlaygroundPage} />}
             />
           </Routes>
-        </Suspense>
-      </ProfileDetailsProvider>
-    </>
+        </div>
+      </Suspense>
+    </ProfileDetailsProvider>
   );
 };
 

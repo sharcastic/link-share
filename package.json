@@ -21,7 +21,8 @@
     "react-select": "^3.1.0",
     "styled-components": "^3.4.10",
     "subscriptions-transport-ws": "^0.9.16",
-    "urql": "^1.9.5"
+    "urql": "^1.9.5",
+    "prop-types": "^15.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
