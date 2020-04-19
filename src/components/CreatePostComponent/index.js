@@ -63,9 +63,10 @@ const CreatePostComponent = ({
   const onDescriptionChange = e => setDescription(e.target.value);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
-    const response = await callServerless(text ? text : linkText);
+    const url = text ? text : linkText;
+    const response = await callServerless([url]);
     if (response) {
-      setPreview(response);
+      setPreview(response[url]);
     }
   };
   const onUsersSelectedChange = users =>
