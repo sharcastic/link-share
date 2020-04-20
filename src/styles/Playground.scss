@@ -2,43 +2,44 @@
 
 .playground-page {
   position: relative;
-  .header-title {
-    margin: 0;
-  }
-  .header-right {
-    position: absolute;
-    top: 0;
-    right: 0;
+  header {
     display: flex;
-    @media screen and (orientation: landscape) {
-      top: 20px;
-      right: 35px;
+    justify-content: space-between;
+    .header-title {
+      margin: 0;
     }
-  }
-  .notifications-button {
-    margin-right: 20px;
-    @media screen and (orientation: landscape) {
-      margin-right: 30px;
-      svg {
-        height: 30px;
-        width: 30px;
+    .header-right {
+      display: flex;
+      @media screen and (orientation: landscape) {
+        top: 20px;
+        right: 35px;
       }
     }
-  }
-  .profile-button {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    img {
-      height: 25px;
-      width: 25px;
-      border-radius: 25px;
+    .notifications-button {
+      margin-right: 20px;
       @media screen and (orientation: landscape) {
-        height: 50px;
-        width: 50px;
-        border-radius: 50px;
+        margin-right: 30px;
+        svg {
+          height: 30px;
+          width: 30px;
+        }
+      }
+    }
+    .profile-button {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      img {
+        height: 25px;
+        width: 25px;
+        border-radius: 25px;
+        @media screen and (orientation: landscape) {
+          height: 35px;
+          width: 35px;
+          border-radius: 35px;
+        }
       }
     }
   }
