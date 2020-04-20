@@ -9,7 +9,7 @@
     "@urql/exchange-graphcache": "^2.3.0",
     "clsx": "^1.1.0",
     "domino": "^2.1.4",
-    "graphql": "^14.6.0",
+    "graphql": "^15.0.0",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",
     "page-metadata-parser": "^1.1.4",
@@ -22,7 +22,7 @@
     "react-select": "^3.1.0",
     "styled-components": "^3.4.10",
     "subscriptions-transport-ws": "^0.9.16",
-    "urql": "^1.9.5",
+    "urql": "^1.9.0",
     "prop-types": "^15.7.2"
   },
   "scripts": {
