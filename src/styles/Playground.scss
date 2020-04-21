@@ -15,17 +15,115 @@
         right: 35px;
       }
     }
-    .notifications-button {
-      margin-right: 20px;
-      svg {
-        height: 25px;
-        width: 25px;
-      }
-      @media screen and (orientation: landscape) {
-        margin-right: 30px;
+    .notifications {
+      display: flex;
+      position: relative;
+      margin-right: 10px;
+      &__button {
+        padding: 0 10px;
+        z-index: 3;
         svg {
-          height: 30px;
-          width: 30px;
+          height: 25px;
+          width: 25px;
+        }
+        @media screen and (orientation: landscape) {
+          margin-right: 20px;
+          svg {
+            height: 30px;
+            width: 30px;
+          }
+        }
+      }
+      &__unreadIndicator {
+        background-color: $red;
+        height: 10px;
+        width: 10px;
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        border-radius: 10px;
+        z-index: 3;
+
+        @media screen and (orientation: landscape) {
+          top: 2px;
+          right: 30px;
+        }
+      }
+      &__panel {
+        position: absolute;
+        background-color: $white;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        width: 270px;
+        right: 0;
+        z-index: 2;
+        top: -10px;
+        max-height: 300px;
+        border-radius: 5px;
+        @media screen and (orientation: landscape) {
+          width: 350px;
+        }
+        &.hide {
+          display: none;
+        }
+        &__header {
+          padding: 10px;
+          padding-top: 12px;
+          display: flex;
+          justify-content: space-between;
+          @media screen and (orientation: landscape) {
+            padding: 15px;
+            padding-top: 18px;
+          }
+          & span:last-of-type {
+            margin-right: 30px;
+            @media screen and (orientation: landscape) {
+              margin-right: 55px;
+            }
+          }
+        }
+        &__list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          background-color: $grey;
+          &__item {
+            height: fit-content;
+            border-bottom: 1px solid black;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            &__text {
+            }
+            &__buttonSection {
+              align-self: flex-end;
+              padding-top: 5px;
+              padding-right: 5px;
+              &__button {
+                &--mark {
+                  border: 0;
+                  cursor: pointer;
+                  background-color: transparent;
+                  color: $blue;
+                }
+                &--accept {
+                  cursor: pointer;
+                  border: 0;
+                  background-color: transparent;
+                  margin-left: 10px;
+                  padding: 5px 10px;
+                  background-color: $blue;
+                  color: $white;
+                  border-radius: 5px;
+                }
+                &--ignore {
+                  cursor: pointer;
+                  border: 0;
+                  background-color: transparent;
+                  color: $red;
+                }
+              }
+            }
+          }
         }
       }
     }

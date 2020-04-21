@@ -1,12 +1,11 @@
 import React from "react";
-import { string, object, bool } from "prop-types";
+import { string, object, func } from "prop-types";
 import clsx from "clsx";
 import "../../styles/IconButton.scss";
 
-const IconButton = ({ Icon, title, className, unreadIndicator }) => (
-  <button className={clsx(className, "icon-button")}>
+const IconButton = ({ Icon, title, className, onClick }) => (
+  <button className={clsx(className, "icon-button")} onClick={onClick}>
     <Icon title={title} />
-    {unreadIndicator && <span className="icon-button__unreadIndicator" />}
   </button>
 );
 
@@ -14,12 +13,12 @@ IconButton.propTypes = {
   Icon: object.isRequired,
   title: string.isRequired,
   className: string,
-  unreadIndicator: bool
+  onClick: func
 };
 
 IconButton.defaultProps = {
   className: "",
-  unreadIndicator: true
+  onClick: () => {}
 };
 
 export default IconButton;
