@@ -1,0 +1,19 @@
+@import "./variables.scss";
+
+.button {
+  padding: 10px;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  &--primary {
+    background-color: $blue;
+    color: $white;
+    border-radius: 5px;
+  }
+  &--plain {
+    background-color: transparent;
+    color: $blue;
+  }
+}

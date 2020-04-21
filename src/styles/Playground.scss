@@ -8,6 +8,15 @@
     .header-title {
       margin: 0;
     }
+    .header-left {
+      display: flex;
+      .mobile-icon {
+        margin-right: 15px;
+        @media screen and (orientation: landscape) {
+          display: none;
+        }
+      }
+    }
     .header-right {
       display: flex;
       @media screen and (orientation: landscape) {
@@ -100,25 +109,13 @@
               padding-right: 5px;
               &__button {
                 &--mark {
-                  border: 0;
-                  cursor: pointer;
-                  background-color: transparent;
-                  color: $blue;
                 }
                 &--accept {
-                  cursor: pointer;
-                  border: 0;
-                  background-color: transparent;
                   margin-left: 10px;
                   padding: 5px 10px;
-                  background-color: $blue;
-                  color: $white;
                   border-radius: 5px;
                 }
                 &--ignore {
-                  cursor: pointer;
-                  border: 0;
-                  background-color: transparent;
                   color: $red;
                 }
               }

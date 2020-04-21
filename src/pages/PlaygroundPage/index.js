@@ -4,10 +4,12 @@ import clsx from "clsx";
 import "../../styles/Playground.scss";
 import { useAuth0 } from "../../utils/Auth0";
 import { ReactComponent as NotificationIcon } from "../../assets/notifications.svg";
+import { ReactComponent as LogoIcon } from "../../assets/logo-mobile.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import LinkCard from "../../components/LinkCard";
 import IconButton from "../../components/IconButton";
+import Button from "../../components/Button";
 
 // import { callServerless } from "../../utils/network";
 
@@ -32,21 +34,24 @@ const PlaygroundPage = () => {
   return (
     <div className="playground-page">
       <header>
-        <h2 className="header-title">Playground</h2>
+        <div className="header-left">
+          <LogoIcon className="mobile-icon" title="Logo" />
+          <h2 className="header-title">Playground</h2>
+        </div>
         <div className="header-right">
           <div className="notifications" ref={ref}>
             <IconButton
               Icon={NotificationIcon}
               title="Notifications"
               className="notifications__button"
-              onClick={() => setTabOpen(true)}
+              onClick={() => setTabOpen(!isTabOpen)}
             />
             <span className="notifications__unreadIndicator" />
             <div
               className={clsx({ notifications__panel: true, hide: !isTabOpen })}
             >
               <div className="notifications__panel__header">
-                <span>View All</span>
+                <Button type="plain">View All</Button>
                 <span>Updates</span>
               </div>
               <ul className="notifications__panel__list">
@@ -55,12 +60,15 @@ const PlaygroundPage = () => {
                     First Item
                   </p>
                   <div className="notifications__panel__list__item__buttonSection">
-                    <button className="notifications__panel__list__item__buttonSection__button--ignore">
+                    <Button
+                      className="notifications__panel__list__item__buttonSection__button--ignore"
+                      type="plain"
+                    >
                       Ignore
-                    </button>
-                    <button className="notifications__panel__list__item__buttonSection__button--accept">
+                    </Button>
+                    <Button className="notifications__panel__list__item__buttonSection__button--accept">
                       Accept
-                    </button>
+                    </Button>
                   </div>
                 </li>
                 <li className="notifications__panel__list__item">
@@ -68,9 +76,12 @@ const PlaygroundPage = () => {
                     Second Item
                   </p>
                   <div className="notifications__panel__list__item__buttonSection">
-                    <button className="notifications__panel__list__item__buttonSection__button--mark">
+                    <Button
+                      className="notifications__panel__list__item__buttonSection__button--mark"
+                      type="plain"
+                    >
                       Mark as Read
-                    </button>
+                    </Button>
                   </div>
                 </li>
               </ul>
