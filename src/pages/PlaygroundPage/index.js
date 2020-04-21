@@ -43,10 +43,11 @@ const PlaygroundPage = () => {
         <LinkCard imgSrc="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
         <LinkCard imgSrc="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax" />
         <LinkCard imgSrc="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" />
-        <LinkCard imgSrc="https://miro.medium.com/max/1200/1*_tTA7GNSjhkEWj-BZzscqA.jpeg" />
+        <LinkCard />
       </main>
     </div>
   );
 };
 
+// imgSrc="https://miro.medium.com/max/1200/1*_tTA7GNSjhkEWj-BZzscqA.jpeg"
 export default PlaygroundPage;

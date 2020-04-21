@@ -17,6 +17,10 @@
     }
     .notifications-button {
       margin-right: 20px;
+      svg {
+        height: 25px;
+        width: 25px;
+      }
       @media screen and (orientation: landscape) {
         margin-right: 30px;
         svg {
@@ -45,7 +49,7 @@
   }
 
   main {
-    margin-top: 50px;
+    margin: 50px 0 100px 0;
     @media screen and (orientation: landscape) {
       display: grid;
       grid-gap: 25px;

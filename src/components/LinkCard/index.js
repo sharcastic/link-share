@@ -7,9 +7,11 @@ import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
 import { ReactComponent as CopyIcon } from "../../assets/copy.svg";
 import { ReactComponent as CommentIcon } from "../../assets/comment.svg";
 import { ReactComponent as TagIcon } from "../../assets/tag.svg";
+import DefaultImage from "../../assets/previewImgMissing.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({ imgSrc }) => {
+  const [src] = useState(imgSrc ? imgSrc : DefaultImage);
   const [imageLoading, setLoading] = useState(true);
   return (
     <div className="post__container">
@@ -46,7 +48,7 @@ const LinkCard = ({ imgSrc }) => {
               </span>
             </div>
           </div>
-          <img src={imgSrc} alt="backdrop" onLoad={() => setLoading(false)} />
+          <img src={src} alt="backdrop" onLoad={() => setLoading(false)} />
         </div>
         <div className="post__bottom">
           <div className="post__bottom__info">
@@ -55,7 +57,7 @@ const LinkCard = ({ imgSrc }) => {
                 title="HTTPS Icon"
                 className="post__bottom__info__url__httpsIcon"
               />
-              <div className="post__bottom__info__url__text">{imgSrc}</div>
+              <div className="post__bottom__info__url__text">{src}</div>
               <CopyIcon
                 title="Copy Icon"
                 className="post__bottom__info__url__copyIcon"
