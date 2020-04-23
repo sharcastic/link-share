@@ -7,11 +7,13 @@ import { callServerless } from "../../utils/network";
 import Button from "../Button";
 import TextInput from "../TextInput";
 import PostPreview from "../PostPreview";
+import TextArea from "../TextArea";
 
 import "../../styles/CreatePost.scss";
 
 const CreatePost = ({ specialBehaviour }) => {
   const [linkText, setLinkText] = useState("");
+  const [description, setDescription] = useState("");
   const [preview, setPreview] = useState({});
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
@@ -23,6 +25,7 @@ const CreatePost = ({ specialBehaviour }) => {
   };
   const onBlur = () => getPreviewDetails();
   const onLinkTextChange = text => setLinkText(text);
+  const onDescriptionChange = text => setDescription(text);
   return (
     <div
       className={clsx({
@@ -34,6 +37,7 @@ const CreatePost = ({ specialBehaviour }) => {
       {preview.responseReceived && (
         <div className="createPost__post-info">
           <PostPreview src="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
+          <TextArea value={description} onChange={onDescriptionChange} />
           This is the post preview!
         </div>
       )}

@@ -22,6 +22,9 @@
       opacity: 0;
     }
     & .createPost__post-info {
+      .textarea-container {
+        margin-top: 10px;
+      }
     }
     &--showPanel {
       & .createPost__bottom,
