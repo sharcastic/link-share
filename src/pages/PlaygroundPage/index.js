@@ -11,6 +11,7 @@ import LinkCard from "../../components/LinkCard";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
+import CreatePost from "../../components/CreatePost";
 
 // import { callServerless } from "../../utils/network";
 
@@ -33,8 +34,9 @@ const PlaygroundPage = () => {
     };
     fn();
   }, []); */
-
-  const onLinkTextChange = text => setLinkText(text);
+  const onLinkTextChange = text => {
+    setLinkText(text);
+  };
   return (
     <div className="playground-page">
       <header>
@@ -97,16 +99,9 @@ const PlaygroundPage = () => {
         </div>
       </header>
       <main>
-        <div
-          className={clsx({ createPost: true /* show: addLinkText !== "" */ })}
-        >
-          Details!
-        </div>
-        <div>
-          <LinkCard imgSrc="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
-          <LinkCard imgSrc="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" />
-          <LinkCard />
-        </div>
+        <LinkCard imgSrc="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
+        <LinkCard imgSrc="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" />
+        <LinkCard />
       </main>
       <div className="hidden-container">
         <div className={clsx({ brighten: true, show: addLinkText !== "" })} />
@@ -118,17 +113,11 @@ const PlaygroundPage = () => {
             onChange={onLinkTextChange}
           />
         ) : (
-          <div className="createPost">
-            <TextInput
-              value={addLinkText}
-              className="createPost__linkTextbox"
-              onChange={onLinkTextChange}
-            />
-            <div className="createPost__bottom">
-              <Button type="plain">Cancel</Button>
-              <Button type="primary">Save Post</Button>
-            </div>
-          </div>
+          <CreatePost
+            initialLinkText={addLinkText}
+            onLinkTextChange={onLinkTextChange}
+            forwardRef
+          />
         )}
       </div>
     </div>
