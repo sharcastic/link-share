@@ -10,6 +10,7 @@ import useOnClickOutside from "../../hooks/useOnClickOutside";
 import LinkCard from "../../components/LinkCard";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
+import TextInput from "../../components/TextInput";
 
 // import { callServerless } from "../../utils/network";
 
@@ -17,6 +18,7 @@ const PlaygroundPage = () => {
   const { user = {} } = useAuth0();
   const ref = useRef();
   const [isTabOpen, setTabOpen] = useState(false);
+  const [addLinkText, setLinkText] = useState("");
   useOnClickOutside(ref, () => setTabOpen(false));
 
   /* useEffect(() => {
@@ -31,6 +33,8 @@ const PlaygroundPage = () => {
     };
     fn();
   }, []); */
+
+  const onLinkTextChange = text => setLinkText(text);
   return (
     <div className="playground-page">
       <header>
@@ -93,14 +97,42 @@ const PlaygroundPage = () => {
         </div>
       </header>
       <main>
-        <LinkCard imgSrc="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
-        <LinkCard imgSrc="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax" />
-        <LinkCard imgSrc="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" />
-        <LinkCard />
+        <div
+          className={clsx({ createPost: true /* show: addLinkText !== "" */ })}
+        >
+          Details!
+        </div>
+        <div>
+          <LinkCard imgSrc="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
+          <LinkCard imgSrc="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" />
+          <LinkCard />
+        </div>
       </main>
+      <div className="hidden-container">
+        <div className={clsx({ brighten: true, show: addLinkText !== "" })} />
+        {addLinkText === "" ? (
+          <TextInput
+            value={addLinkText}
+            placeholder="Type or paste a link here"
+            className="addLink-textInput"
+            onChange={onLinkTextChange}
+          />
+        ) : (
+          <div className="createPost">
+            <TextInput
+              value={addLinkText}
+              className="createPost__linkTextbox"
+              onChange={onLinkTextChange}
+            />
+            <div className="createPost__bottom">
+              <Button type="plain">Cancel</Button>
+              <Button type="primary">Save Post</Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-// imgSrc="https://miro.medium.com/max/1200/1*_tTA7GNSjhkEWj-BZzscqA.jpeg"
 export default PlaygroundPage;

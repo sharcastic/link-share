@@ -14,7 +14,7 @@ Button.propTypes = {
   children: node.isRequired,
   onClick: func,
   className: string,
-  type: oneOf(["primary, plain"])
+  type: oneOf(["primary", "plain"])
 };
 
 Button.defaultProps = {
