@@ -19,7 +19,6 @@ const PlaygroundPage = () => {
   const { user = {} } = useAuth0();
   const ref = useRef();
   const [isTabOpen, setTabOpen] = useState(false);
-  const [addLinkText, setLinkText] = useState("");
   useOnClickOutside(ref, () => setTabOpen(false));
 
   /* useEffect(() => {
@@ -34,9 +33,7 @@ const PlaygroundPage = () => {
     };
     fn();
   }, []); */
-  const onLinkTextChange = text => {
-    setLinkText(text);
-  };
+
   return (
     <div className="playground-page">
       <header>
@@ -104,21 +101,7 @@ const PlaygroundPage = () => {
         <LinkCard />
       </main>
       <div className="hidden-container">
-        <div className={clsx({ brighten: true, show: addLinkText !== "" })} />
-        {addLinkText === "" ? (
-          <TextInput
-            value={addLinkText}
-            placeholder="Type or paste a link here"
-            className="addLink-textInput"
-            onChange={onLinkTextChange}
-          />
-        ) : (
-          <CreatePost
-            initialLinkText={addLinkText}
-            onLinkTextChange={onLinkTextChange}
-            forwardRef
-          />
-        )}
+        <CreatePost specialBehaviour />
       </div>
     </div>
   );

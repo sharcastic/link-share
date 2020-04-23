@@ -17,8 +17,9 @@ export const callServerless = async arrayOfURLs => {
       invalidURLs.push(url);
     }
   });
+  const responseObj = {};
 
-  if (validURLs.size > 0) {
+  if (validURLs.size > 0 || cachedURLs > 0) {
     const res = await fetch("/api/getPreviews", {
       method: "POST",
       headers: {
@@ -28,12 +29,12 @@ export const callServerless = async arrayOfURLs => {
     });
     const responseArr = await res.json();
     console.log("responseArr", responseArr);
-    const responseObj = {};
     responseArr.forEach(({ url, error, metadata }) => {
       if (error) {
         responseObj[url] = { responseReceived: true, error };
       } else {
         responseObj[url] = { responseReceived: true, ...metadata };
+        cache[url] = responseObj[url];
       }
     });
     cachedURLs.forEach(url => {
@@ -48,6 +49,13 @@ export const callServerless = async arrayOfURLs => {
         error: "Link is not a valid URL"
       };
     });
-    return responseObj;
+  } else {
+    invalidURLs.forEach(url => {
+      responseObj[url] = {
+        responseReceived: true,
+        error: "Link is not a valid URL"
+      };
+    });
   }
+  return responseObj;
 };

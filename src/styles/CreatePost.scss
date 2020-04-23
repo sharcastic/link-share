@@ -1,0 +1,83 @@
+@import "./variables.scss";
+
+.createPost {
+  z-index: 5;
+  width: 100%;
+  margin-bottom: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  @media screen and (orientation: landscape) {
+    display: none;
+  }
+  &--specialBehaviour {
+    & .createPost__bottom,
+    .createPost__post-info {
+      opacity: 0;
+    }
+    & .createPost__post-info {
+    }
+    &--showPanel {
+      & .createPost__bottom,
+      .createPost__post-info {
+        z-index: 5;
+        opacity: 1;
+      }
+      & .createPost__linkTextbox {
+        z-index: 5;
+      }
+      &::before {
+        content: "";
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        background-color: $white;
+        opacity: 0.95;
+        z-index: 4;
+      }
+    }
+  }
+  &__linkTextbox {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 1.25rem;
+    padding: 15px 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  &__post-info {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  &__bottom {
+    position: relative;
+    height: 60px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    .button {
+      padding: 10px;
+    }
+    .button--plain {
+      margin-right: 25px;
+      color: $red;
+    }
+  }
+  .post-preview__details__linkDetails {
+    justify-content: flex-end;
+    height: 100%;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import LinkCardLoader from "../LinkCardLoader";
+import PostPreview from "../PostPreview";
 import { ReactComponent as DefaultPersonIcon } from "../../assets/default-person.svg";
 import { ReactComponent as OptionsIcon } from "../../assets/options.svg";
 import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
@@ -13,21 +14,23 @@ import "../../styles/LinkCard.scss";
 const LinkCard = ({ imgSrc }) => {
   const [src] = useState(imgSrc ? imgSrc : DefaultImage);
   const [imageLoading, setLoading] = useState(true);
+  const onLoad = () => setLoading(false);
   return (
     <div className="post__container">
       {imageLoading && <LinkCardLoader />}
       <div className={clsx({ post: true, hide: imageLoading })}>
-        <div className="post__preview">
-          <div className="post__preview__background" />
-          <div className="post__preview__details">
-            <div className="post__preview__details__top">
-              <div className="post__preview__details__top__creationDetails">
-                <DefaultPersonIcon className="post__preview__details__top__creationDetails__authorIcon" />
-                <div className="post__preview__details__top__creationDetails__text">
-                  <span className="post__preview__details__top__creationDetails__text__authorName">
+        <PostPreview
+          onLoad={onLoad}
+          src={src}
+          previewTop={
+            <div className="post-preview__details__top">
+              <div className="post-preview__details__top__creationDetails">
+                <DefaultPersonIcon className="post-preview__details__top__creationDetails__authorIcon" />
+                <div className="post-preview__details__top__creationDetails__text">
+                  <span className="post-preview__details__top__creationDetails__text__authorName">
                     Author name
                   </span>
-                  <span className="post__preview__details__top__creationDetails__text__timeCreated">
+                  <span className="post-preview__details__top__creationDetails__text__timeCreated">
                     at 14:07 on 01 Apr 2020
                   </span>
                 </div>
@@ -35,21 +38,12 @@ const LinkCard = ({ imgSrc }) => {
               <div>
                 <OptionsIcon
                   title="Options Icon"
-                  className="post__preview__details__top__options"
+                  className="post-preview__details__top__options"
                 />
               </div>
             </div>
-            <div className="post__preview__details__linkDetails">
-              <span className="post__preview__details__linkDetails__title">
-                Website Title
-              </span>
-              <span className="post__preview__details_linkDetails__description">
-                Website Description
-              </span>
-            </div>
-          </div>
-          <img src={src} alt="backdrop" onLoad={() => setLoading(false)} />
-        </div>
+          }
+        />
         <div className="post__bottom">
           <div className="post__bottom__info">
             <div className="post__bottom__info__url">

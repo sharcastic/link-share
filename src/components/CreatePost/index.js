@@ -1,28 +1,18 @@
-import React, { useEffect, useState, createRef } from "react";
-import { func, bool, string } from "prop-types";
+import React, { useState } from "react";
+import { bool } from "prop-types";
+import clsx from "clsx";
 
 import { callServerless } from "../../utils/network";
 
 import Button from "../Button";
 import TextInput from "../TextInput";
-import TextInputWithRef from "../TextInputWithRef";
+import PostPreview from "../PostPreview";
 
-const CreatePost = ({ initialLinkText, forwardRef }) => {
-  const [isForwardRef] = useState(forwardRef);
-  const refToForward = createRef();
-  const [linkText, setLinkText] = useState(initialLinkText);
+import "../../styles/CreatePost.scss";
+
+const CreatePost = ({ specialBehaviour }) => {
+  const [linkText, setLinkText] = useState("");
   const [preview, setPreview] = useState({});
-  useEffect(() => {
-    console.log("from effect", linkText);
-    if (
-      forwardRef &&
-      linkText &&
-      linkText.length === 1 &&
-      refToForward.current
-    ) {
-      refToForward.current.focus();
-    }
-  }, [linkText]);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
     const url = text ? text : linkText;
@@ -32,30 +22,28 @@ const CreatePost = ({ initialLinkText, forwardRef }) => {
     }
   };
   const onBlur = () => getPreviewDetails();
-  const onLinkTextChange = e => setLinkText(e.target.value);
-  console.log("from render", linkText);
+  const onLinkTextChange = text => setLinkText(text);
   return (
-    <div className="createPost">
+    <div
+      className={clsx({
+        createPost: true,
+        "createPost--specialBehaviour": specialBehaviour,
+        "createPost--specialBehaviour--showPanel": specialBehaviour && linkText
+      })}
+    >
       {preview.responseReceived && (
-        <div className="post-preview">This is the post preview!</div>
+        <div className="createPost__post-info">
+          <PostPreview src="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
+          This is the post preview!
+        </div>
       )}
-      {isForwardRef ? (
-        <TextInputWithRef
-          ref={refToForward}
-          value={linkText}
-          className="createPost__linkTextbox"
-          onChange={onLinkTextChange}
-          onBlur={onBlur}
-        />
-      ) : (
-        <TextInput
-          value={linkText}
-          className="createPost__linkTextbox"
-          onChange={onLinkTextChange}
-          onBlur={onBlur}
-        />
-      )}
-
+      <TextInput
+        value={linkText}
+        onChange={onLinkTextChange}
+        onBlur={onBlur}
+        className="createPost__linkTextbox"
+        placeholder="Type or paste a link here"
+      />
       <div className="createPost__bottom">
         <Button type="plain">Cancel</Button>
         <Button type="primary">Save Post</Button>
@@ -65,12 +53,13 @@ const CreatePost = ({ initialLinkText, forwardRef }) => {
 };
 
 CreatePost.propTypes = {
-  initialLinkText: string.isRequired,
-  forwardRef: bool
+  specialBehaviour: bool
 };
 
 CreatePost.defaultProps = {
-  forwardRef: false
+  specialBehaviour: false
 };
+
+//<div className="createPost__post-info__post-preview"></div>
 
 export default CreatePost;
