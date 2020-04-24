@@ -22,7 +22,12 @@ const SelectComponent = ({
         menuPlacement={menuPlacement}
         controlShouldRenderValue={controlShouldRenderValue}
         isClearable={false}
-        filterOption={option => !value.find(i => i.id === option.data.id)}
+        filterOption={(option, string = "") => {
+          const presentInString =
+            option.label.indexOf(string) > -1 ||
+            option.value.indexOf(string) > -1;
+          return presentInString || !!value.find(i => i.value === option.value);
+        }}
       />
     </div>
   );

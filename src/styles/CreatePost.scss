@@ -17,6 +17,7 @@
     display: none;
   }
   &--specialBehaviour {
+    z-index: 3;
     & .createPost__bottom,
     .createPost__post-info {
       opacity: 0;
@@ -27,6 +28,7 @@
       }
     }
     &--showPanel {
+      z-index: 5;
       & .createPost__bottom,
       .createPost__post-info {
         z-index: 5;

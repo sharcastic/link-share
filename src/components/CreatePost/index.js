@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { bool } from "prop-types";
 import clsx from "clsx";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 import { callServerless } from "../../utils/network";
 
@@ -16,9 +17,9 @@ import PillLabel from "../PillLabel";
 import "../../styles/CreatePost.scss";
 
 const options = [
-  { value: "chocolate", label: "Chocolate", id: "1" },
-  { value: "strawberry", label: "Strawberry", id: "2" },
-  { value: "vanilla", label: "Vanilla", id: "3" }
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" }
 ];
 
 const CreatePost = ({ specialBehaviour }) => {
@@ -26,6 +27,13 @@ const CreatePost = ({ specialBehaviour }) => {
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState({});
   const [selectedUsers, setSelectedUsers] = useState([]);
+  useEffect(() => {
+    if (linkText) {
+      disableBodyScroll();
+    } else {
+      enableBodyScroll();
+    }
+  }, [linkText]);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
     const url = text ? text : linkText;

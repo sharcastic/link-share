@@ -7,12 +7,14 @@
     "@atlaskit/textfield": "^3.1.9",
     "@auth0/auth0-spa-js": "^1.6.5",
     "@urql/exchange-graphcache": "^2.3.0",
+    "body-scroll-lock": "^3.0.1",
     "clsx": "^1.1.0",
     "domino": "^2.1.4",
     "graphql": "^15.0.0",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",
     "page-metadata-parser": "^1.1.4",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-content-loader": "^5.0.4",
     "react-dom": "^16.13.1",
@@ -22,8 +24,7 @@
     "react-select": "^3.1.0",
     "styled-components": "^3.4.10",
     "subscriptions-transport-ws": "^0.9.16",
-    "urql": "^1.9.0",
-    "prop-types": "^15.7.2"
+    "urql": "^1.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
