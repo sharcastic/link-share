@@ -10,7 +10,7 @@ const TextArea = ({ value, onChange }) => {
       <textarea
         className="textarea"
         rows="3"
-        maxlength="100"
+        maxLength="100"
         placeholder="Type a title or description for the link you are sharing"
         value={value}
         onChange={onTextAreaChange}

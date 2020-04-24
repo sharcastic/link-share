@@ -146,7 +146,7 @@ const CreatePostComponent = ({
             options={options}
             isMulti
             onChange={onUsersSelectedChange}
-            selectedOptions={defaultOptions}
+            defaultSelected={defaultOptions}
           />
           {postID !== undefined ? (
             <div>

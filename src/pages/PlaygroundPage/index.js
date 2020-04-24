@@ -10,10 +10,7 @@ import useOnClickOutside from "../../hooks/useOnClickOutside";
 import LinkCard from "../../components/LinkCard";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
-import TextInput from "../../components/TextInput";
 import CreatePost from "../../components/CreatePost";
-
-// import { callServerless } from "../../utils/network";
 
 const PlaygroundPage = () => {
   const { user = {} } = useAuth0();
