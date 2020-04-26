@@ -76,6 +76,9 @@ const CreatePost = ({ specialBehaviour }) => {
             </div>
           )}
           <TextArea value={description} onChange={onDescriptionChange} />
+          <span className="createPost__post-info__shareTitle">
+            Share with others?
+          </span>
           <div className="selected-users">
             {selectedUsers.map(i => (
               <PillLabel

@@ -19,7 +19,7 @@ const PostPreview = ({ onLoad, previewTop, preview }) => {
           <span className="post-preview__details__linkDetails__title">
             {title}
           </span>
-          <span className="post-preview__details_linkDetails__description">
+          <span className="post-preview__details__linkDetails__description">
             {description}
           </span>
         </div>

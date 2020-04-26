@@ -43,6 +43,8 @@
       }
       &__description {
         font-size: 0.8rem;
+        max-height: 50px;
+        overflow: hidden;
       }
     }
   }
