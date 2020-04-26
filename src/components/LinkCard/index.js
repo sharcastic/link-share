@@ -8,11 +8,9 @@ import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
 import { ReactComponent as CopyIcon } from "../../assets/copy.svg";
 import { ReactComponent as CommentIcon } from "../../assets/comment.svg";
 import { ReactComponent as TagIcon } from "../../assets/tag.svg";
-import DefaultImage from "../../assets/previewImgMissing.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({ imgSrc }) => {
-  const [src] = useState(imgSrc ? imgSrc : DefaultImage);
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
   return (
@@ -21,7 +19,7 @@ const LinkCard = ({ imgSrc }) => {
       <div className={clsx({ post: true, hide: imageLoading })}>
         <PostPreview
           onLoad={onLoad}
-          src={src}
+          preview={{ image: imgSrc }}
           previewTop={
             <div className="post-preview__details__top">
               <div className="post-preview__details__top__creationDetails">
@@ -51,7 +49,7 @@ const LinkCard = ({ imgSrc }) => {
                 title="HTTPS Icon"
                 className="post__bottom__info__url__httpsIcon"
               />
-              <div className="post__bottom__info__url__text">{src}</div>
+              <div className="post__bottom__info__url__text">{imgSrc}</div>
               <CopyIcon
                 title="Copy Icon"
                 className="post__bottom__info__url__copyIcon"

@@ -31,6 +31,7 @@ const CreatePost = ({ specialBehaviour }) => {
     if (linkText) {
       disableBodyScroll();
     } else {
+      setPreview({});
       enableBodyScroll();
     }
   }, [linkText]);
@@ -40,6 +41,8 @@ const CreatePost = ({ specialBehaviour }) => {
     const response = await callServerless([url]);
     if (response) {
       setPreview(response[url]);
+    } else {
+      setPreview({});
     }
   };
   const onBlur = () => getPreviewDetails();
@@ -63,9 +66,15 @@ const CreatePost = ({ specialBehaviour }) => {
         "createPost--specialBehaviour--showPanel": specialBehaviour && linkText
       })}
     >
-      {preview.responseReceived && (
+      {preview.responseReceived !== undefined && (
         <div className="createPost__post-info">
-          <PostPreview src="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
+          {preview.responseReceived === true ? (
+            <PostPreview preview={preview} />
+          ) : (
+            <div className="createPost__post-info__previewLoading">
+              Preview loading!
+            </div>
+          )}
           <TextArea value={description} onChange={onDescriptionChange} />
           <div className="selected-users">
             {selectedUsers.map(i => (

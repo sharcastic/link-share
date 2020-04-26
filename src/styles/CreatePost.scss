@@ -31,11 +31,11 @@
       z-index: 5;
       & .createPost__bottom,
       .createPost__post-info {
-        z-index: 5;
+        z-index: inherit;
         opacity: 1;
       }
       & .createPost__linkTextbox {
-        z-index: 5;
+        z-index: inherit;
       }
       &::before {
         content: "";
@@ -75,6 +75,9 @@
           margin-right: 5px;
         }
       }
+    }
+    &__previewLoading {
+      z-index: inherit;
     }
   }
   &__bottom {
