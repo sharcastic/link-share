@@ -4,11 +4,13 @@
   &.hide {
     display: none;
   }
-  border-radius: 5px;
+  
 
   &__container {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    background: white;
     margin-bottom: 20px;
+    border-radius: 5px;
     @media screen and (orientation: landscape) {
       margin-bottom: 0;
     }

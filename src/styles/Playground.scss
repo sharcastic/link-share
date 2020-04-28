@@ -79,8 +79,7 @@
           display: none;
         }
         &__header {
-          padding: 10px;
-          padding-top: 12px;
+          padding: 20px 10px;
           display: flex;
           justify-content: space-between;
           @media screen and (orientation: landscape) {
@@ -88,7 +87,7 @@
             padding-top: 18px;
           }
           & span:last-of-type {
-            margin-right: 30px;
+            margin-right: 40px;
             @media screen and (orientation: landscape) {
               margin-right: 55px;
             }
@@ -99,9 +98,10 @@
           padding: 0;
           margin: 0;
           background-color: $grey;
+          border-radius: 0px 0px 5px 5px;
           &__item {
             height: fit-content;
-            border-bottom: 1px solid black;
+            border-top: 1px solid #dadbdd;
             padding: 10px;
             display: flex;
             flex-direction: column;
