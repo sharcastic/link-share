@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import clsx from "clsx";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+
 import { ReactComponent as DefaultPersonIcon } from "../../assets/default-person.svg";
 import { ReactComponent as OptionsIcon } from "../../assets/options.svg";
 import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
@@ -13,6 +15,10 @@ import "../../styles/LinkCard.scss";
 const LinkCard = ({ imgSrc }) => {
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
+  const ref = useRef();
+  const [isTabOpen, setTabOpen] = useState(false);
+  useOnClickOutside(ref, () => setTabOpen(false));
+
   return (
     <div className="post__container">
       {imageLoading && <LinkCardLoader />}
@@ -33,11 +39,26 @@ const LinkCard = ({ imgSrc }) => {
                   </span>
                 </div>
               </div>
-              <div>
+              <div className="options">
                 <OptionsIcon
                   title="Options Icon"
-                  className="post-preview__details__top__options"
+                  className="options__icon"
+                  onClick={() => setTabOpen(!isTabOpen)}
                 />
+                <div className={clsx({ options__panel: true, hide: !isTabOpen })} >
+                  <ul className="options__panel__list">
+                    <li className="options__panel__list__item">
+                      <p className="options__panel__list__item__text">
+                        First Item
+                      </p>
+                    </li>
+                    <li className="options__panel__list__item">
+                      <p className="options__panel__list__item__text">
+                        Second Item
+                      </p>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           }

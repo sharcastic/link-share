@@ -47,9 +47,7 @@ const PlaygroundPage = () => {
               onClick={() => setTabOpen(!isTabOpen)}
             />
             <span className="notifications__unreadIndicator" />
-            <div
-              className={clsx({ notifications__panel: true, hide: !isTabOpen })}
-            >
+            <div className={clsx({ notifications__panel: true, hide: !isTabOpen })} >
               <div className="notifications__panel__header">
                 <Button type="plain">View All</Button>
                 <span>Updates</span>
