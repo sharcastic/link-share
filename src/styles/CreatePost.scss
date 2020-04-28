@@ -24,7 +24,7 @@
     }
     & .createPost__post-info {
       .textarea-container {
-        padding: 1rem 0.5rem;
+        padding: 1rem 0.75rem;
         background: $white;
         textarea {
           border: none;
@@ -50,6 +50,10 @@
         z-index: inherit;
         opacity: 1;
       }
+      .createPost__post-info {
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
       & .createPost__linkTextbox {
         z-index: inherit;
       }
@@ -71,7 +75,7 @@
     box-sizing: border-box;
     width: 100%;
     font-size: 1.25rem;
-    padding: 15px 12px;
+    padding: 15px 0.75rem;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     margin-bottom: 10px;
@@ -82,11 +86,12 @@
     margin-bottom: 10px;
     background: $white;
     .select {
-      margin-top: 10px;
+      margin: 10px 0.75rem;
     }
     .selected-users {
       display: flex;
       flex-wrap: wrap;
+      padding: 0 0.75rem;
       .pill-label {
         margin-right: 5px;
         .person-icon {

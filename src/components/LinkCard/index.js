@@ -106,7 +106,7 @@ const LinkCard = ({ imgSrc }) => {
               <div className="post__bottom__IconRow__left__friends">
                 <div className="post__bottom__IconRow__left__friends__iconContainer">
                   <DefaultPersonIcon />
-                  {/* <DefaultPersonIcon /> */}
+                  <DefaultPersonIcon />
                 </div>
                 <span className="post__bottom__IconRow__left__friends_number">
                   1

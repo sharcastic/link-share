@@ -5,6 +5,9 @@ import "../../styles/Playground.scss";
 import { useAuth0 } from "../../utils/Auth0";
 import { ReactComponent as NotificationIcon } from "../../assets/notifications.svg";
 import { ReactComponent as LogoIcon } from "../../assets/logo-mobile.svg";
+import { ReactComponent as PreferencesIcon } from "../../assets/preferences.svg";
+import { ReactComponent as TorchIcon } from "../../assets/torch.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/logout.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import LinkCard from "../../components/LinkCard";
@@ -14,9 +17,12 @@ import CreatePost from "../../components/CreatePost";
 
 const PlaygroundPage = () => {
   const { user = {} } = useAuth0();
-  const ref = useRef();
-  const [isTabOpen, setTabOpen] = useState(false);
-  useOnClickOutside(ref, () => setTabOpen(false));
+  const refNoti = useRef();
+  const refProfile = useRef();
+  const [isNotiOpen, setNotiOpen] = useState(false);
+  useOnClickOutside(refNoti, () => setNotiOpen(false));
+  const [isProfileOpen, setProfileOpen] = useState(false);
+  useOnClickOutside(refProfile, () => setProfileOpen(false));
 
   /* useEffect(() => {
     const fn = async () => {
@@ -39,21 +45,21 @@ const PlaygroundPage = () => {
           <h2 className="header-title">Playground</h2>
         </div>
         <div className="header-right">
-          <div className="notifications" ref={ref}>
+          <div className="notifications" ref={refNoti}>
             <IconButton
               Icon={NotificationIcon}
               title="Notifications"
               className="notifications__button"
-              onClick={() => setTabOpen(!isTabOpen)}
+              onClick={() => setNotiOpen(!isNotiOpen)}
             />
             <span className="notifications__unreadIndicator" />
-            <div className={clsx({ notifications__panel: true, hide: !isTabOpen })} >
+            <div className={clsx({ notifications__panel: true, hide: !isNotiOpen })} >
               <div className="notifications__panel__header">
-                <Button type="plain">View All</Button>
+                <Button type="plain" onClick={() => setNotiOpen(!isNotiOpen)}>View All</Button>
                 <span>Updates</span>
               </div>
               <ul className="notifications__panel__list">
-                <li className="notifications__panel__list__item">
+                <li className="notifications__panel__list__item" onClick={() => setNotiOpen(!isNotiOpen)}>
                   <p className="notifications__panel__list__item__text">
                     First Item
                   </p>
@@ -69,7 +75,7 @@ const PlaygroundPage = () => {
                     </Button>
                   </div>
                 </li>
-                <li className="notifications__panel__list__item">
+                <li className="notifications__panel__list__item" onClick={() => setNotiOpen(!isNotiOpen)}>
                   <p className="notifications__panel__list__item__text">
                     Second Item
                   </p>
@@ -85,8 +91,38 @@ const PlaygroundPage = () => {
               </ul>
             </div>
           </div>
-          <button className="profile-button">
-            <img src={user.picture} alt="Profile Button" />
+          <button className="profile" ref={refProfile}>
+            <img 
+              src={user.picture} 
+              alt="Profile Button" 
+              onClick={() => setProfileOpen(!isProfileOpen)}
+            />
+            
+            <div className={clsx({ profile__panel: true, hide: !isProfileOpen })} >
+            <div className="profile__panel__header">
+                <span>@username</span>
+              </div>
+                  <ul className="profile__panel__list">
+                    <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
+                      <button className="profile__panel__list__item__text">
+                      <span> <PreferencesIcon/> </span>
+                        Preferences
+                      </button>
+                    </li>
+                    <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
+                      <button className="profile__panel__list__item__text">
+                        <span> <TorchIcon/> </span>
+                        Dark Mode
+                      </button>
+                    </li>
+                    <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
+                      <button className="profile__panel__list__item__text">
+                      <span> <LogoutIcon/> </span>
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
           </button>
         </div>
       </header>

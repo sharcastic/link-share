@@ -5,10 +5,11 @@
   header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     .header-title {
       margin: 0;
       color: $blue;
-      font-family: "Goldplay-Bold";
+      font-family: "Goldplay-Semibold";
       font-size: 2rem;
     }
     .header-left {
@@ -36,8 +37,8 @@
         padding: 0 10px;
         z-index: 3;
         svg {
-          height: 25px;
-          width: 25px;
+          height: 26px;
+          width: 26px;
         }
         @media screen and (orientation: landscape) {
           margin-right: 20px;
@@ -105,6 +106,7 @@
             padding: 10px;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
             &__text {
             }
             &__buttonSection {
@@ -128,27 +130,122 @@
         }
       }
     }
-    .profile-button {
+    .profile {
       background-color: transparent;
       outline: none;
       border: none;
       cursor: pointer;
       padding: 0;
+      position: relative;
+      display: flex;
       img {
-        height: 25px;
-        width: 25px;
+        height: 26px;
+        width: 26px;
         border-radius: 25px;
+        z-index: 4;
         @media screen and (orientation: landscape) {
           height: 35px;
           width: 35px;
           border-radius: 35px;
         }
       }
+      &__panel {
+        position: absolute;
+        background-color: $white;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        // width: 120px;
+        right: -5px;
+        z-index: 3;
+        top: -5px;
+        max-height: 300px;
+        border-radius: 5px;
+        color: $text-dark;
+        @media screen and (orientation: landscape) {
+          width: 150px;
+        }
+
+        &.hide {
+          display: none;
+        }
+
+        &__header {
+          padding: 10px 10px 20px;
+          display: flex;
+          justify-content: space-between;
+          @media screen and (orientation: landscape) {
+            padding: 15px;
+            padding-top: 18px;
+          }
+          & span:last-of-type {
+            margin-right: 40px;
+            @media screen and (orientation: landscape) {
+              margin-right: 55px;
+            }
+          }
+        }
+
+        &__list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          // background-color: $grey;
+          // border-radius: 5px;
+
+          &__item {
+            height: fit-content;
+            // border-top: 1px solid #dadbdd;
+            padding: 7px 10px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+
+            &__text {
+              border: none;
+              padding: 0;
+              background: none;
+              text-align: left;
+              span {
+                // background: $greygrey;
+                width: 18px;
+                height: 18px;
+                border-radius: 20px;
+                display: inline-block;
+                margin-right: 3px;
+                padding: 3px;
+                svg {
+                  height: 12px;
+                  width: 12px;
+                }
+              }
+            }
+
+            &__buttonSection {
+              align-self: flex-end;
+              padding-top: 5px;
+              padding-right: 5px;
+
+              &__button {
+                &--mark {}
+
+                &--accept {
+                  margin-left: 10px;
+                  padding: 5px 10px;
+                  border-radius: 5px;
+                }
+
+                &--ignore {
+                  color: $red;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
   main {
-    margin: 50px 0 100px 0;
+    margin: 30px 0 15vh 0;
     @media screen and (orientation: landscape) {
       margin: 50px 0 0 0;
       display: grid;
