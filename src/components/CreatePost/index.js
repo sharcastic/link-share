@@ -13,6 +13,7 @@ import PostPreview from "../PostPreview";
 import TextArea from "../TextArea";
 import Select from "../Select";
 import PillLabel from "../PillLabel";
+import logo from "../../assets/logo.svg";
 
 import "../../styles/CreatePost.scss";
 
@@ -37,13 +38,13 @@ const CreatePost = ({ specialBehaviour }) => {
   }, [linkText]);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
-    const url = text ? text : linkText;
-    const response = await callServerless([url]);
-    if (response) {
-      setPreview(response[url]);
-    } else {
-      setPreview({});
-    }
+    // const url = text ? text : linkText;
+    // const response = await callServerless([url]);
+    // if (response) {
+    //   setPreview(response[url]);
+    // } else {
+    //   setPreview({});
+    // }
   };
   const onBlur = () => getPreviewDetails();
   const onLinkTextChange = text => setLinkText(text);
@@ -72,7 +73,7 @@ const CreatePost = ({ specialBehaviour }) => {
             <PostPreview preview={preview} />
           ) : (
             <div className="createPost__post-info__previewLoading">
-              Preview loading!
+                <img src={logo} className="App-logo" alt="logo" />
             </div>
           )}
           <TextArea value={description} onChange={onDescriptionChange} />
@@ -99,6 +100,7 @@ const CreatePost = ({ specialBehaviour }) => {
             onChange={onSelectedUserChange}
             menuPlacement="top"
             value={selectedUsers}
+            placeholder="This does not work"
           />
         </div>
       )}

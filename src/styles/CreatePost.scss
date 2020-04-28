@@ -24,7 +24,23 @@
     }
     & .createPost__post-info {
       .textarea-container {
-        margin-top: 10px;
+        padding: 1rem 0.5rem;
+        background: $white;
+        textarea {
+          border: none;
+          font-size: 1.5rem;
+          line-height: 2rem;
+          color: $blue;
+          font-family: Goldplay-Medium;
+          &::placeholder {
+            color: $light-grey;
+            font-size: 1.5rem;
+            font-family: Goldplay-Regular;
+          }
+        }
+        .character-count {
+          color: $light-grey;
+        }
       }
     }
     &--showPanel {
@@ -62,7 +78,9 @@
   }
   &__post-info {
     position: relative;
+    padding-bottom: 10px;
     margin-bottom: 10px;
+    background: $white;
     .select {
       margin-top: 10px;
     }
@@ -78,22 +96,30 @@
     }
     &__previewLoading {
       z-index: inherit;
+      background: #233767;
+      height: 150px;
+      width: 100%;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   &__bottom {
     position: relative;
     height: 60px;
-    padding: 10px 15px;
+    padding: 10px 0px;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
 
     .button {
-      padding: 10px;
+      padding: 10px 15px;
+      font-family: Goldplay-Semibold;
     }
     .button--plain {
-      margin-right: 25px;
+      margin-right: 10px;
       color: $red;
     }
   }

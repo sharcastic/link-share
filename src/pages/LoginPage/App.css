@@ -9,14 +9,14 @@
 }
 
 .App-logo {
-  height: 20vmin;
+  height: 15vmin;
   pointer-events: none;
-  margin-bottom: 10vh;
+  /* margin-bottom: 10vh; */
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 10s backwards;
   }
 }
 
@@ -51,6 +51,6 @@
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(1800deg);
   }
 }

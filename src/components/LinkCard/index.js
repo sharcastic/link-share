@@ -10,6 +10,9 @@ import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
 import { ReactComponent as CopyIcon } from "../../assets/copy.svg";
 import { ReactComponent as CommentIcon } from "../../assets/comment.svg";
 import { ReactComponent as TagIcon } from "../../assets/tag.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/delete.svg";
+import { ReactComponent as EditIcon } from "../../assets/edit.svg";
+import { ReactComponent as ShareIcon } from "../../assets/share.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({ imgSrc }) => {
@@ -48,14 +51,22 @@ const LinkCard = ({ imgSrc }) => {
                 <div className={clsx({ options__panel: true, hide: !isTabOpen })} >
                   <ul className="options__panel__list">
                     <li className="options__panel__list__item">
-                      <p className="options__panel__list__item__text">
-                        First Item
-                      </p>
+                      <button className="options__panel__list__item__text">
+                      <span> <ShareIcon/> </span>
+                        Share Post
+                      </button>
                     </li>
                     <li className="options__panel__list__item">
-                      <p className="options__panel__list__item__text">
-                        Second Item
-                      </p>
+                      <button className="options__panel__list__item__text">
+                        <span> <EditIcon/> </span>
+                        Edit Post
+                      </button>
+                    </li>
+                    <li className="options__panel__list__item">
+                      <button className="options__panel__list__item__text">
+                      <span> <DeleteIcon/> </span>
+                        Delete Post
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -95,7 +106,7 @@ const LinkCard = ({ imgSrc }) => {
               <div className="post__bottom__IconRow__left__friends">
                 <div className="post__bottom__IconRow__left__friends__iconContainer">
                   <DefaultPersonIcon />
-                  <DefaultPersonIcon />
+                  {/* <DefaultPersonIcon /> */}
                 </div>
                 <span className="post__bottom__IconRow__left__friends_number">
                   1

@@ -34,11 +34,11 @@
         }
 
         &__text {
-          font-size: 0.85rem;
+          font-size: 1rem;
           overflow: hidden;
           white-space: nowrap;
           color: #27ae8e;
-          width: 73vw;
+          width: 70vw;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 1;
@@ -80,26 +80,25 @@
       }
 
       &__left__friends__iconContainer {
-        margin-right: 12px;
+        margin-right: 8px;
         position: relative;
 
         svg {
-          width: 20px;
-          height: 20px;
-
-          &:last-of-type {
-            position: absolute;
-            top: 0;
-            left: 8px;
-            z-index: 2;
-          }
+          width: 22px;
+          height: 22px;
+          // &:last-of-type {
+          //   position: absolute;
+          //   top: 0;
+          //   left: 10px;
+          //   z-index: 2;
+          // }
         }
       }
 
       &__left__comments_icon,
       &__right__tags_icon {
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         cursor: pointer;
         margin-right: 4px;
       }
@@ -107,7 +106,8 @@
       &__left__comments_number,
       &__left__friends_number,
       &__right__tags_number {
-        font-size: 0.8rem;
+        font-size: 1rem;
+        font-family: Goldplay-Semibold;
         color: $blue;
       }
 
@@ -159,7 +159,7 @@
         position: absolute;
         background-color: $white;
         box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-        width: 130px;
+        width: 120px;
         right: 0;
         z-index: 2;
         top: 0px;
@@ -184,11 +184,29 @@
           &__item {
             height: fit-content;
             // border-top: 1px solid #dadbdd;
-            padding: 10px;
+            padding: 7px 10px;
             display: flex;
             flex-direction: column;
 
-            &__text {}
+            &__text {
+              border: none;
+              padding: 0;
+              background: none;
+              text-align: left;
+              span {
+                // background: $greygrey;
+                width: 18px;
+                height: 18px;
+                border-radius: 20px;
+                display: inline-block;
+                margin-right: 3px;
+                padding: 3px;
+                svg {
+                  height: 12px;
+                  width: 12px;
+                }
+              }
+            }
 
             &__buttonSection {
               align-self: flex-end;
