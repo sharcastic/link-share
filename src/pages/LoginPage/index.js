@@ -2,7 +2,6 @@ import React from "react";
 import Lottie from 'react-lottie';
 import { useAuth0 } from "../../utils/Auth0";
 
-import logo from "../../assets/icons/logo.svg";
 import animationData from '../../assets/anim/launch.json'
 
 import "../../styles/Launch.scss";

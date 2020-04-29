@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import clsx from "clsx";
 
 import "../../styles/Playground.scss";
@@ -14,29 +14,24 @@ import LinkCard from "../../components/LinkCard";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
 import CreatePost from "../../components/CreatePost";
-import ThemeSwitcher from "../../components/ThemeSwitcher"
+
+import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
 const PlaygroundPage = () => {
+  const { darkTheme, toggleDarkTheme } = useContext(ApplicationContext);
   const { user = {}, logoutUser } = useAuth0();
   const refNoti = useRef();
   const refProfile = useRef();
   const [isNotiOpen, setNotiOpen] = useState(false);
+  const toggleNotificationsOpen = () => setNotiOpen(!isNotiOpen);
   useOnClickOutside(refNoti, () => setNotiOpen(false));
   const [isProfileOpen, setProfileOpen] = useState(false);
+  const toggleProfileOpen = () => setProfileOpen(!isProfileOpen);
   useOnClickOutside(refProfile, () => setProfileOpen(false));
-
-  /* useEffect(() => {
-    const fn = async () => {
-      const response = await callServerless([
-        "not a url",
-        "https://css-tricks.com/piecing-together-approaches-for-a-css-masonry-layout/",
-        "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
-        "https://medium.com/@codebyamir/a-web-developers-guide-to-browser-caching-cc41f3b73e7c"
-      ]);
-      console.log("RESPONSE IN USEEFFECT", response);
-    };
-    fn();
-  }, []); */
+  const toggleThemes = () => {
+    toggleDarkTheme();
+    toggleProfileOpen();
+  };
 
   return (
     <div className="playground-page">
@@ -51,16 +46,26 @@ const PlaygroundPage = () => {
               Icon={NotificationIcon}
               title="Notifications"
               className="notifications__button"
-              onClick={() => setNotiOpen(!isNotiOpen)}
+              onClick={toggleNotificationsOpen}
             />
             <span className="notifications__unreadIndicator" />
-            <div className={clsx({ notifications__panel: true, hide: !isNotiOpen })} >
+            <div
+              className={clsx({
+                notifications__panel: true,
+                hide: !isNotiOpen
+              })}
+            >
               <div className="notifications__panel__header">
-                <Button type="plain" onClick={() => setNotiOpen(!isNotiOpen)}>View All</Button>
+                <Button type="plain" onClick={toggleNotificationsOpen}>
+                  View All
+                </Button>
                 <span>Updates</span>
               </div>
               <ul className="notifications__panel__list">
-                <li className="notifications__panel__list__item" onClick={() => setNotiOpen(!isNotiOpen)}>
+                <li
+                  className="notifications__panel__list__item"
+                  onClick={toggleNotificationsOpen}
+                >
                   <p className="notifications__panel__list__item__text">
                     First Item
                   </p>
@@ -76,7 +81,10 @@ const PlaygroundPage = () => {
                     </Button>
                   </div>
                 </li>
-                <li className="notifications__panel__list__item" onClick={() => setNotiOpen(!isNotiOpen)}>
+                <li
+                  className="notifications__panel__list__item"
+                  onClick={toggleNotificationsOpen}
+                >
                   <p className="notifications__panel__list__item__text">
                     Second Item
                   </p>
@@ -92,39 +100,47 @@ const PlaygroundPage = () => {
               </ul>
             </div>
           </div>
-          <button className="profile" ref={refProfile}>
-            <img 
-              src={user.picture} 
-              alt="Profile Button" 
-              onClick={() => setProfileOpen(!isProfileOpen)}
+          <div className="profile" ref={refProfile}>
+            <img
+              src={user.picture}
+              alt="Profile Button"
+              onClick={toggleProfileOpen}
             />
-            
-            <div className={clsx({ profile__panel: true, hide: !isProfileOpen })} >
-            <div className="profile__panel__header">
+
+            <div
+              className={clsx({ profile__panel: true, hide: !isProfileOpen })}
+            >
+              <div className="profile__panel__header">
                 <span>@username</span>
               </div>
-                  <ul className="profile__panel__list">
-                    <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
-                      <button className="profile__panel__list__item__text">
-                      <span> <PreferencesIcon/> </span>
-                        Preferences
-                      </button>
-                    </li>
-                    <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
-                      <button className="profile__panel__list__item__text">
-                        <span> <TorchIcon/> </span>
-                        <ThemeSwitcher/>
-                      </button>
-                    </li>
-                    <li className="profile__panel__list__item" onClick={logoutUser}>
-                      <button className="profile__panel__list__item__text">
-                      <span> <LogoutIcon/> </span>
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-          </button>
+              <ul className="profile__panel__list">
+                <li
+                  className="profile__panel__list__item"
+                  onClick={toggleProfileOpen}
+                >
+                  <button>
+                    <PreferencesIcon />
+                    Preferences
+                  </button>
+                </li>
+                <li
+                  className="profile__panel__list__item"
+                  onClick={toggleThemes}
+                >
+                  <button>
+                    <TorchIcon />
+                    <p>{darkTheme ? "Light Mode" : "Dark Mode"}</p>
+                  </button>
+                </li>
+                <li className="profile__panel__list__item" onClick={logoutUser}>
+                  <button>
+                    <LogoutIcon />
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </header>
       <main>

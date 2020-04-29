@@ -205,18 +205,17 @@
             flex-direction: column;
             cursor: pointer;
 
-            &__text {
+            button {
               border: none;
               padding: 0;
               background: none;
               text-align: left;
               display: flex;
               @include theme-aware('color', 'text1');
-              span {
+              svg {
                 // background: $greygrey;
                 width: 18px;
                 height: 18px;
-                border-radius: 20px;
                 display: inline-block;
                 margin-right: 3px;
                 padding: 3px;

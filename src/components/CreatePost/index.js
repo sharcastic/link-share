@@ -38,13 +38,13 @@ const CreatePost = ({ specialBehaviour }) => {
   }, [linkText]);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
-    // const url = text ? text : linkText;
-    // const response = await callServerless([url]);
-    // if (response) {
-    //   setPreview(response[url]);
-    // } else {
-    //   setPreview({});
-    // }
+    const url = text ? text : linkText;
+    const response = await callServerless([url]);
+    if (response) {
+      setPreview(response[url]);
+    } else {
+      setPreview({});
+    }
   };
   const onBlur = () => getPreviewDetails();
   const onLinkTextChange = text => setLinkText(text);

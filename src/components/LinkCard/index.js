@@ -21,14 +21,15 @@ const LinkCard = ({ imgSrc }) => {
   const ref = useRef();
   const [isTabOpen, setTabOpen] = useState(false);
   useOnClickOutside(ref, () => setTabOpen(false));
-  const postTabref = useRef();
-  const [isPostCommentsOpen, setPostCommentsOpen] = useState(false);
-  const [isPostPeopleOpen, setPostPeopleOpen] = useState(false);
-  const [isPostTagsOpen, setPostTagsOpen] = useState(false);
-  useOnClickOutside(postTabref, () => setPostCommentsOpen(false));
-  useOnClickOutside(postTabref, () => setPostPeopleOpen(false)); 
-  useOnClickOutside(postTabref, () => setPostTagsOpen(false));
-  
+  const [extraPanelSelected, setExtraPanel] = useState();
+  const toggleExtraPanel = panel => () => {
+    if (extraPanelSelected === panel) {
+      setExtraPanel();
+    } else {
+      setExtraPanel(panel);
+    }
+  };
+
   return (
     <div className="post__container">
       {imageLoading && <LinkCardLoader />}
@@ -55,23 +56,31 @@ const LinkCard = ({ imgSrc }) => {
                   className="options__icon"
                   onClick={() => setTabOpen(!isTabOpen)}
                 />
-                <div className={clsx({ options__panel: true, hide: !isTabOpen })} >
+                <div
+                  className={clsx({ options__panel: true, hide: !isTabOpen })}
+                >
                   <ul className="options__panel__list">
                     <li className="options__panel__list__item">
                       <button className="options__panel__list__item__text">
-                      <span> <ShareIcon/> </span>
+                        <span>
+                          <ShareIcon />
+                        </span>
                         Share Post
                       </button>
                     </li>
                     <li className="options__panel__list__item">
                       <button className="options__panel__list__item__text">
-                        <span> <EditIcon/> </span>
+                        <span>
+                          <EditIcon />
+                        </span>
                         Edit Post
                       </button>
                     </li>
                     <li className="options__panel__list__item">
                       <button className="options__panel__list__item__text">
-                      <span> <DeleteIcon/> </span>
+                        <span>
+                          <DeleteIcon />
+                        </span>
                         Delete Post
                       </button>
                     </li>
@@ -101,8 +110,13 @@ const LinkCard = ({ imgSrc }) => {
           </div>
           <div className="post__bottom__IconRow">
             <div className="post__bottom__IconRow__left">
-              <div className={clsx({ post__bottom__IconRow__left__comments: true, active: isPostCommentsOpen })}
-                onClick={() => setPostCommentsOpen(!isPostCommentsOpen)}>
+              <div
+                className={clsx({
+                  post__bottom__IconRow__left__comments: true,
+                  active: extraPanelSelected === "comments"
+                })}
+                onClick={toggleExtraPanel("comments")}
+              >
                 <CommentIcon
                   title="Comment Icon"
                   className="post__bottom__IconRow__left__comments_icon"
@@ -111,8 +125,13 @@ const LinkCard = ({ imgSrc }) => {
                   5
                 </span>
               </div>
-              <div className={clsx({ post__bottom__IconRow__left__friends: true, active: isPostPeopleOpen })}
-                onClick={() => setPostPeopleOpen(!isPostPeopleOpen)}>
+              <div
+                className={clsx({
+                  post__bottom__IconRow__left__friends: true,
+                  active: extraPanelSelected === "friends"
+                })}
+                onClick={toggleExtraPanel("friends")}
+              >
                 <div className="post__bottom__IconRow__left__friends__iconContainer">
                   <DefaultPersonIcon />
                   <DefaultPersonIcon />
@@ -123,8 +142,13 @@ const LinkCard = ({ imgSrc }) => {
               </div>
             </div>
             <div className="post__bottom__IconRow__right">
-              <div className={clsx({ post__bottom__IconRow__right__tags: true, active: isPostTagsOpen })}
-                onClick={() => setPostTagsOpen(!isPostTagsOpen)}>
+              <div
+                className={clsx({
+                  post__bottom__IconRow__right__tags: true,
+                  active: extraPanelSelected === "tags"
+                })}
+                onClick={toggleExtraPanel("tags")}
+              >
                 <TagIcon
                   className="post__bottom__IconRow__right__tags_icon"
                   title="Tag Icon"
@@ -134,17 +158,17 @@ const LinkCard = ({ imgSrc }) => {
                 </span>
               </div>
             </div>
-
           </div>
         </div>
-        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostCommentsOpen })}>
-              Comments Tab
-        </div>
-        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostPeopleOpen })}>
-              Users tagged Tab
-        </div>
-        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostTagsOpen })}>
-              Content tags Tab
+        <div
+          className={clsx({
+            post__bottom__tabarea: true,
+            hide: !extraPanelSelected
+          })}
+        >
+          {extraPanelSelected === "comments" && "Comments Tab"}
+          {extraPanelSelected === "friends" && "Friends Tab"}
+          {extraPanelSelected === "tags" && "Tags Tab"}
         </div>
       </div>
     </div>

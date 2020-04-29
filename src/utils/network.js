@@ -1,5 +1,3 @@
-import { isLinkRegex } from "../constants";
-
 const cache = {};
 
 export const callServerless = async arrayOfURLs => {
@@ -7,13 +5,14 @@ export const callServerless = async arrayOfURLs => {
   const invalidURLs = [];
   const cachedURLs = [];
   arrayOfURLs.forEach(url => {
-    if (isLinkRegex.test(url)) {
+    try {
+      new URL(url);
       if (cache[url]) {
         cachedURLs.push(url);
       } else {
         validURLs.add(url);
       }
-    } else {
+    } catch {
       invalidURLs.push(url);
     }
   });
