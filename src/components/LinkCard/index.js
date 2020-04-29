@@ -112,7 +112,7 @@ const LinkCard = ({ imgSrc }) => {
                 </span>
               </div>
               <div className={clsx({ post__bottom__IconRow__left__friends: true, active: isPostPeopleOpen })}
-                onClick={() => setPostPeopleOpen(!isPostPeopleOpen)}>>
+                onClick={() => setPostPeopleOpen(!isPostPeopleOpen)}>
                 <div className="post__bottom__IconRow__left__friends__iconContainer">
                   <DefaultPersonIcon />
                   <DefaultPersonIcon />
@@ -124,7 +124,7 @@ const LinkCard = ({ imgSrc }) => {
             </div>
             <div className="post__bottom__IconRow__right">
               <div className={clsx({ post__bottom__IconRow__right__tags: true, active: isPostTagsOpen })}
-                onClick={() => setPostTagsOpen(!isPostTagsOpen)}>>
+                onClick={() => setPostTagsOpen(!isPostTagsOpen)}>
                 <TagIcon
                   className="post__bottom__IconRow__right__tags_icon"
                   title="Tag Icon"

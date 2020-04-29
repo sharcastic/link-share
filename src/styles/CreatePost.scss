@@ -114,6 +114,24 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      
+      @media (prefers-reduced-motion: no-preference) {
+        .App-logo {
+          height: 10vmin;
+          pointer-events: none;
+          animation: Loader-spin 2s cubic-bezier(.79,.14,.15,.86) infinite;
+        }
+      }
+      @keyframes Loader-spin {
+        from {
+            // opacity: 0.75;
+            transform: rotate(0deg)
+        }
+        to {
+            // opacity: 1;
+            transform: rotate(360deg)
+        }
+      }
     }
   }
   &__bottom {

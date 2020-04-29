@@ -17,7 +17,7 @@ import CreatePost from "../../components/CreatePost";
 import ThemeSwitcher from "../../components/ThemeSwitcher"
 
 const PlaygroundPage = () => {
-  const { user = {} } = useAuth0();
+  const { user = {}, logoutUser } = useAuth0();
   const refNoti = useRef();
   const refProfile = useRef();
   const [isNotiOpen, setNotiOpen] = useState(false);
@@ -116,7 +116,7 @@ const PlaygroundPage = () => {
                         <ThemeSwitcher/>
                       </button>
                     </li>
-                    <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
+                    <li className="profile__panel__list__item" onClick={logoutUser}>
                       <button className="profile__panel__list__item__text">
                       <span> <LogoutIcon/> </span>
                         Logout

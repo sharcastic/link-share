@@ -15,15 +15,6 @@
         justify-content: center;
         font-size: calc(10px + 2vmin);
         color: transparent;
-        .App-logo {
-            height: 15vmin;
-            pointer-events: none;
-            /* margin-bottom: 10vh; */
-          }
-          
-          .login-btn {
-            
-          }
       }
   }
   @keyframes Login-slide {
@@ -51,10 +42,6 @@
         cursor: pointer;
         position: relative;
         box-shadow: 0px 5px #146854;
-        animation-duration: 2s;
-        animation-name: Login-slide;
-        animation-delay: 3s;
-        animation-iteration-count: 1;
-        animation-timing-function: ease-in-out;
+        animation: Login-slide 2s ease-in-out 3s 1;
     }
   }
