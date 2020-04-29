@@ -4,77 +4,106 @@
   &.hide {
     display: none;
   }
-  border-radius: 5px;
+
 
   &__container {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    // background: white;
+    @include theme-aware('background', 'cardBg');
+    margin-bottom: 15px;
+    border-radius: 5px;
+
     @media screen and (orientation: landscape) {
       margin-bottom: 0;
     }
   }
+
   &__bottom {
-    padding: 12px 12px 15px 12px;
+    padding: 12px 12px 5px 12px;
+
     &__info {
       font-family: "Goldplay-Medium";
+
       &__url {
         display: flex;
         justify-content: space-between;
+
         &__httpsIcon {
           fill: $turquoise;
           width: 14px;
           height: 14px;
         }
+
         &__text {
-          font-size: 0.85rem;
-          overflow: scroll;
+          font-size: 1rem;
+          overflow: hidden;
           white-space: nowrap;
           color: #27ae8e;
-          width: 73vw;
+          width: 70vw;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 1;
           padding-bottom: 10px;
           margin-bottom: 10px;
+
           &::-webkit-scrollbar {
             display: none;
           }
         }
+
         &__copyIcon {
           width: 20px;
           height: 20px;
           cursor: pointer;
+          path {
+            @include theme-aware('fill', 'primary');
+          }
         }
       }
+
       &__description {
         font-size: 1.2rem;
+        @include theme-aware('color', 'text0');
       }
     }
+
     &__IconRow {
       margin-top: 15px;
       display: flex;
       justify-content: space-between;
+
       &__left,
       &__right {
         display: flex;
       }
+
       &__right__tags,
       &__left__comments,
       &__left__friends {
         display: flex;
         align-items: center;
+        padding-bottom: 5px;
+        border-bottom: 3px solid transparent;
+        &.active {
+          border-bottom: 3px solid;
+          @include theme-aware('border-color', 'secondary');
+        }
       }
+
       &__left__friends__iconContainer {
-        margin-right: 12px;
+        margin-right: 15px;
         position: relative;
+
         svg {
-          width: 20px;
-          height: 20px;
+          width: 21px;
+          height: 21px;
           &:last-of-type {
             position: absolute;
             top: 0;
-            left: 8px;
+            left: 10px;
             z-index: 2;
+            width: 22px;
+            height: 22px;
           }
         }
       }
@@ -84,46 +113,160 @@
         height: 20px;
         cursor: pointer;
         margin-right: 4px;
+        @include theme-aware('fill', 'primary');
       }
+
       &__left__comments_number,
       &__left__friends_number,
       &__right__tags_number {
-        font-size: 0.8rem;
-        color: $blue;
+        font-size: 1rem;
+        font-family: Goldplay-Semibold;
+        // color: $blue;
+        @include theme-aware('color', 'primary');
       }
+
       &__left__comments {
         margin-right: 30px;
       }
     }
+
+    &__tabarea {
+      display: flex;
+      position: relative;
+      height: 150px;
+      // transform: translateY(0);
+      opacity: 1;
+      z-index: 0;
+      @include theme-aware('color', 'bg');
+      @include theme-aware('background', 'primary');
+      transition: all 0.3s ease-in;
+      &.hide {
+        opacity: 0;
+        z-index: -1;
+        height: 0;
+        position: absolute;
+        // transform: translateY(-200px);
+      }
+    }
   }
+
   &-preview__details__top {
     display: flex;
     justify-content: space-between;
     padding: 10px 10px 0 10px;
+
     &__creationDetails {
       display: flex;
       align-items: center;
+
       &__authorIcon {
         height: 24px;
         width: 24px;
         margin-right: 8px;
-        fill: $white;
+        // fill: $white;
+        @include theme-aware('fill', 'primary');
       }
+
       &__text {
         display: flex;
         flex-direction: column;
         font-size: 0.67rem;
+
         &__authorName {
           font-family: "Goldplay-Semibold";
         }
-        &__timeCreated {
+
+        &__timeCreated {}
+      }
+    }
+
+    .options {
+      display: flex;
+      position: relative;
+      &__icon {
+        height: 24px;
+        width: 24px;
+        fill: $white;
+        cursor: pointer;
+      }
+      &__panel {
+        position: absolute;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        width: 120px;
+        right: 0;
+        z-index: 2;
+        top: 0px;
+        max-height: 300px;
+        border-radius: 5px;
+        @media screen and (orientation: landscape) {
+          width: 150px;
+        }
+
+        &.hide {
+          display: none;
+        }
+
+        &__list {
+          list-style: none;
+          padding: 0;
+          margin: 0;      
+          @include theme-aware('background', 'bg');
+          border-radius: 5px;
+
+          &__item {
+            height: fit-content;
+            // border-top: 1px solid #dadbdd;
+            padding: 7px 10px;
+            display: flex;
+            flex-direction: column;
+
+            &__text {
+              border: none;
+              padding: 0;
+              background: none;
+              text-align: left;
+              @include theme-aware('color', 'text1');
+              span {
+                // background: $greygrey;
+                width: 18px;
+                height: 18px;
+                border-radius: 20px;
+                display: inline-block;
+                margin-right: 3px;
+                padding: 3px;
+                svg {
+                  height: 12px;
+                  width: 12px;
+                  path {
+                    @include theme-aware('fill', 'primary');
+                  }
+                }
+              }
+            }
+
+            &__buttonSection {
+              align-self: flex-end;
+              padding-top: 5px;
+              padding-right: 5px;
+
+              &__button {
+                &--mark {}
+
+                &--accept {
+                  margin-left: 10px;
+                  padding: 5px 10px;
+                  border-radius: 5px;
+                }
+
+                &--ignore {
+                  color: $red;
+                }
+              }
+            }
+          }
         }
       }
     }
-    &__options {
-      height: 24px;
-      width: 24px;
-      fill: $white;
-    }
   }
+
 }

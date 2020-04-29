@@ -1,7 +1,7 @@
 import React from "react";
 import { string, func, bool, node } from "prop-types";
 
-import { ReactComponent as CloseIcon } from "../../assets/close.svg";
+import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 
 import "../../styles/PillLabel.scss";
 

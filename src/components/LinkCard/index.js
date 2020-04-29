@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import clsx from "clsx";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
-import { ReactComponent as DefaultPersonIcon } from "../../assets/default-person.svg";
-import { ReactComponent as OptionsIcon } from "../../assets/options.svg";
-import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
-import { ReactComponent as CopyIcon } from "../../assets/copy.svg";
-import { ReactComponent as CommentIcon } from "../../assets/comment.svg";
-import { ReactComponent as TagIcon } from "../../assets/tag.svg";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+
+import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
+import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
+import { ReactComponent as HttpsIcon } from "../../assets/icons/https.svg";
+import { ReactComponent as CopyIcon } from "../../assets/icons/copy.svg";
+import { ReactComponent as CommentIcon } from "../../assets/icons/comment.svg";
+import { ReactComponent as TagIcon } from "../../assets/icons/tag.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
+import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
+import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({ imgSrc }) => {
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
+  const ref = useRef();
+  const [isTabOpen, setTabOpen] = useState(false);
+  useOnClickOutside(ref, () => setTabOpen(false));
+  const postTabref = useRef();
+  const [isPostCommentsOpen, setPostCommentsOpen] = useState(false);
+  const [isPostPeopleOpen, setPostPeopleOpen] = useState(false);
+  const [isPostTagsOpen, setPostTagsOpen] = useState(false);
+  useOnClickOutside(postTabref, () => setPostCommentsOpen(false));
+  useOnClickOutside(postTabref, () => setPostPeopleOpen(false)); 
+  useOnClickOutside(postTabref, () => setPostTagsOpen(false));
+  
   return (
     <div className="post__container">
       {imageLoading && <LinkCardLoader />}
@@ -33,11 +49,34 @@ const LinkCard = ({ imgSrc }) => {
                   </span>
                 </div>
               </div>
-              <div>
+              <div className="options">
                 <OptionsIcon
                   title="Options Icon"
-                  className="post-preview__details__top__options"
+                  className="options__icon"
+                  onClick={() => setTabOpen(!isTabOpen)}
                 />
+                <div className={clsx({ options__panel: true, hide: !isTabOpen })} >
+                  <ul className="options__panel__list">
+                    <li className="options__panel__list__item">
+                      <button className="options__panel__list__item__text">
+                      <span> <ShareIcon/> </span>
+                        Share Post
+                      </button>
+                    </li>
+                    <li className="options__panel__list__item">
+                      <button className="options__panel__list__item__text">
+                        <span> <EditIcon/> </span>
+                        Edit Post
+                      </button>
+                    </li>
+                    <li className="options__panel__list__item">
+                      <button className="options__panel__list__item__text">
+                      <span> <DeleteIcon/> </span>
+                        Delete Post
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           }
@@ -62,7 +101,8 @@ const LinkCard = ({ imgSrc }) => {
           </div>
           <div className="post__bottom__IconRow">
             <div className="post__bottom__IconRow__left">
-              <div className="post__bottom__IconRow__left__comments">
+              <div className={clsx({ post__bottom__IconRow__left__comments: true, active: isPostCommentsOpen })}
+                onClick={() => setPostCommentsOpen(!isPostCommentsOpen)}>
                 <CommentIcon
                   title="Comment Icon"
                   className="post__bottom__IconRow__left__comments_icon"
@@ -71,7 +111,8 @@ const LinkCard = ({ imgSrc }) => {
                   5
                 </span>
               </div>
-              <div className="post__bottom__IconRow__left__friends">
+              <div className={clsx({ post__bottom__IconRow__left__friends: true, active: isPostPeopleOpen })}
+                onClick={() => setPostPeopleOpen(!isPostPeopleOpen)}>
                 <div className="post__bottom__IconRow__left__friends__iconContainer">
                   <DefaultPersonIcon />
                   <DefaultPersonIcon />
@@ -82,7 +123,8 @@ const LinkCard = ({ imgSrc }) => {
               </div>
             </div>
             <div className="post__bottom__IconRow__right">
-              <div className="post__bottom__IconRow__right__tags">
+              <div className={clsx({ post__bottom__IconRow__right__tags: true, active: isPostTagsOpen })}
+                onClick={() => setPostTagsOpen(!isPostTagsOpen)}>
                 <TagIcon
                   className="post__bottom__IconRow__right__tags_icon"
                   title="Tag Icon"
@@ -92,7 +134,17 @@ const LinkCard = ({ imgSrc }) => {
                 </span>
               </div>
             </div>
+
           </div>
+        </div>
+        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostCommentsOpen })}>
+              Comments Tab
+        </div>
+        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostPeopleOpen })}>
+              Users tagged Tab
+        </div>
+        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostTagsOpen })}>
+              Content tags Tab
         </div>
       </div>
     </div>

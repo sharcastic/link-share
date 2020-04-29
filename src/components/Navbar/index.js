@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { ReactComponent as HomeIcon } from "../../assets/homeIcon.svg";
-import { ReactComponent as SearchIcon } from "../../assets/search.svg";
-import { ReactComponent as FriendsIcon } from "../../assets/friends.svg";
-import { ReactComponent as SiteLogo } from "../../assets/site-logo.svg";
+import { ReactComponent as HomeIcon } from "../../assets/icons/homeIcon.svg";
+import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
+import { ReactComponent as FriendsIcon } from "../../assets/icons/friends.svg";
+import { ReactComponent as SiteLogo } from "../../assets/icons/site-logo.svg";
 import "../../styles/Navbar.scss";
 
 const navItems = [
