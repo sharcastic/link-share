@@ -1,3 +1,4 @@
+// current - need to be refactored
 $blue: #233767;
 $turquoise: #27ae8e;
 $white: #ffffff;
@@ -6,3 +7,75 @@ $grey: #f1f3f5;
 $text-dark: #222222;
 $light-grey: #999999;
 $greygrey: #eeeeee;
+
+// // Light Mode
+// $light-primary: #233767;
+// $light-secondary: #27AE8E;
+// $light-accent: #FF7272;
+// $light-bg: #F1F3F5;
+// $light-cardBg: #ffffff;
+// $light-lines: #eeeeee;
+// $light-text1: #222222;
+// $light-text2: #555555;
+// $light-text3: #777777;
+
+// // Dark Mode
+// $dark-primary: #223050;
+// $dark-secondary: #27AE8E;
+// $dark-accent: #FF7272;
+// $dark-bg: #222C42 ;
+// $dark-cardBg: #313B52;
+// $dark-lines: #233767;
+// $dark-text1: #ffffff;
+// $dark-text2: #f8f8f8;
+// $dark-text3: #eeeeee;
+
+// // common
+// $placeholder: #999999;
+
+
+$themes: (
+    light: (
+        primary: #233767,
+        secondary: #27AE8E,
+        accent: #FF7272,
+        bg: #F1F3F5,
+        cardBg: #ffffff,
+        lines: #eeeeee,
+        text0: #233767,
+        text1: #222222,
+        text2: #555555,
+        text3: #777777,
+        placeholder: #999999
+    ),
+    dark: (
+        primary: #ffffff,
+        secondary: #27AE8E,
+        accent: #FF7272,
+        bg: #222C42,
+        cardBg: #313B52,
+        lines: #233767,
+        text0: #f1f3f5,
+        text1: #ffffff,
+        text2: #f8f8f8,
+        text3: #eeeeee,
+        placeholder: #999999
+    )
+);
+
+/**
+ * theme-aware - Change color of a css property based on the currently active theme
+ *
+ * @param  {key}     CSS property
+ * @param  {color}   Color name defined in the themes under _color-palette.scss
+ *
+ * @example - @include theme-aware('background', 'color-background');
+ * @returns - background: #FFF;
+ */
+ @mixin theme-aware($key, $color) {
+    @each $theme-name, $theme-color in $themes {
+        .theme-#{$theme-name} & {
+            #{$key}: map-get(map-get($themes, $theme-name), $color)
+        }
+    }
+}

@@ -21,7 +21,14 @@ const LinkCard = ({ imgSrc }) => {
   const ref = useRef();
   const [isTabOpen, setTabOpen] = useState(false);
   useOnClickOutside(ref, () => setTabOpen(false));
-
+  const postTabref = useRef();
+  const [isPostCommentsOpen, setPostCommentsOpen] = useState(false);
+  const [isPostPeopleOpen, setPostPeopleOpen] = useState(false);
+  const [isPostTagsOpen, setPostTagsOpen] = useState(false);
+  useOnClickOutside(postTabref, () => setPostCommentsOpen(false));
+  useOnClickOutside(postTabref, () => setPostPeopleOpen(false)); 
+  useOnClickOutside(postTabref, () => setPostTagsOpen(false));
+  
   return (
     <div className="post__container">
       {imageLoading && <LinkCardLoader />}
@@ -94,7 +101,8 @@ const LinkCard = ({ imgSrc }) => {
           </div>
           <div className="post__bottom__IconRow">
             <div className="post__bottom__IconRow__left">
-              <div className="post__bottom__IconRow__left__comments">
+              <div className={clsx({ post__bottom__IconRow__left__comments: true, active: isPostCommentsOpen })}
+                onClick={() => setPostCommentsOpen(!isPostCommentsOpen)}>
                 <CommentIcon
                   title="Comment Icon"
                   className="post__bottom__IconRow__left__comments_icon"
@@ -103,7 +111,8 @@ const LinkCard = ({ imgSrc }) => {
                   5
                 </span>
               </div>
-              <div className="post__bottom__IconRow__left__friends">
+              <div className={clsx({ post__bottom__IconRow__left__friends: true, active: isPostPeopleOpen })}
+                onClick={() => setPostPeopleOpen(!isPostPeopleOpen)}>>
                 <div className="post__bottom__IconRow__left__friends__iconContainer">
                   <DefaultPersonIcon />
                   <DefaultPersonIcon />
@@ -114,7 +123,8 @@ const LinkCard = ({ imgSrc }) => {
               </div>
             </div>
             <div className="post__bottom__IconRow__right">
-              <div className="post__bottom__IconRow__right__tags">
+              <div className={clsx({ post__bottom__IconRow__right__tags: true, active: isPostTagsOpen })}
+                onClick={() => setPostTagsOpen(!isPostTagsOpen)}>>
                 <TagIcon
                   className="post__bottom__IconRow__right__tags_icon"
                   title="Tag Icon"
@@ -124,7 +134,17 @@ const LinkCard = ({ imgSrc }) => {
                 </span>
               </div>
             </div>
+
           </div>
+        </div>
+        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostCommentsOpen })}>
+              Comments Tab
+        </div>
+        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostPeopleOpen })}>
+              Users tagged Tab
+        </div>
+        <div className={clsx({ post__bottom__tabarea: true, hide: !isPostTagsOpen })}>
+              Content tags Tab
         </div>
       </div>
     </div>

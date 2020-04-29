@@ -8,7 +8,8 @@
 
   &__container {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    background: white;
+    // background: white;
+    @include theme-aware('background', 'cardBg');
     margin-bottom: 15px;
     border-radius: 5px;
 
@@ -18,7 +19,7 @@
   }
 
   &__bottom {
-    padding: 12px 12px 15px 12px;
+    padding: 12px 12px 5px 12px;
 
     &__info {
       font-family: "Goldplay-Medium";
@@ -54,11 +55,15 @@
           width: 20px;
           height: 20px;
           cursor: pointer;
+          path {
+            @include theme-aware('fill', 'primary');
+          }
         }
       }
 
       &__description {
         font-size: 1.2rem;
+        @include theme-aware('color', 'text0');
       }
     }
 
@@ -77,6 +82,12 @@
       &__left__friends {
         display: flex;
         align-items: center;
+        padding-bottom: 5px;
+        border-bottom: 3px solid transparent;
+        &.active {
+          border-bottom: 3px solid;
+          @include theme-aware('border-color', 'secondary');
+        }
       }
 
       &__left__friends__iconContainer {
@@ -96,13 +107,13 @@
           }
         }
       }
-
       &__left__comments_icon,
       &__right__tags_icon {
         width: 20px;
         height: 20px;
         cursor: pointer;
         margin-right: 4px;
+        @include theme-aware('fill', 'primary');
       }
 
       &__left__comments_number,
@@ -110,11 +121,31 @@
       &__right__tags_number {
         font-size: 1rem;
         font-family: Goldplay-Semibold;
-        color: $blue;
+        // color: $blue;
+        @include theme-aware('color', 'primary');
       }
 
       &__left__comments {
         margin-right: 30px;
+      }
+    }
+
+    &__tabarea {
+      display: flex;
+      position: relative;
+      height: 150px;
+      // transform: translateY(0);
+      opacity: 1;
+      z-index: 0;
+      @include theme-aware('color', 'bg');
+      @include theme-aware('background', 'primary');
+      transition: all 0.3s ease-in;
+      &.hide {
+        opacity: 0;
+        z-index: -1;
+        height: 0;
+        position: absolute;
+        // transform: translateY(-200px);
       }
     }
   }
@@ -132,7 +163,8 @@
         height: 24px;
         width: 24px;
         margin-right: 8px;
-        fill: $white;
+        // fill: $white;
+        @include theme-aware('fill', 'primary');
       }
 
       &__text {
@@ -159,7 +191,6 @@
       }
       &__panel {
         position: absolute;
-        background-color: $white;
         box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
         width: 120px;
         right: 0;
@@ -167,7 +198,6 @@
         top: 0px;
         max-height: 300px;
         border-radius: 5px;
-        color: $text-dark;
         @media screen and (orientation: landscape) {
           width: 150px;
         }
@@ -179,8 +209,8 @@
         &__list {
           list-style: none;
           padding: 0;
-          margin: 0;
-          background-color: $grey;
+          margin: 0;      
+          @include theme-aware('background', 'bg');
           border-radius: 5px;
 
           &__item {
@@ -195,6 +225,7 @@
               padding: 0;
               background: none;
               text-align: left;
+              @include theme-aware('color', 'text1');
               span {
                 // background: $greygrey;
                 width: 18px;
@@ -206,6 +237,9 @@
                 svg {
                   height: 12px;
                   width: 12px;
+                  path {
+                    @include theme-aware('fill', 'primary');
+                  }
                 }
               }
             }

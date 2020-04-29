@@ -14,6 +14,7 @@ import LinkCard from "../../components/LinkCard";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
 import CreatePost from "../../components/CreatePost";
+import ThemeSwitcher from "../../components/ThemeSwitcher"
 
 const PlaygroundPage = () => {
   const { user = {} } = useAuth0();
@@ -112,7 +113,7 @@ const PlaygroundPage = () => {
                     <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
                       <button className="profile__panel__list__item__text">
                         <span> <TorchIcon/> </span>
-                        Dark Mode
+                        <ThemeSwitcher/>
                       </button>
                     </li>
                     <li className="profile__panel__list__item" onClick={() => setProfileOpen(!isProfileOpen)}>
