@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { func, string, node, object } from "prop-types";
 
-import DefaultImage from "../../assets/previewImgMissing.svg";
-import logo from "../../assets/logo.svg";
+import DefaultImage from "../../assets/icons/previewImgMissing.svg";
+import logo from "../../assets/icons/logo.svg";
 import "../../styles/PostPreview.scss";
 
 const PostPreview = ({ onLoad, previewTop, preview }) => {

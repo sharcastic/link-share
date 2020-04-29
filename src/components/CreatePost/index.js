@@ -5,7 +5,7 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 import { callServerless } from "../../utils/network";
 
-import { ReactComponent as DefaultPersonIcon } from "../../assets/default-person.svg";
+import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
 
 import Button from "../Button";
 import TextInput from "../TextInput";
@@ -13,7 +13,7 @@ import PostPreview from "../PostPreview";
 import TextArea from "../TextArea";
 import Select from "../Select";
 import PillLabel from "../PillLabel";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/icons/logo.svg";
 
 import "../../styles/CreatePost.scss";
 

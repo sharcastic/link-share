@@ -4,15 +4,15 @@ import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-import { ReactComponent as DefaultPersonIcon } from "../../assets/default-person.svg";
-import { ReactComponent as OptionsIcon } from "../../assets/options.svg";
-import { ReactComponent as HttpsIcon } from "../../assets/https.svg";
-import { ReactComponent as CopyIcon } from "../../assets/copy.svg";
-import { ReactComponent as CommentIcon } from "../../assets/comment.svg";
-import { ReactComponent as TagIcon } from "../../assets/tag.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/delete.svg";
-import { ReactComponent as EditIcon } from "../../assets/edit.svg";
-import { ReactComponent as ShareIcon } from "../../assets/share.svg";
+import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
+import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
+import { ReactComponent as HttpsIcon } from "../../assets/icons/https.svg";
+import { ReactComponent as CopyIcon } from "../../assets/icons/copy.svg";
+import { ReactComponent as CommentIcon } from "../../assets/icons/comment.svg";
+import { ReactComponent as TagIcon } from "../../assets/icons/tag.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
+import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
+import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({ imgSrc }) => {

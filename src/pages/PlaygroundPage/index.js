@@ -3,11 +3,11 @@ import clsx from "clsx";
 
 import "../../styles/Playground.scss";
 import { useAuth0 } from "../../utils/Auth0";
-import { ReactComponent as NotificationIcon } from "../../assets/notifications.svg";
-import { ReactComponent as LogoIcon } from "../../assets/logo-mobile.svg";
-import { ReactComponent as PreferencesIcon } from "../../assets/preferences.svg";
-import { ReactComponent as TorchIcon } from "../../assets/torch.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/logout.svg";
+import { ReactComponent as NotificationIcon } from "../../assets/icons/notifications.svg";
+import { ReactComponent as LogoIcon } from "../../assets/icons/logo-mobile.svg";
+import { ReactComponent as PreferencesIcon } from "../../assets/icons/preferences.svg";
+import { ReactComponent as TorchIcon } from "../../assets/icons/torch.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import LinkCard from "../../components/LinkCard";
