@@ -105,7 +105,7 @@
         }
       }
     }
-    &__previewLoading {
+    .previewLoading {
       z-index: inherit;
       background: #233767;
       height: 150px;
@@ -134,8 +134,8 @@
         }
       }
     }
-    &__shareTitle {
-      padding: 0 0.75rem;
+    .shareTitle {
+      padding: 10px 0.75rem;
     }
   }
   &__bottom {

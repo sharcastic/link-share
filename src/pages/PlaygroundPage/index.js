@@ -20,11 +20,11 @@ import ApplicationContext from "../../context/ApplicationContext/ApplicationCont
 const PlaygroundPage = () => {
   const { darkTheme, toggleDarkTheme } = useContext(ApplicationContext);
   const { user = {}, logoutUser } = useAuth0();
-  const refNoti = useRef();
+  const refNotification = useRef();
   const refProfile = useRef();
   const [isNotiOpen, setNotiOpen] = useState(false);
   const toggleNotificationsOpen = () => setNotiOpen(!isNotiOpen);
-  useOnClickOutside(refNoti, () => setNotiOpen(false));
+  useOnClickOutside(refNotification, () => setNotiOpen(false));
   const [isProfileOpen, setProfileOpen] = useState(false);
   const toggleProfileOpen = () => setProfileOpen(!isProfileOpen);
   useOnClickOutside(refProfile, () => setProfileOpen(false));
@@ -41,7 +41,7 @@ const PlaygroundPage = () => {
           <h2 className="header-title">Playground</h2>
         </div>
         <div className="header-right">
-          <div className="notifications" ref={refNoti}>
+          <div className="notifications" ref={refNotification}>
             <IconButton
               Icon={NotificationIcon}
               title="Notifications"
@@ -63,36 +63,29 @@ const PlaygroundPage = () => {
               </div>
               <ul className="notifications__panel__list">
                 <li
-                  className="notifications__panel__list__item"
+                  className="notifications-item"
                   onClick={toggleNotificationsOpen}
                 >
-                  <p className="notifications__panel__list__item__text">
-                    First Item
-                  </p>
-                  <div className="notifications__panel__list__item__buttonSection">
+                  <p className="notifications-item__text">First Item</p>
+                  <div className="notifications-item__buttonSection">
                     <Button
-                      className="notifications__panel__list__item__buttonSection__button--ignore"
+                      className="notification-button--ignore"
                       type="plain"
                     >
                       Ignore
                     </Button>
-                    <Button className="notifications__panel__list__item__buttonSection__button--accept">
+                    <Button className="notification-button--accept">
                       Accept
                     </Button>
                   </div>
                 </li>
                 <li
-                  className="notifications__panel__list__item"
+                  className="notifications-item"
                   onClick={toggleNotificationsOpen}
                 >
-                  <p className="notifications__panel__list__item__text">
-                    Second Item
-                  </p>
-                  <div className="notifications__panel__list__item__buttonSection">
-                    <Button
-                      className="notifications__panel__list__item__buttonSection__button--mark"
-                      type="plain"
-                    >
+                  <p className="notifications-item__text">Second Item</p>
+                  <div className="notifications-item__buttonSection">
+                    <Button className="notification-button--mark" type="plain">
                       Mark as Read
                     </Button>
                   </div>

@@ -4,13 +4,12 @@ import "../../styles/LinkCardLoader.scss";
 
 const LinkCardLoader = () => (
   <div className="link-loader">
-    <div className="link-loader__upper-loader">
+    <div className="upper-loader">
       <ContentLoader
         speed={1}
         width="100%"
         height={150}
         viewBox="0 0 350 150"
-        // backgroundColor="grey"
         foregroundColor="#AAAAAA"
       >
         <circle cx="22" cy="24" r="12" left="" />

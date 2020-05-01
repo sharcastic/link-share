@@ -5,11 +5,9 @@
     display: none;
   }
 
-
   &__container {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    // background: white;
-    @include theme-aware('background', 'cardBg');
+    @include theme-aware("background", "cardBg");
     margin-bottom: 15px;
     border-radius: 5px;
 
@@ -21,7 +19,7 @@
   &__bottom {
     padding: 12px 12px 5px 12px;
 
-    &__info {
+    .link-info {
       font-family: "Goldplay-Medium";
 
       &__url {
@@ -56,41 +54,41 @@
           height: 20px;
           cursor: pointer;
           path {
-            @include theme-aware('fill', 'primary');
+            @include theme-aware("fill", "primary");
           }
         }
       }
 
       &__description {
         font-size: 1.2rem;
-        @include theme-aware('color', 'text0');
+        @include theme-aware("color", "text0");
       }
     }
 
-    &__IconRow {
+    .post-iconRow {
       margin-top: 15px;
       display: flex;
       justify-content: space-between;
 
-      &__left,
-      &__right {
+      .iconRow__left,
+      .iconRow__right {
         display: flex;
       }
 
-      &__right__tags,
-      &__left__comments,
-      &__left__friends {
+      .iconRow__left__friends,
+      .iconRow__left__comments,
+      .iconRow__right__tags {
         display: flex;
         align-items: center;
         padding-bottom: 5px;
         border-bottom: 3px solid transparent;
         &.active {
           border-bottom: 3px solid;
-          @include theme-aware('border-color', 'secondary');
+          @include theme-aware("border-color", "secondary");
         }
       }
 
-      &__left__friends__iconContainer {
+      .friends__iconContainer {
         margin-right: 15px;
         position: relative;
 
@@ -107,25 +105,24 @@
           }
         }
       }
-      &__left__comments_icon,
-      &__right__tags_icon {
+      .comments__icon,
+      .tags__icon {
         width: 20px;
         height: 20px;
         cursor: pointer;
         margin-right: 4px;
-        @include theme-aware('fill', 'primary');
+        @include theme-aware("fill", "primary");
       }
 
-      &__left__comments_number,
-      &__left__friends_number,
-      &__right__tags_number {
+      .comments__number,
+      .friends__number,
+      .tags__number {
         font-size: 1rem;
         font-family: Goldplay-Semibold;
-        // color: $blue;
-        @include theme-aware('color', 'primary');
+        @include theme-aware("color", "primary");
       }
 
-      &__left__comments {
+      .iconRow__left__comments {
         margin-right: 30px;
       }
     }
@@ -137,8 +134,8 @@
       // transform: translateY(0);
       opacity: 1;
       z-index: 0;
-      @include theme-aware('color', 'bg');
-      @include theme-aware('background', 'primary');
+      @include theme-aware("color", "bg");
+      @include theme-aware("background", "primary");
       transition: all 0.3s ease-in;
       &.hide {
         opacity: 0;
@@ -150,12 +147,12 @@
     }
   }
 
-  &-preview__details__top {
+  .details-top {
     display: flex;
     justify-content: space-between;
     padding: 10px 10px 0 10px;
 
-    &__creationDetails {
+    .creationDetails {
       display: flex;
       align-items: center;
 
@@ -164,7 +161,7 @@
         width: 24px;
         margin-right: 8px;
         // fill: $white;
-        @include theme-aware('fill', 'primary');
+        @include theme-aware("fill", "primary");
       }
 
       &__text {
@@ -176,7 +173,8 @@
           font-family: "Goldplay-Semibold";
         }
 
-        &__timeCreated {}
+        &__timeCreated {
+        }
       }
     }
 
@@ -206,14 +204,14 @@
           display: none;
         }
 
-        &__list {
+        .options__list {
           list-style: none;
           padding: 0;
-          margin: 0;      
-          @include theme-aware('background', 'bg');
+          margin: 0;
+          @include theme-aware("background", "bg");
           border-radius: 5px;
 
-          &__item {
+          .list__item {
             height: fit-content;
             // border-top: 1px solid #dadbdd;
             padding: 7px 10px;
@@ -225,7 +223,7 @@
               padding: 0;
               background: none;
               text-align: left;
-              @include theme-aware('color', 'text1');
+              @include theme-aware("color", "text1");
               span {
                 // background: $greygrey;
                 width: 18px;
@@ -238,28 +236,8 @@
                   height: 12px;
                   width: 12px;
                   path {
-                    @include theme-aware('fill', 'primary');
+                    @include theme-aware("fill", "primary");
                   }
-                }
-              }
-            }
-
-            &__buttonSection {
-              align-self: flex-end;
-              padding-top: 5px;
-              padding-right: 5px;
-
-              &__button {
-                &--mark {}
-
-                &--accept {
-                  margin-left: 10px;
-                  padding: 5px 10px;
-                  border-radius: 5px;
-                }
-
-                &--ignore {
-                  color: $red;
                 }
               }
             }
@@ -268,5 +246,4 @@
       }
     }
   }
-
 }

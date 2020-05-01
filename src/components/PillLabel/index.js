@@ -10,11 +10,11 @@ const PillLabel = ({ value, id, onRemove, className, removable, leftIcon }) => {
   return (
     <div className={`pill-label ${className}`}>
       {leftIcon}
-      <span className="pill-label--text">{value}</span>
+      <span className="pill-label__text">{value}</span>
       {removable && (
         <CloseIcon
           title="remove icon"
-          className="pill-label--remove"
+          className="pill-label__remove"
           onClick={onRemoveClick}
         />
       )}

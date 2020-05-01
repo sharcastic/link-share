@@ -15,13 +15,9 @@ const PostPreview = ({ onLoad, previewTop, preview }) => {
       <div className="post-preview__background" />
       <div className="post-preview__details">
         {previewTop}
-        <div className="post-preview__details__linkDetails">
-          <span className="post-preview__details__linkDetails__title">
-            {title}
-          </span>
-          <span className="post-preview__details__linkDetails__description">
-            {description}
-          </span>
+        <div className="linkDetails">
+          <span className="linkDetails__title">{title}</span>
+          <span className="linkDetails__description">{description}</span>
         </div>
       </div>
       <img

@@ -72,18 +72,16 @@ const CreatePost = ({ specialBehaviour }) => {
           {preview.responseReceived === true ? (
             <PostPreview preview={preview} />
           ) : (
-            <div className="createPost__post-info__previewLoading">
-                <img src={logo} className="App-logo" alt="logo" />
+            <div className="previewLoading">
+              <img src={logo} className="App-logo" alt="logo" />
             </div>
           )}
           <TextArea value={description} onChange={onDescriptionChange} />
-          <span className="createPost__post-info__shareTitle">
-            Share with others?
-          </span>
+          <span className="shareTitle">Share with others?</span>
           <div className="selected-users">
             {selectedUsers.map(i => (
               <PillLabel
-                id={i.id}
+                id={i.value}
                 value={i.value}
                 key={i.id}
                 removable
