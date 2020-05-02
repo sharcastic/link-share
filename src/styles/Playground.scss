@@ -144,15 +144,13 @@
       padding: 0;
       position: relative;
       display: flex;
-      img {
+      .profile-icon {
         height: 26px;
         width: 26px;
-        border-radius: 25px;
         z-index: 4;
         @media screen and (orientation: landscape) {
           height: 35px;
           width: 35px;
-          border-radius: 35px;
         }
       }
       &__panel {

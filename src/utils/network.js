@@ -4,6 +4,7 @@ export const callServerless = async arrayOfURLs => {
   const validURLs = new Set();
   const invalidURLs = [];
   const cachedURLs = [];
+  const responseObj = {};
   arrayOfURLs.forEach(url => {
     try {
       new URL(url);
@@ -16,9 +17,9 @@ export const callServerless = async arrayOfURLs => {
       invalidURLs.push(url);
     }
   });
-  const responseObj = {};
 
-  if (validURLs.size > 0 || cachedURLs > 0) {
+  if (validURLs.size > 0) {
+    console.log("MAKING REQUEST FROM NETWORK.JS");
     const res = await fetch("/api/getPreviews", {
       method: "POST",
       headers: {

@@ -7,6 +7,8 @@ $grey: #f1f3f5;
 $text-dark: #222222;
 $light-grey: #999999;
 $greygrey: #eeeeee;
+$light-white: #f8f8f8;
+$dark-gray: #828282;
 
 // // Light Mode
 // $light-primary: #233767;
@@ -33,34 +35,33 @@ $greygrey: #eeeeee;
 // // common
 // $placeholder: #999999;
 
-
 $themes: (
-    light: (
-        primary: #233767,
-        secondary: #27AE8E,
-        accent: #FF7272,
-        bg: #F1F3F5,
-        cardBg: #ffffff,
-        lines: #eeeeee,
-        text0: #233767,
-        text1: #222222,
-        text2: #555555,
-        text3: #777777,
-        placeholder: #999999
-    ),
-    dark: (
-        primary: #ffffff,
-        secondary: #27AE8E,
-        accent: #FF7272,
-        bg: #222C42,
-        cardBg: #313B52,
-        lines: #233767,
-        text0: #f1f3f5,
-        text1: #ffffff,
-        text2: #f8f8f8,
-        text3: #eeeeee,
-        placeholder: #999999
-    )
+  light: (
+    primary: #233767,
+    secondary: #27ae8e,
+    accent: #ff7272,
+    bg: #f1f3f5,
+    cardBg: #ffffff,
+    lines: #eeeeee,
+    text0: #233767,
+    text1: #222222,
+    text2: #555555,
+    text3: #777777,
+    placeholder: #999999
+  ),
+  dark: (
+    primary: #ffffff,
+    secondary: #27ae8e,
+    accent: #ff7272,
+    bg: #222c42,
+    cardBg: #313b52,
+    lines: #233767,
+    text0: #f1f3f5,
+    text1: #ffffff,
+    text2: #f8f8f8,
+    text3: #eeeeee,
+    placeholder: #999999
+  )
 );
 
 /**
@@ -72,10 +73,10 @@ $themes: (
  * @example - @include theme-aware('background', 'color-background');
  * @returns - background: #FFF;
  */
- @mixin theme-aware($key, $color) {
-    @each $theme-name, $theme-color in $themes {
-        .theme-#{$theme-name} & {
-            #{$key}: map-get(map-get($themes, $theme-name), $color)
-        }
+@mixin theme-aware($key, $color) {
+  @each $theme-name, $theme-color in $themes {
+    .theme-#{$theme-name} & {
+      #{$key}: map-get(map-get($themes, $theme-name), $color);
     }
+  }
 }

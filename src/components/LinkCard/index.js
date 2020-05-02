@@ -4,7 +4,9 @@ import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
+import TextInput from "../TextInput";
+import ProfileIcon from "../ProfileIcon";
+
 import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
 import { ReactComponent as HttpsIcon } from "../../assets/icons/https.svg";
 import { ReactComponent as CopyIcon } from "../../assets/icons/copy.svg";
@@ -36,11 +38,15 @@ const LinkCard = ({ imgSrc }) => {
       <div className={clsx({ post: true, hide: imageLoading })}>
         <PostPreview
           onLoad={onLoad}
-          preview={{ image: imgSrc }}
+          preview={{
+            image: imgSrc,
+            title: "Post URL Title",
+            description: "Post URL description"
+          }}
           previewTop={
             <div className="details-top">
               <div className="creationDetails">
-                <DefaultPersonIcon className="creationDetails__authorIcon" />
+                <ProfileIcon className="creationDetails__authorIcon" />
                 <div className="creationDetails__text">
                   <span className="creationDetails__text__authorName">
                     Author name
@@ -131,8 +137,8 @@ const LinkCard = ({ imgSrc }) => {
                 onClick={toggleExtraPanel("friends")}
               >
                 <div className="friends__iconContainer">
-                  <DefaultPersonIcon />
-                  <DefaultPersonIcon />
+                  <ProfileIcon />
+                  <ProfileIcon />
                 </div>
                 <span className="friends__number">1</span>
               </div>
@@ -157,9 +163,32 @@ const LinkCard = ({ imgSrc }) => {
             hide: !extraPanelSelected
           })}
         >
-          {extraPanelSelected === "comments" && "Comments Tab"}
-          {extraPanelSelected === "friends" && "Friends Tab"}
-          {extraPanelSelected === "tags" && "Tags Tab"}
+          <div className="tabarea-content">
+            {/* {extraPanelSelected === "comments" && "Comments Tab"}
+            {extraPanelSelected === "friends" && "Friends Tab"}
+            {extraPanelSelected === "tags" && "Tags Tab"} */}
+            <div className="comment-item">
+              <ProfileIcon className="author-icon" />
+              <div className="comment-details">
+                <span className="comment-author">Friend name</span>
+                <span className="comment-text">Comment content!</span>
+              </div>
+            </div>
+            <div className="comment-item">
+              <span className="author-icon">
+                <ProfileIcon className="author-icon" />
+              </span>
+              <div className="comment-details">
+                <span className="comment-author">Fricken Chicken</span>
+                <span className="comment-text">
+                  This another comment to add to the previous one. This can be a
+                  longer comment, and that’s ok. Because we can handle it.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <TextInput value="" placeholder="Add a comment" />
         </div>
       </div>
     </div>

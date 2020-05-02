@@ -1,4 +1,8 @@
 @import "./variables.scss";
+.random {
+  height: 15px;
+  width: 15px;
+}
 
 .post {
   &.hide {
@@ -17,7 +21,7 @@
   }
 
   &__bottom {
-    padding: 12px 12px 5px 12px;
+    padding: 12px 15px 10px 15px;
 
     .link-info {
       font-family: "Goldplay-Medium";
@@ -69,6 +73,7 @@
       margin-top: 15px;
       display: flex;
       justify-content: space-between;
+      padding: 0 5px;
 
       .iconRow__left,
       .iconRow__right {
@@ -92,7 +97,7 @@
         margin-right: 15px;
         position: relative;
 
-        svg {
+        div {
           width: 21px;
           height: 21px;
           &:last-of-type {
@@ -129,20 +134,55 @@
 
     &__tabarea {
       display: flex;
+      flex-direction: column;
       position: relative;
-      height: 150px;
-      // transform: translateY(0);
       opacity: 1;
       z-index: 0;
-      @include theme-aware("color", "bg");
-      @include theme-aware("background", "primary");
+      height: 175px; // IS THIS ALWAYS REQUIRED? ANY WAY AROUND THIS? THIS SHOULD BE MAX HEIGHT?
+      // @include theme-aware("color", "bg");
+      // @include theme-aware("background", "primary"); CHANGE REQUIRED?
+      background-color: $light-white;
+      color: $blue;
       transition: all 0.3s ease-in;
       &.hide {
         opacity: 0;
         z-index: -1;
         height: 0;
         position: absolute;
-        // transform: translateY(-200px);
+      }
+      .tabarea-content {
+        overflow-y: scroll;
+        height: 125px;
+        padding: 10px 20px;
+      }
+      .comment-item {
+        display: flex;
+        margin-bottom: 5px;
+        .author-icon {
+          height: 16px;
+          width: 16px;
+          margin-top: 2px;
+        }
+
+        .comment-details {
+          padding-left: 10px;
+          display: flex;
+          flex-direction: column;
+          font-size: 0.75rem;
+          .comment-author {
+            @include theme-aware("color", "primary");
+            font-family: "Goldplay-Semibold";
+          }
+          .comment-text {
+            color: $dark-gray;
+          }
+        }
+      }
+      .textInput {
+        height: 30px;
+        margin: 12px;
+        border-radius: 5px;
+        padding: 0 10px;
       }
     }
   }
@@ -160,7 +200,6 @@
         height: 24px;
         width: 24px;
         margin-right: 8px;
-        // fill: $white;
         @include theme-aware("fill", "primary");
       }
 

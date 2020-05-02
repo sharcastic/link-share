@@ -16,6 +16,7 @@ import Button from "../../components/Button";
 import CreatePost from "../../components/CreatePost";
 
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
+import ProfileIcon from "../../components/ProfileIcon";
 
 const PlaygroundPage = () => {
   const { darkTheme, toggleDarkTheme } = useContext(ApplicationContext);
@@ -94,10 +95,10 @@ const PlaygroundPage = () => {
             </div>
           </div>
           <div className="profile" ref={refProfile}>
-            <img
-              src={user.picture}
+            <ProfileIcon
               alt="Profile Button"
               onClick={toggleProfileOpen}
+              img={user.picture}
             />
 
             <div
