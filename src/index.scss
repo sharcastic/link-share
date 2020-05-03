@@ -31,7 +31,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
-  @include theme-aware('background', 'bg');
+  @include theme-aware("background", "bg");
   @media screen and (orientation: landscape) {
     font-size: 16px;
   }
@@ -46,6 +46,10 @@ li {
 svg {
   // fill: $blue;
   // @include theme-aware('fill', 'primary');
+}
+
+input {
+  outline: none;
 }
 
 #root {

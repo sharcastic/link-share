@@ -1,6 +1,7 @@
 import React, { useRef, useState, useContext } from "react";
 import { string, shape } from "prop-types";
 import clsx from "clsx";
+import { useToasts } from "react-toast-notifications";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
@@ -22,6 +23,7 @@ import "../../styles/LinkCard.scss";
 
 const LinkCard = ({ cardData: { postDescription, url, id }, previewData }) => {
   const { changeEditingPost } = useContext(ApplicationContext);
+  const { addToast } = useToasts();
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
   const ref = useRef();
@@ -120,6 +122,13 @@ const LinkCard = ({ cardData: { postDescription, url, id }, previewData }) => {
               <CopyIcon
                 title="Copy Icon"
                 className="link-info__url__copyIcon"
+                onClick={() =>
+                  navigator.clipboard.writeText(url).then(() => {
+                    addToast(<p>Copied to Clipboard!</p>, {
+                      appearance: "info"
+                    });
+                  })
+                }
               />
             </div>
             <div className="link-info__description">{postDescription}</div>

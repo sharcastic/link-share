@@ -64,6 +64,7 @@ const CreatePost = ({ specialBehaviour }) => {
     }
     setLinkText("");
     setPreview({});
+    setSelectedUsers([]);
   };
   const onSelectedUserChange = users =>
     users === null ? setSelectedUsers([]) : setSelectedUsers(users);
