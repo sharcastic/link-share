@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { string, shape } from "prop-types";
 import clsx from "clsx";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
@@ -17,7 +18,13 @@ import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
-const LinkCard = ({ imgSrc }) => {
+const LinkCard = ({
+  cardData: {
+    previewData: { imgSrc, title, description },
+    postDescription,
+    url
+  }
+}) => {
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
   const ref = useRef();
@@ -40,8 +47,8 @@ const LinkCard = ({ imgSrc }) => {
           onLoad={onLoad}
           preview={{
             image: imgSrc,
-            title: "Post URL Title",
-            description: "Post URL description"
+            title,
+            description
           }}
           previewTop={
             <div className="details-top">
@@ -106,16 +113,13 @@ const LinkCard = ({ imgSrc }) => {
                 title="HTTPS Icon"
                 className="link-info__url__httpsIcon"
               />
-              <div className="link-info__url__text">{imgSrc}</div>
+              <div className="link-info__url__text">{url}</div>
               <CopyIcon
                 title="Copy Icon"
                 className="link-info__url__copyIcon"
               />
             </div>
-            <div className="link-info__description">
-              Title or Description for the link shared which can go into
-              multiple lines
-            </div>
+            <div className="link-info__description">{postDescription}</div>
           </div>
           <div className="post-iconRow">
             <div className="iconRow__left">
@@ -193,6 +197,14 @@ const LinkCard = ({ imgSrc }) => {
       </div>
     </div>
   );
+};
+
+LinkCard.propTypes = {
+  cardData: shape({
+    previewData: shape({ imgSrc: string, description: string, title: string }),
+    postDescription: string,
+    url: string
+  }).isRequired
 };
 
 export default LinkCard;

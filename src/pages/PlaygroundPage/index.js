@@ -19,7 +19,9 @@ import ApplicationContext from "../../context/ApplicationContext/ApplicationCont
 import ProfileIcon from "../../components/ProfileIcon";
 
 const PlaygroundPage = () => {
-  const { darkTheme, toggleDarkTheme } = useContext(ApplicationContext);
+  const { darkTheme, toggleDarkTheme, homeFeedPosts } = useContext(
+    ApplicationContext
+  );
   const { user = {}, logoutUser } = useAuth0();
   const refNotification = useRef();
   const refProfile = useRef();
@@ -138,9 +140,9 @@ const PlaygroundPage = () => {
         </div>
       </header>
       <main>
-        <LinkCard imgSrc="https://techcrunch.com/wp-content/themes/techcrunch-2017/images/opengraph-default.png" />
-        <LinkCard imgSrc="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" />
-        <LinkCard />
+        {homeFeedPosts.map(post => (
+          <LinkCard cardData={post} key={post.url} />
+        ))}
       </main>
       <div className="hidden-container">
         <CreatePost specialBehaviour />

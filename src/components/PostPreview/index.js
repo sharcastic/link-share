@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import clsx from "clsx";
 import { func, string, node, object } from "prop-types";
 
 import DefaultImage from "../../assets/icons/previewImgMissing.svg";
@@ -8,8 +7,8 @@ import "../../styles/PostPreview.scss";
 const PostPreview = ({ onLoad, previewTop, preview }) => {
   const { title, description, image } = preview;
   const [imgSrc, setImgSrc] = useState(image ? image : DefaultImage);
-  const [loading, setLoading] = useState(true);
-  const onImageLoad = () => onLoad();
+  // const [loading, setLoading] = useState(true);
+  // const onImageLoad = () => onLoad();
   return (
     <div className="post-preview">
       <div className="post-preview__background" />
@@ -23,9 +22,8 @@ const PostPreview = ({ onLoad, previewTop, preview }) => {
       <img
         src={imgSrc}
         alt="backdrop"
-        onLoad={onImageLoad}
+        onLoad={onLoad}
         onError={() => setImgSrc(DefaultImage)}
-        className={clsx({ hide: loading, "post-preview__image": true })}
       />
     </div>
   );
