@@ -141,7 +141,7 @@ const PlaygroundPage = () => {
       </header>
       <main>
         {homeFeedPosts.map(post => (
-          <LinkCard cardData={post} key={post.url} />
+          <LinkCard cardData={post} key={post.id} id={post.id} />
         ))}
       </main>
       <div className="hidden-container">

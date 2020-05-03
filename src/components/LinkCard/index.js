@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { string, shape } from "prop-types";
 import clsx from "clsx";
 import LinkCardLoader from "../LinkCardLoader";
@@ -7,6 +7,8 @@ import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import TextInput from "../TextInput";
 import ProfileIcon from "../ProfileIcon";
+
+import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
 import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
 import { ReactComponent as HttpsIcon } from "../../assets/icons/https.svg";
@@ -22,12 +24,18 @@ const LinkCard = ({
   cardData: {
     previewData: { imgSrc, title, description },
     postDescription,
-    url
+    url,
+    id
   }
 }) => {
+  const { changeEditingPost } = useContext(ApplicationContext);
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
   const ref = useRef();
+  const onEditPostClick = () => {
+    changeEditingPost(id);
+    setOptionsOpen(false);
+  };
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   useOnClickOutside(ref, () => setOptionsOpen(false));
   const [extraPanelSelected, setExtraPanel] = useState();
@@ -41,71 +49,77 @@ const LinkCard = ({
 
   return (
     <div className="post__container">
-      {imageLoading && <LinkCardLoader />}
-      <div className={clsx({ post: true, hide: imageLoading })}>
-        <PostPreview
-          onLoad={onLoad}
-          preview={{
-            image: imgSrc,
-            title,
-            description
-          }}
-          previewTop={
-            <div className="details-top">
-              <div className="creationDetails">
-                <ProfileIcon className="creationDetails__authorIcon" />
-                <div className="creationDetails__text">
-                  <span className="creationDetails__text__authorName">
-                    Author name
-                  </span>
-                  <span className="creationDetails__text__timeCreated">
-                    at 14:07 on 01 Apr 2020
-                  </span>
+      <div className="post">
+        <div>
+          {imageLoading && <LinkCardLoader />}
+          <PostPreview
+            className={clsx({ hide: imageLoading })}
+            onLoad={onLoad}
+            preview={{
+              image: imgSrc,
+              title,
+              description
+            }}
+            previewTop={
+              <div className="details-top">
+                <div className="creationDetails">
+                  <ProfileIcon className="creationDetails__authorIcon" />
+                  <div className="creationDetails__text">
+                    <span className="creationDetails__text__authorName">
+                      Author name
+                    </span>
+                    <span className="creationDetails__text__timeCreated">
+                      at 14:07 on 01 Apr 2020
+                    </span>
+                  </div>
+                </div>
+                <div className="options" ref={ref}>
+                  <OptionsIcon
+                    title="Options Icon"
+                    className="options__icon"
+                    onClick={() => setOptionsOpen(!isOptionsOpen)}
+                  />
+                  <div
+                    className={clsx({
+                      options__panel: true,
+                      hide: !isOptionsOpen
+                    })}
+                  >
+                    <ul className="options__list">
+                      <li className="list__item">
+                        <button className="list__item__text">
+                          <span>
+                            <ShareIcon />
+                          </span>
+                          Share Post
+                        </button>
+                      </li>
+                      <li className="list__item">
+                        <button
+                          className="list__item__text"
+                          onClick={onEditPostClick}
+                        >
+                          <span>
+                            <EditIcon />
+                          </span>
+                          Edit Post
+                        </button>
+                      </li>
+                      <li className="list__item">
+                        <button className="list__item__text">
+                          <span>
+                            <DeleteIcon />
+                          </span>
+                          Delete Post
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div className="options" ref={ref}>
-                <OptionsIcon
-                  title="Options Icon"
-                  className="options__icon"
-                  onClick={() => setOptionsOpen(!isOptionsOpen)}
-                />
-                <div
-                  className={clsx({
-                    options__panel: true,
-                    hide: !isOptionsOpen
-                  })}
-                >
-                  <ul className="options__list">
-                    <li className="list__item">
-                      <button className="list__item__text">
-                        <span>
-                          <ShareIcon />
-                        </span>
-                        Share Post
-                      </button>
-                    </li>
-                    <li className="list__item">
-                      <button className="list__item__text">
-                        <span>
-                          <EditIcon />
-                        </span>
-                        Edit Post
-                      </button>
-                    </li>
-                    <li className="list__item">
-                      <button className="list__item__text">
-                        <span>
-                          <DeleteIcon />
-                        </span>
-                        Delete Post
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          }
-        />
+            }
+          />
+        </div>
         <div className="post__bottom">
           <div className="link-info">
             <div className="link-info__url">
@@ -203,7 +217,8 @@ LinkCard.propTypes = {
   cardData: shape({
     previewData: shape({ imgSrc: string, description: string, title: string }),
     postDescription: string,
-    url: string
+    url: string,
+    id: string
   }).isRequired
 };
 

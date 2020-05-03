@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { bool } from "prop-types";
 import clsx from "clsx";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
+import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 import { callServerless } from "../../utils/network";
 
 import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
@@ -24,6 +25,7 @@ const options = [
 ];
 
 const CreatePost = ({ specialBehaviour }) => {
+  const { editingPost, changeEditingPost } = useContext(ApplicationContext);
   const [linkText, setLinkText] = useState("");
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState({});
@@ -36,6 +38,14 @@ const CreatePost = ({ specialBehaviour }) => {
       enableBodyScroll();
     }
   }, [linkText]);
+  useEffect(() => {
+    if (editingPost) {
+      // setPreview(editingPost.previewData);
+      setLinkText(editingPost.url);
+      setDescription(editingPost.postDescription);
+      getPreviewDetails(editingPost.url);
+    }
+  }, [editingPost]);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
     const url = text ? text : linkText;
@@ -50,6 +60,9 @@ const CreatePost = ({ specialBehaviour }) => {
   const onLinkTextChange = text => setLinkText(text);
   const onDescriptionChange = text => setDescription(text);
   const onCancelClick = () => {
+    if (editingPost) {
+      changeEditingPost();
+    }
     setLinkText("");
     setPreview({});
   };
