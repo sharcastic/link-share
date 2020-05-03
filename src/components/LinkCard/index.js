@@ -20,14 +20,7 @@ import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
-const LinkCard = ({
-  cardData: {
-    previewData: { imgSrc, title, description },
-    postDescription,
-    url,
-    id
-  }
-}) => {
+const LinkCard = ({ cardData: { postDescription, url, id }, previewData }) => {
   const { changeEditingPost } = useContext(ApplicationContext);
   const [imageLoading, setLoading] = useState(true);
   const onLoad = () => setLoading(false);
@@ -55,11 +48,7 @@ const LinkCard = ({
           <PostPreview
             className={clsx({ hide: imageLoading })}
             onLoad={onLoad}
-            preview={{
-              image: imgSrc,
-              title,
-              description
-            }}
+            preview={previewData}
             previewTop={
               <div className="details-top">
                 <div className="creationDetails">

@@ -40,7 +40,6 @@ const CreatePost = ({ specialBehaviour }) => {
   }, [linkText]);
   useEffect(() => {
     if (editingPost) {
-      // setPreview(editingPost.previewData);
       setLinkText(editingPost.url);
       setDescription(editingPost.postDescription);
       getPreviewDetails(editingPost.url);

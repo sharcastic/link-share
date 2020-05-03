@@ -37,25 +37,18 @@ export const callServerless = async arrayOfURLs => {
         cache[url] = responseObj[url];
       }
     });
-    cachedURLs.forEach(url => {
-      responseObj[url] = {
-        responseReceived: true,
-        ...cache[url]
-      };
-    });
-    invalidURLs.forEach(url => {
-      responseObj[url] = {
-        responseReceived: true,
-        error: "Link is not a valid URL"
-      };
-    });
-  } else {
-    invalidURLs.forEach(url => {
-      responseObj[url] = {
-        responseReceived: true,
-        error: "Link is not a valid URL"
-      };
-    });
   }
+  invalidURLs.forEach(url => {
+    responseObj[url] = {
+      responseReceived: true,
+      error: "Link is not a valid URL"
+    };
+  });
+  cachedURLs.forEach(url => {
+    responseObj[url] = {
+      responseReceived: true,
+      ...cache[url]
+    };
+  });
   return responseObj;
 };

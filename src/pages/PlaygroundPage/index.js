@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import clsx from "clsx";
 
 import "../../styles/Playground.scss";
@@ -11,12 +11,13 @@ import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import LinkCard from "../../components/LinkCard";
+import ProfileIcon from "../../components/ProfileIcon";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
 import CreatePost from "../../components/CreatePost";
 
+import { callServerless } from "../../utils/network";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
-import ProfileIcon from "../../components/ProfileIcon";
 
 const PlaygroundPage = () => {
   const { darkTheme, toggleDarkTheme, homeFeedPosts } = useContext(
@@ -25,16 +26,36 @@ const PlaygroundPage = () => {
   const { user = {}, logoutUser } = useAuth0();
   const refNotification = useRef();
   const refProfile = useRef();
+
   const [isNotiOpen, setNotiOpen] = useState(false);
+  const [isProfileOpen, setProfileOpen] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [postPreviews, setPostPreviews] = useState({});
+  const [pageLoading, setPageLoading] = useState(true);
+
   const toggleNotificationsOpen = () => setNotiOpen(!isNotiOpen);
   useOnClickOutside(refNotification, () => setNotiOpen(false));
-  const [isProfileOpen, setProfileOpen] = useState(false);
   const toggleProfileOpen = () => setProfileOpen(!isProfileOpen);
   useOnClickOutside(refProfile, () => setProfileOpen(false));
   const toggleThemes = () => {
     toggleDarkTheme();
     toggleProfileOpen();
   };
+
+  useEffect(() => {
+    const getPreviews = async () => {
+      const arr = [];
+      homeFeedPosts.forEach(value => {
+        arr.push(value);
+      });
+      // setPosts(arr);
+      const response = await callServerless(arr.map(i => i.url));
+      setPostPreviews(response);
+      setPosts(arr);
+      setPageLoading(false);
+    };
+    getPreviews();
+  }, [homeFeedPosts]);
 
   return (
     <div className="playground-page">
@@ -139,11 +160,19 @@ const PlaygroundPage = () => {
           </div>
         </div>
       </header>
-      <main>
-        {homeFeedPosts.map(post => (
-          <LinkCard cardData={post} key={post.id} id={post.id} />
-        ))}
-      </main>
+      {pageLoading ? (
+        <div>Loading Posts!</div>
+      ) : (
+        <main>
+          {posts.map(post => (
+            <LinkCard
+              cardData={post}
+              key={post.id}
+              previewData={postPreviews[post.url]}
+            />
+          ))}
+        </main>
+      )}
       <div className="hidden-container">
         <CreatePost specialBehaviour />
       </div>
