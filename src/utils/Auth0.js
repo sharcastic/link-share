@@ -26,18 +26,22 @@ export const Auth0Provider = ({
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("tokenObject");
     sessionStorage.removeItem("accessToken");
-    navigate("/");
+    auth0Client.logout({
+      returnTo: window.location.origin
+    });
   };
 
   useEffect(() => {
     const initAuth0 = async () => {
-      const auth0FromHook = await createAuth0Client(initOptions);
-      setAuth0(auth0FromHook);
+      const promise = createAuth0Client(initOptions);
+      promise.then(auth0Obj => setAuth0(auth0Obj));
       if (
         window.location.search.includes("code=") &&
         window.location.search.includes("state=")
       ) {
-        const { appState } = await auth0FromHook.handleRedirectCallback();
+        const { appState } = await promise.then(auth0Obj =>
+          auth0Obj.handleRedirectCallback()
+        );
         onRedirectCallback(appState);
       }
       const userInSession = JSON.parse(sessionStorage.getItem("user"));
@@ -52,20 +56,22 @@ export const Auth0Provider = ({
           logoutUser();
         }
       } else {
-        const isAuthenticated = await auth0FromHook.isAuthenticated();
-        setIsAuthenticated(isAuthenticated);
-        if (isAuthenticated) {
-          const user = await auth0FromHook.getUser();
-          const token = await auth0FromHook.getIdTokenClaims();
-          sessionStorage.setItem("user", JSON.stringify(user));
-          sessionStorage.setItem("tokenObject", JSON.stringify(token));
-          sessionStorage.setItem("accessToken", JSON.stringify(token.__raw));
-          setUser(user);
-          setAccessToken(token);
-          navigate("/Home");
-        }
+        promise.then(async auth0Obj => {
+          const isAuthenticated = await auth0Obj.isAuthenticated();
+          setIsAuthenticated(isAuthenticated);
+          if (isAuthenticated) {
+            const user = await auth0Obj.getUser();
+            const token = await auth0Obj.getIdTokenClaims();
+            sessionStorage.setItem("user", JSON.stringify(user));
+            sessionStorage.setItem("tokenObject", JSON.stringify(token));
+            sessionStorage.setItem("accessToken", JSON.stringify(token.__raw));
+            setUser(user);
+            setAccessToken(token);
+            navigate("/Home");
+          }
 
-        setLoading(false);
+          setLoading(false);
+        });
       }
     };
     initAuth0();
