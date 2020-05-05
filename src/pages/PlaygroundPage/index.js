@@ -1,8 +1,9 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import "../../styles/Playground.scss";
 
 import LinkCard from "../../components/LinkCard";
+import Modal from "../../components/Modal";
 
 import { callServerless } from "../../utils/network";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
@@ -18,12 +19,13 @@ const PlaygroundPage = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState();
   const [isModalOpen, setModalOpen] = useState(false);
-  const modalRef = useRef();
 
   useEffect(() => {
     setModalOpen(!!desktopSelectedPost);
     setSelectedPost(
-      desktopSelectedPost ? homeFeedPosts.get(desktopSelectedPost) : undefined
+      desktopSelectedPost
+        ? homeFeedPosts.get(desktopSelectedPost.id)
+        : undefined
     );
   }, [desktopSelectedPost]);
 
@@ -55,21 +57,16 @@ const PlaygroundPage = () => {
             />
           ))}
           {isModalOpen && (
-            <div className="modal-container">
-              <div className="modal-content" ref={modalRef}>
-                <LinkCard
-                  cardData={selectedPost}
-                  previewData={postPreviews[selectedPost.url]}
-                  fromModal
-                />
-                <span
-                  className="close"
-                  onClick={() => setDesktopSelectedPost()}
-                >
-                  Close [X]
-                </span>
-              </div>
-            </div>
+            <Modal onCloseClick={() => setDesktopSelectedPost()}>
+              <LinkCard
+                cardData={selectedPost}
+                previewData={postPreviews[selectedPost.url]}
+                fromModal
+                selectedPanel={
+                  desktopSelectedPost ? desktopSelectedPost.panel : undefined
+                }
+              />
+            </Modal>
           )}
         </main>
       )}

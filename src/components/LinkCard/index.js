@@ -24,7 +24,8 @@ import "../../styles/LinkCard.scss";
 const LinkCard = ({
   cardData: { postDescription, url, id },
   previewData,
-  fromModal
+  fromModal,
+  selectedPanel
 }) => {
   const { changeEditingPost, isMobile, setDesktopSelectedPost } = useContext(
     ApplicationContext
@@ -42,8 +43,9 @@ const LinkCard = ({
   const [isOptionsOpen, setOptionsOpen] = useState(false);
 
   useOnClickOutside(ref, () => setOptionsOpen(false));
-  const [extraPanelSelected, setExtraPanel] = useState();
+  const [extraPanelSelected, setExtraPanel] = useState(selectedPanel);
   const toggleExtraPanel = panel => () => {
+    debugger;
     if (isMobile || fromModal) {
       if (extraPanelSelected === panel) {
         setExtraPanel();
@@ -54,7 +56,7 @@ const LinkCard = ({
         setExtraPanel(panel);
       }
     } else {
-      setDesktopSelectedPost(id);
+      setDesktopSelectedPost(id, panel);
     }
   };
 
@@ -64,6 +66,7 @@ const LinkCard = ({
         <div>
           {imageLoading && <LinkCardLoader />}
           <PostPreview
+            linkURL={url}
             className={clsx({ hide: imageLoading })}
             onLoad={onLoad}
             preview={previewData}
@@ -163,7 +166,19 @@ const LinkCard = ({
               </div>
               <div
                 className={clsx({
-                  iconRow__left__friends: true,
+                  iconRow__left__tags: true,
+                  active: extraPanelSelected === "tags"
+                })}
+                onClick={toggleExtraPanel("tags")}
+              >
+                <TagIcon className="tags__icon" title="Tag Icon" />
+                <span className="tags__number">0</span>
+              </div>
+            </div>
+            <div className="iconRow__right">
+              <div
+                className={clsx({
+                  iconRow__right__taggedFriends: true,
                   active: extraPanelSelected === "friends"
                 })}
                 onClick={toggleExtraPanel("friends")}
@@ -173,18 +188,6 @@ const LinkCard = ({
                   <ProfileIcon />
                 </div>
                 <span className="friends__number">1</span>
-              </div>
-            </div>
-            <div className="iconRow__right">
-              <div
-                className={clsx({
-                  iconRow__right__tags: true,
-                  active: extraPanelSelected === "tags"
-                })}
-                onClick={toggleExtraPanel("tags")}
-              >
-                <TagIcon className="tags__icon" title="Tag Icon" />
-                <span className="tags__number">0</span>
               </div>
             </div>
           </div>
@@ -235,11 +238,13 @@ LinkCard.propTypes = {
   }).isRequired,
   previewData: shape({ imgSrc: string, description: string, title: string })
     .isRequired,
-  fromModal: bool
+  fromModal: bool,
+  selectedPanel: string
 };
 
 LinkCard.defaultProps = {
-  fromModal: false
+  fromModal: false,
+  selectedPanel: ""
 };
 
 export default LinkCard;

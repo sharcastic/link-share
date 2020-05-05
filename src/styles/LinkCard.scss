@@ -82,13 +82,14 @@
         display: flex;
       }
 
-      .iconRow__left__friends,
+      .iconRow__right__taggedFriends,
       .iconRow__left__comments,
-      .iconRow__right__tags {
+      .iconRow__left__tags {
         display: flex;
         align-items: center;
         padding-bottom: 5px;
         border-bottom: 3px solid transparent;
+        cursor: pointer;
         &.active {
           border-bottom: 3px solid;
           @include theme-aware("border-color", "secondary");

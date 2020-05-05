@@ -39,6 +39,12 @@
       padding: 10px;
       justify-content: flex-end;
       height: 100%;
+      a {
+        display: flex;
+        flex-direction: column;
+        color: $white;
+        text-decoration: none;
+      }
       &__title {
         font-size: 1.1rem;
         font-family: "Goldplay-Semibold";

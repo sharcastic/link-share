@@ -29,8 +29,8 @@ const ApplicationContextProvider = ({ children }) => {
   const changeEditingPost = id => {
     setEditingPost(id ? homeFeedPosts.get(id) : undefined);
   };
-  const setDesktopSelectedPost = (id = undefined) => {
-    setSelectedPost(id);
+  const setDesktopSelectedPost = (id = undefined, panel = undefined) => {
+    setSelectedPost(id ? { id, panel } : undefined);
   };
   const toggleDarkTheme = () => {
     setDarkTheme(!darkTheme);
