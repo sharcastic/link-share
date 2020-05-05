@@ -1,5 +1,5 @@
-import React, { useRef, useState, useContext } from "react";
-import { string, shape } from "prop-types";
+import React, { useRef, useState, useContext, useEffect } from "react";
+import { string, shape, bool } from "prop-types";
 import clsx from "clsx";
 import { useToasts } from "react-toast-notifications";
 import LinkCardLoader from "../LinkCardLoader";
@@ -21,10 +21,18 @@ import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
-const LinkCard = ({ cardData: { postDescription, url, id }, previewData }) => {
-  const { changeEditingPost } = useContext(ApplicationContext);
+const LinkCard = ({
+  cardData: { postDescription, url, id },
+  previewData,
+  fromModal
+}) => {
+  const { changeEditingPost, isMobile, setDesktopSelectedPost } = useContext(
+    ApplicationContext
+  );
   const { addToast } = useToasts();
+
   const [imageLoading, setLoading] = useState(true);
+
   const onLoad = () => setLoading(false);
   const ref = useRef();
   const onEditPostClick = () => {
@@ -32,13 +40,21 @@ const LinkCard = ({ cardData: { postDescription, url, id }, previewData }) => {
     setOptionsOpen(false);
   };
   const [isOptionsOpen, setOptionsOpen] = useState(false);
+
   useOnClickOutside(ref, () => setOptionsOpen(false));
   const [extraPanelSelected, setExtraPanel] = useState();
   const toggleExtraPanel = panel => () => {
-    if (extraPanelSelected === panel) {
-      setExtraPanel();
+    if (isMobile || fromModal) {
+      if (extraPanelSelected === panel) {
+        setExtraPanel();
+        if (fromModal) {
+          setDesktopSelectedPost();
+        }
+      } else {
+        setExtraPanel(panel);
+      }
     } else {
-      setExtraPanel(panel);
+      setDesktopSelectedPost(id);
     }
   };
 
@@ -213,11 +229,17 @@ const LinkCard = ({ cardData: { postDescription, url, id }, previewData }) => {
 
 LinkCard.propTypes = {
   cardData: shape({
-    previewData: shape({ imgSrc: string, description: string, title: string }),
     postDescription: string,
     url: string,
     id: string
-  }).isRequired
+  }).isRequired,
+  previewData: shape({ imgSrc: string, description: string, title: string })
+    .isRequired,
+  fromModal: bool
+};
+
+LinkCard.defaultProps = {
+  fromModal: false
 };
 
 export default LinkCard;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { isMobile } from "react-device-detect";
 
 import ApplicationContext from "./ApplicationContext";
 
@@ -22,10 +23,14 @@ initialHomeFeedState.set("3", {
 
 const ApplicationContextProvider = ({ children }) => {
   const [darkTheme, setDarkTheme] = useState(false);
+  const [desktopSelectedPost, setSelectedPost] = useState();
   const [editingPost, setEditingPost] = useState();
   const [homeFeedPosts] = useState(initialHomeFeedState);
   const changeEditingPost = id => {
     setEditingPost(id ? homeFeedPosts.get(id) : undefined);
+  };
+  const setDesktopSelectedPost = (id = undefined) => {
+    setSelectedPost(id);
   };
   const toggleDarkTheme = () => {
     setDarkTheme(!darkTheme);
@@ -42,7 +47,10 @@ const ApplicationContextProvider = ({ children }) => {
         toggleDarkTheme,
         homeFeedPosts,
         editingPost,
-        changeEditingPost
+        changeEditingPost,
+        isMobile,
+        desktopSelectedPost,
+        setDesktopSelectedPost
       }}
     >
       {children}

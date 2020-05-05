@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 
 import "../../styles/Playground.scss";
 
@@ -8,11 +8,24 @@ import { callServerless } from "../../utils/network";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
 const PlaygroundPage = () => {
-  const { homeFeedPosts } = useContext(ApplicationContext);
-
+  const {
+    homeFeedPosts,
+    desktopSelectedPost,
+    setDesktopSelectedPost
+  } = useContext(ApplicationContext);
   const [posts, setPosts] = useState([]);
   const [postPreviews, setPostPreviews] = useState({});
   const [pageLoading, setPageLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const modalRef = useRef();
+
+  useEffect(() => {
+    setModalOpen(!!desktopSelectedPost);
+    setSelectedPost(
+      desktopSelectedPost ? homeFeedPosts.get(desktopSelectedPost) : undefined
+    );
+  }, [desktopSelectedPost]);
 
   useEffect(() => {
     const getPreviews = async () => {
@@ -41,6 +54,23 @@ const PlaygroundPage = () => {
               previewData={postPreviews[post.url]}
             />
           ))}
+          {isModalOpen && (
+            <div className="modal-container">
+              <div className="modal-content" ref={modalRef}>
+                <LinkCard
+                  cardData={selectedPost}
+                  previewData={postPreviews[selectedPost.url]}
+                  fromModal
+                />
+                <span
+                  className="close"
+                  onClick={() => setDesktopSelectedPost()}
+                >
+                  Close [X]
+                </span>
+              </div>
+            </div>
+          )}
         </main>
       )}
     </div>

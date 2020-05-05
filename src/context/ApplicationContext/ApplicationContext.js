@@ -5,7 +5,10 @@ const AppliationContext = createContext({
   toggleDarkTheme: () => {},
   homeFeedPosts: [],
   editingPost: undefined,
-  changeEditingPost: () => {}
+  changeEditingPost: () => {},
+  isMobile: true,
+  desktopSelectedPost: undefined,
+  setDesktopSelectedPost: () => {}
 });
 
 export default AppliationContext;
