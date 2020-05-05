@@ -18,10 +18,22 @@
     padding: 50px 0 0 80px;
     min-width: 500px;
     align-items: center;
+    & .createPost__post-info {
+      order: 2;
+      &.hide {
+        display: none;
+      }
+    }
+    & .createPost__linkTextbox {
+      order: 1;
+    }
+    & .createPost__bottom {
+      order: 3;
+    }
     & .createPost__bottom,
     & .createPost__post-info,
     & .createPost__linkTextbox {
-      width: 35%;
+      width: 30%;
       min-width: 400px;
     }
   }

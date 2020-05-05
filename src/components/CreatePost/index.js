@@ -79,7 +79,12 @@ const CreatePost = () => {
       })}
     >
       {preview.responseReceived !== undefined && (
-        <div className="createPost__post-info">
+        <div
+          className={clsx({
+            "createPost__post-info": true,
+            hide: !!linkText && preview.responseReceived === undefined
+          })}
+        >
           {preview.responseReceived === true ? (
             <PostPreview preview={preview} />
           ) : (
