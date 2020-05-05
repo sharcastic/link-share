@@ -5,6 +5,9 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  @media screen and (orientation: landscape) {
+    align-items: flex-start;
+  }
   .header-title {
     margin: 0;
     // color: $blue;
@@ -15,6 +18,9 @@ header {
   .header-left {
     display: flex;
     align-items: center;
+    @media screen and (orientation: landscape) {
+      margin-top: 110px;
+    }
     .mobile-icon {
       margin-right: 15px;
       @media screen and (orientation: landscape) {
@@ -24,9 +30,10 @@ header {
   }
   .header-right {
     display: flex;
+    height: fit-content;
     @media screen and (orientation: landscape) {
-      top: 20px;
-      right: 35px;
+      height: 50px;
+      align-items: center;
     }
   }
   .notifications {
@@ -44,8 +51,8 @@ header {
       @media screen and (orientation: landscape) {
         margin-right: 20px;
         svg {
-          height: 30px;
-          width: 30px;
+          height: 40px;
+          width: 40px;
         }
       }
     }
@@ -148,8 +155,8 @@ header {
       width: 26px;
       z-index: 4;
       @media screen and (orientation: landscape) {
-        height: 35px;
-        width: 35px;
+        height: 40px;
+        width: 40px;
       }
     }
     &__panel {

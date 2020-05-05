@@ -7,6 +7,7 @@ import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetai
 import ApplicationContextProvider from "./context/ApplicationContext/ApplicationContextProvider";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
+import CreatePost from "./components/CreatePost";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
@@ -57,6 +58,7 @@ const RoutesComponent = () => {
                   />
                 </Routes>
               </div>
+              <CreatePost />
             </div>
           </Suspense>
         </ToastProvider>

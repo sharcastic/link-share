@@ -14,7 +14,16 @@
   display: flex;
   flex-direction: column;
   @media screen and (orientation: landscape) {
-    display: none;
+    top: 0;
+    padding: 50px 0 0 80px;
+    min-width: 500px;
+    align-items: center;
+    & .createPost__bottom,
+    & .createPost__post-info,
+    & .createPost__linkTextbox {
+      width: 35%;
+      min-width: 400px;
+    }
   }
   z-index: 3;
   & .createPost__bottom,

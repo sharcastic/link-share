@@ -3,7 +3,6 @@ import React, { useState, useContext, useEffect } from "react";
 import "../../styles/Playground.scss";
 
 import LinkCard from "../../components/LinkCard";
-import CreatePost from "../../components/CreatePost";
 
 import { callServerless } from "../../utils/network";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
@@ -44,9 +43,6 @@ const PlaygroundPage = () => {
           ))}
         </main>
       )}
-      <div className="hidden-container">
-        <CreatePost />
-      </div>
     </div>
   );
 };
