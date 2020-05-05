@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
 import ApplicationContextProvider from "./context/ApplicationContext/ApplicationContextProvider";
 import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
@@ -40,19 +41,22 @@ const RoutesComponent = () => {
       <ProfileDetailsProvider>
         <ToastProvider autoDismiss autoDismissTimeout={3000}>
           <Suspense fallback={<div>Loading your route...!</div>}>
-            <Navbar />
             <div className="page-container">
-              <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route
-                  path="/home"
-                  element={<ProtectedRoute component={HomePage} />}
-                />
-                <Route
-                  path="/playground"
-                  element={<ProtectedRoute component={PlaygroundPage} />}
-                />
-              </Routes>
+              <Navbar />
+              <Header />
+              <div className="route-container">
+                <Routes>
+                  <Route path="/" element={<LoginPage />} />
+                  <Route
+                    path="/home"
+                    element={<ProtectedRoute component={HomePage} />}
+                  />
+                  <Route
+                    path="/playground"
+                    element={<ProtectedRoute component={PlaygroundPage} />}
+                  />
+                </Routes>
+              </div>
             </div>
           </Suspense>
         </ToastProvider>

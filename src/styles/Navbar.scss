@@ -20,10 +20,10 @@
   z-index: 4;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
   @media screen and (orientation: landscape) {
+    top: 0;
+    left: 0;
     height: 100vh;
     width: 80px;
-    bottom: initial;
-    left: initial;
     transform: initial;
     overflow: initial;
     border-radius: initial;
