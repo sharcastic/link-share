@@ -45,7 +45,7 @@ const PlaygroundPage = () => {
         </main>
       )}
       <div className="hidden-container">
-        <CreatePost specialBehaviour />
+        <CreatePost />
       </div>
     </div>
   );

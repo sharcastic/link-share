@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { bool } from "prop-types";
 import clsx from "clsx";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
@@ -24,7 +23,7 @@ const options = [
   { value: "vanilla", label: "Vanilla" }
 ];
 
-const CreatePost = ({ specialBehaviour }) => {
+const CreatePost = () => {
   const { editingPost, changeEditingPost } = useContext(ApplicationContext);
   const [linkText, setLinkText] = useState("");
   const [description, setDescription] = useState("");
@@ -76,8 +75,7 @@ const CreatePost = ({ specialBehaviour }) => {
     <div
       className={clsx({
         createPost: true,
-        "createPost--specialBehaviour": specialBehaviour,
-        "createPost--specialBehaviour--showPanel": specialBehaviour && linkText
+        "createPost--showPanel": !!linkText
       })}
     >
       {preview.responseReceived !== undefined && (
@@ -134,15 +132,5 @@ const CreatePost = ({ specialBehaviour }) => {
     </div>
   );
 };
-
-CreatePost.propTypes = {
-  specialBehaviour: bool
-};
-
-CreatePost.defaultProps = {
-  specialBehaviour: false
-};
-
-//<div className="createPost__post-info__post-preview"></div>
 
 export default CreatePost;
