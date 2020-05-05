@@ -58,12 +58,10 @@
         }
 
         &__copyIcon {
+          fill: $turquoise;
           width: 14px;
           height: 14px;
           cursor: pointer;
-          path {
-            @include theme-aware("fill", "primary");
-          }
         }
       }
 
