@@ -13,12 +13,13 @@
   &::before {
     content: "";
     position: fixed;
+    opacity: 0.8;
     top: 0;
     left: 0;
     background-color: black;
     width: 100%;
     height: 100%;
-    opacity: 80%;
+    
     z-index: -1;
   }
   .modal-content {
