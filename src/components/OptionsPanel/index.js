@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useRef } from "react";
 
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
+import "../../styles/OptionsPanel.scss";
+
 const PanelContext = createContext({
   isOpen: false,
   setIsOpen: () => {}
@@ -33,7 +35,11 @@ const HiddenComponent = ({ children }) => {
 };
 
 export const PanelItem = ({ children, onClick }) => {
-  return <li onClick={onClick}>{children}</li>;
+  return (
+    <li onClick={onClick} className="panel-item">
+      {children}
+    </li>
+  );
 };
 
 const Panel = ({ parentChildren }) => {

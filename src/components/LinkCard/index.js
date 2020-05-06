@@ -2,13 +2,14 @@ import React, { useRef, useState, useContext, useEffect } from "react";
 import { string, shape, bool } from "prop-types";
 import clsx from "clsx";
 import { useToasts } from "react-toast-notifications";
-import LinkCardLoader from "../LinkCardLoader";
-import PostPreview from "../PostPreview";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import TextInput from "../TextInput";
 import ProfileIcon from "../ProfileIcon";
+import Panel, { PanelItem } from "../../components/OptionsPanel";
+import LinkCardLoader from "../LinkCardLoader";
+import PostPreview from "../PostPreview";
 
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
 import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
@@ -83,49 +84,30 @@ const LinkCard = ({
                     </span>
                   </div>
                 </div>
-                <div className="options" ref={ref}>
-                  <OptionsIcon
-                    title="Options Icon"
-                    className="options__icon"
-                    onClick={() => setOptionsOpen(!isOptionsOpen)}
-                  />
-                  <div
-                    className={clsx({
-                      options__panel: true,
-                      hide: !isOptionsOpen
-                    })}
-                  >
-                    <ul className="options__list">
-                      <li className="list__item">
-                        <button className="list__item__text">
-                          <span>
-                            <ShareIcon />
-                          </span>
-                          Share Post
-                        </button>
-                      </li>
-                      <li className="list__item">
-                        <button
-                          className="list__item__text"
-                          onClick={onEditPostClick}
-                        >
-                          <span>
-                            <EditIcon />
-                          </span>
-                          Edit Post
-                        </button>
-                      </li>
-                      <li className="list__item">
-                        <button className="list__item__text">
-                          <span>
-                            <DeleteIcon />
-                          </span>
-                          Delete Post
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <Panel>
+                  <Panel.VisibleComponent>
+                    <OptionsIcon
+                      title="Options Icon"
+                      className="options-icon"
+                    />
+                  </Panel.VisibleComponent>
+                  <Panel.HiddenComponent>
+                    <PanelItem onClick={() => console.log("Clicked on Share")}>
+                      <ShareIcon title="Share Icon" />
+                      Item 1
+                    </PanelItem>
+                    <PanelItem onClick={onEditPostClick}>
+                      <EditIcon title="Edit Icon" />
+                      Item 2
+                    </PanelItem>
+                    <PanelItem
+                      onClick={() => console.log("Clicked on Delete!")}
+                    >
+                      <DeleteIcon title="Delete Icon" />
+                      Item 1
+                    </PanelItem>
+                  </Panel.HiddenComponent>
+                </Panel>
               </div>
             }
           />
