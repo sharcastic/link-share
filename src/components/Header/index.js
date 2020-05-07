@@ -17,20 +17,12 @@ import Button from "../../components/Button";
 
 import { useAuth0 } from "../../utils/Auth0";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import "../../styles/Header.scss";
 
 const Header = () => {
-  const refNotification = useRef();
-
   const { user = {}, logoutUser } = useAuth0();
   const { darkTheme, toggleDarkTheme } = useContext(ApplicationContext);
-
-  const [isNotiOpen, setNotiOpen] = useState(false);
-
-  const toggleNotificationsOpen = () => setNotiOpen(!isNotiOpen);
-  useOnClickOutside(refNotification, () => setNotiOpen(false));
   const toggleThemes = () => toggleDarkTheme();
 
   return (
