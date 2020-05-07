@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useRef } from "react";
 import clsx from "clsx";
 
+import Button from "../Button";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import "../../styles/OptionsPanel.scss";
@@ -47,6 +48,46 @@ export const PanelItem = ({ children, onClick }) => {
       {children}
     </li>
   );
+};
+
+export const NotificationItem = ({ id, type }) => {
+  switch (type) {
+    case "request": {
+      return (
+        <li className="notification-item request-notification">
+          <span>Request Notification</span>
+          <div className="button-section">
+            <Button className="ignore-button" type="plain">
+              Ignore
+            </Button>
+            <Button className="accept-button">Accept</Button>
+          </div>
+        </li>
+      );
+    }
+    case "unread": {
+      return (
+        <li className="notification-item unread-notification">
+          <span>Unread Notification</span>
+          <div className="button-section">
+            <Button className="mark-button" type="plain">
+              Mark as Read
+            </Button>
+          </div>
+        </li>
+      );
+    }
+    case "read": {
+      return (
+        <li className="notification-item read-notification">
+          Read Notification
+        </li>
+      );
+    }
+    default: {
+      return <li />;
+    }
+  }
 };
 
 const Panel = ({ parentChildren, className }) => {

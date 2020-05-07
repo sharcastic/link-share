@@ -1,3 +1,4 @@
+@import "./variables.scss";
 .hide {
   display: none;
 }
@@ -35,4 +36,28 @@
 .options {
   height: 25px;
   width: 25px;
+}
+
+ul {
+  .notification-item {
+    color: $blue;
+    align-items: initial;
+    height: fit-content;
+    border-top: 1px solid #dadbdd;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    .button-section {
+      align-self: flex-end;
+      .ignore-button {
+        color: $red;
+      }
+      .accept-button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+    }
+  }
 }

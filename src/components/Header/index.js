@@ -7,7 +7,10 @@ import { ReactComponent as PreferencesIcon } from "../../assets/icons/preference
 import { ReactComponent as TorchIcon } from "../../assets/icons/torch.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
 
-import Panel, { PanelItem } from "../../components/OptionsPanel";
+import Panel, {
+  PanelItem,
+  NotificationItem
+} from "../../components/OptionsPanel";
 import ProfileIcon from "../../components/ProfileIcon";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
@@ -20,22 +23,15 @@ import "../../styles/Header.scss";
 
 const Header = () => {
   const refNotification = useRef();
-  const refProfile = useRef();
 
   const { user = {}, logoutUser } = useAuth0();
   const { darkTheme, toggleDarkTheme } = useContext(ApplicationContext);
 
   const [isNotiOpen, setNotiOpen] = useState(false);
-  const [isProfileOpen, setProfileOpen] = useState(false);
 
   const toggleNotificationsOpen = () => setNotiOpen(!isNotiOpen);
   useOnClickOutside(refNotification, () => setNotiOpen(false));
-  const toggleProfileOpen = () => setProfileOpen(!isProfileOpen);
-  useOnClickOutside(refProfile, () => setProfileOpen(false));
-  const toggleThemes = () => {
-    toggleDarkTheme();
-    toggleProfileOpen();
-  };
+  const toggleThemes = () => toggleDarkTheme();
 
   return (
     <header>
@@ -44,55 +40,28 @@ const Header = () => {
         <h2 className="header-title">Playground</h2>
       </div>
       <div className="header-right">
-        <div className="notifications" ref={refNotification}>
-          <IconButton
-            Icon={NotificationIcon}
-            title="Notifications"
-            className="notifications__button"
-            onClick={toggleNotificationsOpen}
-          />
-          <span className="notifications__unreadIndicator" />
-          <div
-            className={clsx({
-              notifications__panel: true,
-              hide: !isNotiOpen
-            })}
+        <Panel className="notification-container">
+          <Panel.VisibleComponent>
+            <IconButton
+              Icon={NotificationIcon}
+              title="Notifications"
+              className="notifications-icon"
+            />
+            <span className="unread-indicator" />
+          </Panel.VisibleComponent>
+          <Panel.HiddenComponent
+            headerElement={
+              <div className="hidden-header">
+                <Button type="plain">View All</Button>
+                <Button type="plain">Updates</Button>
+              </div>
+            }
           >
-            <div className="notifications__panel__header">
-              <Button type="plain" onClick={toggleNotificationsOpen}>
-                View All
-              </Button>
-              <span>Updates</span>
-            </div>
-            <ul className="notifications__panel__list">
-              <li
-                className="notifications-item"
-                onClick={toggleNotificationsOpen}
-              >
-                <p className="notifications-item__text">First Item</p>
-                <div className="notifications-item__buttonSection">
-                  <Button className="notification-button--ignore" type="plain">
-                    Ignore
-                  </Button>
-                  <Button className="notification-button--accept">
-                    Accept
-                  </Button>
-                </div>
-              </li>
-              <li
-                className="notifications-item"
-                onClick={toggleNotificationsOpen}
-              >
-                <p className="notifications-item__text">Second Item</p>
-                <div className="notifications-item__buttonSection">
-                  <Button className="notification-button--mark" type="plain">
-                    Mark as Read
-                  </Button>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+            <NotificationItem type="request" id="1" />
+            <NotificationItem type="unread" id="1" />
+            <NotificationItem type="read" id="1" />
+          </Panel.HiddenComponent>
+        </Panel>
         <Panel className="profile-container">
           <Panel.VisibleComponent>
             <ProfileIcon alt="Profile Button" img={user.picture} />

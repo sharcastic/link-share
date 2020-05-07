@@ -36,119 +36,13 @@ header {
       align-items: center;
     }
   }
-  .notifications {
-    display: flex;
-    position: relative;
-    margin-right: 10px;
-    &__button {
-      padding: 0 10px;
-      z-index: 3;
-      svg {
-        height: 26px;
-        width: 26px;
-        @include theme-aware("fill", "primary");
-      }
-      @media screen and (orientation: landscape) {
-        margin-right: 20px;
-        svg {
-          height: 40px;
-          width: 40px;
-        }
-      }
-    }
-    &__unreadIndicator {
-      background-color: $red;
-      height: 10px;
-      width: 10px;
-      position: absolute;
-      top: 0px;
-      right: 10px;
-      border-radius: 10px;
-      z-index: 3;
-
-      @media screen and (orientation: landscape) {
-        top: 2px;
-        right: 30px;
-      }
-    }
-    &__panel {
-      position: absolute;
-      // background-color: $white;
-      @include theme-aware("background", "cardBg");
-      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-      width: 270px;
-      right: 0;
-      z-index: 2;
-      top: -10px;
-      max-height: 300px;
-      border-radius: 5px;
-      @media screen and (orientation: landscape) {
-        width: 350px;
-      }
-      &.hide {
-        display: none;
-      }
-      &__header {
-        padding: 20px 10px;
-        display: flex;
-        justify-content: space-between;
-        @include theme-aware("color", "text0");
-        @media screen and (orientation: landscape) {
-          padding: 15px;
-          padding-top: 18px;
-        }
-        & span:last-of-type {
-          margin-right: 40px;
-          @media screen and (orientation: landscape) {
-            margin-right: 55px;
-          }
-        }
-      }
-      &__list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        // background-color: $grey;
-        @include theme-aware("background", "bg");
-        border-radius: 0px 0px 5px 5px;
-        .notifications-item {
-          height: fit-content;
-          border-top: 1px solid #dadbdd;
-          padding: 10px;
-          display: flex;
-          flex-direction: column;
-          cursor: pointer;
-          &__text {
-            @include theme-aware("color", "text0");
-          }
-          &__buttonSection {
-            align-self: flex-end;
-            padding-top: 5px;
-            padding-right: 5px;
-            .notification-button {
-              &--mark {
-              }
-              &--accept {
-                margin-left: 10px;
-                padding: 5px 10px;
-                border-radius: 5px;
-              }
-              &--ignore {
-                color: $red;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 .profile-container {
   .profile-icon {
     height: 26px;
     width: 26px;
-    z-index: 4;
+    z-index: 5;
     position: relative;
     cursor: pointer;
     @media screen and (orientation: landscape) {
@@ -159,6 +53,7 @@ header {
   .hidden-component {
     top: -5px;
     right: -5px;
+    z-index: 4;
   }
   .panel-item {
     svg {
@@ -181,5 +76,57 @@ header {
   border-top-right-radius: 10px;
   @media screen and (orientation: landscape) {
     height: 50px;
+  }
+}
+
+.notification-container {
+  margin-right: 20px;
+  .hidden-component {
+    width: 270px;
+    right: -10px;
+    top: -5px;
+    @media screen and (orientation: landscape) {
+      width: 350px;
+      top: 0;
+    }
+    .hidden-header {
+      padding-right: 60px;
+      display: flex;
+      justify-content: space-between;
+      @include theme-aware("color", "text0");
+
+      :nth-child(2) {
+        font-family: "Goldplay-Medium";
+      }
+    }
+  }
+  .notifications-icon {
+    z-index: 4;
+    position: relative;
+    cursor: pointer;
+    svg {
+      @include theme-aware("fill", "primary");
+      height: 26px;
+      width: 26px;
+      @media screen and (orientation: landscape) {
+        height: 40px;
+        width: 40px;
+        margin-top: 5px;
+      }
+    }
+  }
+  .unread-indicator {
+    background-color: $red;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 10px;
+    z-index: 4;
+    @media screen and (orientation: landscape) {
+      top: 5px;
+      right: 5px;
+    }
   }
 }
