@@ -1,5 +1,5 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
-import { string, shape, bool } from "prop-types";
+import React, { useState, useContext } from "react";
+import { string, shape, bool, number, oneOfType } from "prop-types";
 import clsx from "clsx";
 import { useToasts } from "react-toast-notifications";
 
@@ -9,7 +9,6 @@ import Panel, { PanelItem } from "../../components/OptionsPanel";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
 
-import useOnClickOutside from "../../hooks/useOnClickOutside";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
 import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
@@ -36,17 +35,11 @@ const LinkCard = ({
   const [imageLoading, setLoading] = useState(true);
 
   const onLoad = () => setLoading(false);
-  const ref = useRef();
   const onEditPostClick = () => {
     changeEditingPost(id);
-    setOptionsOpen(false);
   };
-  const [isOptionsOpen, setOptionsOpen] = useState(false);
-
-  useOnClickOutside(ref, () => setOptionsOpen(false));
   const [extraPanelSelected, setExtraPanel] = useState(selectedPanel);
   const toggleExtraPanel = panel => () => {
-    debugger;
     if (isMobile || fromModal) {
       if (extraPanelSelected === panel) {
         setExtraPanel();
@@ -221,12 +214,14 @@ LinkCard.propTypes = {
   previewData: shape({ imgSrc: string, description: string, title: string })
     .isRequired,
   fromModal: bool,
-  selectedPanel: string
+  selectedPanel: string,
+  index: oneOfType([number, null])
 };
 
 LinkCard.defaultProps = {
   fromModal: false,
-  selectedPanel: ""
+  selectedPanel: "",
+  index: null
 };
 
 export default LinkCard;

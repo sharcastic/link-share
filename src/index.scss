@@ -59,9 +59,9 @@ input {
   padding: 15px;
   width: 100%;
   @media screen and (orientation: landscape) {
-    width: 100vw;
-    margin-left: 80px;
-    padding: 50px;
+    width: 80vw;
+    margin: auto;
+    padding: 50px 0;
   }
 }
 

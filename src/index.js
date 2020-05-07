@@ -14,6 +14,10 @@ import {
 import Routes from "./Routes";
 import * as serviceWorker from "./serviceWorker";
 
+window.onbeforeunload = function() {
+  window.scrollTo(0, 0);
+};
+
 render(
   <React.StrictMode>
     <Router>

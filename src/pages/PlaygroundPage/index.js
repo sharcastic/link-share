@@ -12,7 +12,8 @@ const PlaygroundPage = () => {
   const {
     homeFeedPosts,
     desktopSelectedPost,
-    setDesktopSelectedPost
+    setDesktopSelectedPost,
+    setHomeRef
   } = useContext(ApplicationContext);
   const [posts, setPosts] = useState([]);
   const [postPreviews, setPostPreviews] = useState({});
@@ -39,6 +40,7 @@ const PlaygroundPage = () => {
       setPostPreviews(response);
       setPosts(arr);
       setPageLoading(false);
+      setHomeRef(document.querySelectorAll(".post__container")[1]);
     };
     getPreviews();
   }, [homeFeedPosts]);
@@ -49,7 +51,7 @@ const PlaygroundPage = () => {
         <div>Loading Posts!</div>
       ) : (
         <main>
-          {posts.map(post => (
+          {posts.map((post, index) => (
             <LinkCard
               cardData={post}
               key={post.id}

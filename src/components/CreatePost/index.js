@@ -6,6 +6,7 @@ import ApplicationContext from "../../context/ApplicationContext/ApplicationCont
 import { callServerless } from "../../utils/network";
 
 import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
+import { ReactComponent as AddIcon } from "../../assets/icons/add.svg";
 
 import Button from "../Button";
 import TextInput from "../TextInput";
@@ -24,7 +25,10 @@ const options = [
 ];
 
 const CreatePost = () => {
-  const { editingPost, changeEditingPost } = useContext(ApplicationContext);
+  const { editingPost, changeEditingPost, showHomeTextInput } = useContext(
+    ApplicationContext
+  );
+  const [showTextInputOverride, setOverride] = useState(false);
   const [linkText, setLinkText] = useState("");
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState({});
@@ -78,6 +82,12 @@ const CreatePost = () => {
         "createPost--showPanel": !!linkText
       })}
     >
+      <div
+        className={clsx({ addPostButton: true, hide: showHomeTextInput })}
+        onClick={() => setOverride(true)}
+      >
+        <AddIcon title="Add Icon" />
+      </div>
       {preview.responseReceived !== undefined && (
         <div
           className={clsx({
@@ -125,7 +135,10 @@ const CreatePost = () => {
         value={linkText}
         onChange={onLinkTextChange}
         onBlur={onBlur}
-        className="createPost__linkTextbox"
+        className={clsx({
+          createPost__linkTextbox: true,
+          hide: !showHomeTextInput && !showTextInputOverride
+        })}
         placeholder="Type or paste a link here"
       />
       <div className="createPost__bottom">

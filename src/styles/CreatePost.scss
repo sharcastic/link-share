@@ -17,7 +17,7 @@
     bottom: 85vh;
     z-index: 0;
     top: 0;
-    padding: 50px 0 0 80px;
+    padding-top: 50px;
     min-width: 500px;
     align-items: center;
     & .createPost__post-info {
@@ -38,6 +38,9 @@
       width: 30%;
       min-width: 400px;
     }
+  }
+  & .createPost__bottom {
+    display: none;
   }
   & .createPost__bottom,
   .createPost__post-info {
@@ -67,6 +70,9 @@
   }
   &--showPanel {
     z-index: 5;
+    & .createPost__bottom {
+      display: flex;
+    }
     & .createPost__bottom,
     .createPost__post-info {
       z-index: inherit;
@@ -103,6 +109,9 @@
     @include theme-aware("background", "cardBg");
     &::placeholder {
       @include theme-aware("color", "placeholder");
+    }
+    &.hide {
+      display: none;
     }
   }
   &__post-info {
@@ -179,5 +188,24 @@
   .post-preview__details__linkDetails {
     justify-content: flex-end;
     height: 100%;
+  }
+  .addPostButton {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: $white;
+    width: 60px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    &.hide {
+      display: none;
+    }
   }
 }

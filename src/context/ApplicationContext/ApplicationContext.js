@@ -8,7 +8,9 @@ const AppliationContext = createContext({
   changeEditingPost: () => {},
   isMobile: true,
   desktopSelectedPost: undefined,
-  setDesktopSelectedPost: () => {}
+  setDesktopSelectedPost: () => {},
+  setHomeRef: () => {},
+  showHomeTextInput: true
 });
 
 export default AppliationContext;

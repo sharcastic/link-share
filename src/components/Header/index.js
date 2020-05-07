@@ -1,5 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
-import clsx from "clsx";
+import React, { useContext } from "react";
 
 import { ReactComponent as NotificationIcon } from "../../assets/icons/notifications.svg";
 import { ReactComponent as LogoIcon } from "../../assets/icons/logo-mobile.svg";

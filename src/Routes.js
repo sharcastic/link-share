@@ -5,7 +5,6 @@ import { useAuth0 } from "./utils/Auth0";
 import LoginPage from "./pages/LoginPage";
 import ProfileDetailsProvider from "./context/ProfileDetailsContext/ProfileDetailsProvider";
 import ApplicationContextProvider from "./context/ApplicationContext/ApplicationContextProvider";
-import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import CreatePost from "./components/CreatePost";
 
@@ -43,7 +42,6 @@ const RoutesComponent = () => {
         <ToastProvider autoDismiss autoDismissTimeout={3000}>
           <Suspense fallback={<div>Loading your route...!</div>}>
             <div className="page-container">
-              <Navbar />
               <Header />
               <div className="route-container">
                 <Routes>
