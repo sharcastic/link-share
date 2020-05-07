@@ -6,6 +6,8 @@ import { ReactComponent as LogoIcon } from "../../assets/icons/logo-mobile.svg";
 import { ReactComponent as PreferencesIcon } from "../../assets/icons/preferences.svg";
 import { ReactComponent as TorchIcon } from "../../assets/icons/torch.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
+
+import Panel, { PanelItem } from "../../components/OptionsPanel";
 import ProfileIcon from "../../components/ProfileIcon";
 import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
@@ -91,42 +93,26 @@ const Header = () => {
             </ul>
           </div>
         </div>
-        <div className="profile" ref={refProfile}>
-          <ProfileIcon
-            alt="Profile Button"
-            onClick={toggleProfileOpen}
-            img={user.picture}
-          />
-
-          <div className={clsx({ profile__panel: true, hide: !isProfileOpen })}>
-            <div className="profile__panel__header">
-              <span>@username</span>
-            </div>
-            <ul className="profile__panel__list">
-              <li
-                className="profile__panel__list__item"
-                onClick={toggleProfileOpen}
-              >
-                <button>
-                  <PreferencesIcon />
-                  Preferences
-                </button>
-              </li>
-              <li className="profile__panel__list__item" onClick={toggleThemes}>
-                <button>
-                  <TorchIcon />
-                  <p>{darkTheme ? "Light Mode" : "Dark Mode"}</p>
-                </button>
-              </li>
-              <li className="profile__panel__list__item" onClick={logoutUser}>
-                <button>
-                  <LogoutIcon />
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <Panel className="profile-container">
+          <Panel.VisibleComponent>
+            <ProfileIcon alt="Profile Button" img={user.picture} />
+          </Panel.VisibleComponent>
+          <Panel.HiddenComponent
+            headerElement={<div className="hidden-header">@username</div>}
+          >
+            <PanelItem onClick={() => console.log("Clicked on Share")}>
+              <PreferencesIcon title="Preferences Icon" />
+              Preferences
+            </PanelItem>
+            <PanelItem onClick={toggleThemes}>
+              <TorchIcon title="Mode switch icon" />
+              <p>{darkTheme ? "Light Mode" : "Dark Mode"}</p>
+            </PanelItem>
+            <PanelItem onClick={logoutUser}>
+              <LogoutIcon title="Logout icon" /> Logout
+            </PanelItem>
+          </Panel.HiddenComponent>
+        </Panel>
       </div>
     </header>
   );

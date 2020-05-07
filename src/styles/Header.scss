@@ -142,120 +142,44 @@ header {
       }
     }
   }
-  .profile {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+}
+
+.profile-container {
+  .profile-icon {
+    height: 26px;
+    width: 26px;
+    z-index: 4;
     position: relative;
-    display: flex;
-    .profile-icon {
-      height: 26px;
-      width: 26px;
-      z-index: 4;
-      @media screen and (orientation: landscape) {
-        height: 40px;
-        width: 40px;
-      }
+    cursor: pointer;
+    @media screen and (orientation: landscape) {
+      height: 40px;
+      width: 40px;
     }
-    &__panel {
-      position: absolute;
-      background-color: $white;
-      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-      // width: 120px;
-      right: -5px;
-      z-index: 3;
-      top: -5px;
-      max-height: 300px;
-      border-radius: 5px;
-      color: $text-dark;
-      @media screen and (orientation: landscape) {
-        width: 150px;
-      }
-
-      &.hide {
-        display: none;
-      }
-
-      &__header {
-        padding: 10px 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        @include theme-aware("color", "text0");
-        @include theme-aware("background", "cardBg");
-        @media screen and (orientation: landscape) {
-          padding: 15px;
-          padding-top: 18px;
-        }
-        & span:last-of-type {
-          margin-right: 40px;
-          @media screen and (orientation: landscape) {
-            margin-right: 55px;
-          }
-        }
-      }
-
-      &__list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        @include theme-aware("background", "bg");
-        &__item {
-          height: fit-content;
-          // border-top: 1px solid #dadbdd;
-          padding: 7px 10px;
-          display: flex;
-          flex-direction: column;
-          cursor: pointer;
-          button {
-            border: none;
-            padding: 0;
-            background: none;
-            text-align: left;
-            display: flex;
-            @include theme-aware("color", "text1");
-            svg {
-              // background: $greygrey;
-              width: 18px;
-              height: 18px;
-              display: inline-block;
-              margin-right: 3px;
-              padding: 3px;
-              svg {
-                height: 12px;
-                width: 12px;
-                path {
-                  @include theme-aware("fill", "primary");
-                }
-              }
-              p {
-              }
-            }
-          }
-
-          &__buttonSection {
-            align-self: flex-end;
-            padding-top: 5px;
-            padding-right: 5px;
-
-            &__button {
-              &--mark {
-              }
-
-              &--accept {
-                margin-left: 10px;
-                padding: 5px 10px;
-                border-radius: 5px;
-              }
-
-              &--ignore {
-                color: $red;
-              }
-            }
-          }
-        }
-      }
+  }
+  .hidden-component {
+    top: -5px;
+    right: -5px;
+  }
+  .panel-item {
+    svg {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      margin-right: 3px;
+      padding: 3px;
     }
+  }
+}
+.hidden-header {
+  background-color: $white;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  padding: 0 50px 0 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  @media screen and (orientation: landscape) {
+    height: 50px;
   }
 }

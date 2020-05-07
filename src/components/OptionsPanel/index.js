@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useRef } from "react";
+import clsx from "clsx";
 
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
@@ -25,38 +26,48 @@ const VisibleComponent = ({ children }) => {
   return <>{children}</>;
 };
 
-const HiddenComponent = ({ children }) => {
+const HiddenComponent = ({ children, headerElement = null }) => {
   const { isOpen } = useContext(PanelContext);
   return (
-    <ul className={isOpen ? "hidden-component" : "hide hidden-component"}>
-      {children}
-    </ul>
+    <div className={isOpen ? "hidden-component" : "hide hidden-component"}>
+      {headerElement}
+      <ul>{children}</ul>
+    </div>
   );
 };
 
 export const PanelItem = ({ children, onClick }) => {
+  const { setOpen } = useContext(PanelContext);
+  const onItemClick = () => {
+    setOpen(false);
+    onClick();
+  };
   return (
-    <li onClick={onClick} className="panel-item">
+    <li onClick={onItemClick} className="panel-item">
       {children}
     </li>
   );
 };
 
-const Panel = ({ parentChildren }) => {
+const Panel = ({ parentChildren, className }) => {
   const { setOpen } = useContext(PanelContext);
   const ref = useRef();
   useOnClickOutside(ref, () => setOpen(false));
   return (
-    <div ref={ref} onClick={setOpen} className="panel-container">
+    <div
+      ref={ref}
+      onClick={() => setOpen()}
+      className={clsx(["panel-container", className])}
+    >
       {parentChildren}
     </div>
   );
 };
 
-const PanelContainer = ({ children }) => {
+const PanelContainer = ({ children, className }) => {
   return (
     <PanelContextProvider>
-      <Panel parentChildren={children} />
+      <Panel parentChildren={children} className={className} />
     </PanelContextProvider>
   );
 };

@@ -94,17 +94,17 @@ const LinkCard = ({
                   <Panel.HiddenComponent>
                     <PanelItem onClick={() => console.log("Clicked on Share")}>
                       <ShareIcon title="Share Icon" />
-                      Item 1
+                      Share Post
                     </PanelItem>
                     <PanelItem onClick={onEditPostClick}>
                       <EditIcon title="Edit Icon" />
-                      Item 2
+                      Edit Post
                     </PanelItem>
                     <PanelItem
                       onClick={() => console.log("Clicked on Delete!")}
                     >
                       <DeleteIcon title="Delete Icon" />
-                      Item 1
+                      Delete Post
                     </PanelItem>
                   </Panel.HiddenComponent>
                 </Panel>
