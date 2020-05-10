@@ -64,6 +64,7 @@ const LinkCard = ({
             className={clsx({ hide: imageLoading })}
             onLoad={onLoad}
             preview={previewData}
+            initialLoad={previewData === undefined}
             previewTop={
               <div className="details-top">
                 <div className="creationDetails">
@@ -211,17 +212,15 @@ LinkCard.propTypes = {
     url: string,
     id: string
   }).isRequired,
-  previewData: shape({ imgSrc: string, description: string, title: string })
-    .isRequired,
+  previewData: shape({ imgSrc: string, description: string, title: string }),
   fromModal: bool,
-  selectedPanel: string,
-  index: oneOfType([number, null])
+  selectedPanel: string
 };
 
 LinkCard.defaultProps = {
   fromModal: false,
   selectedPanel: "",
-  index: null
+  previewData: {}
 };
 
 export default LinkCard;

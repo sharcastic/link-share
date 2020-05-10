@@ -16,7 +16,6 @@ const PlaygroundPage = () => {
   } = useContext(ApplicationContext);
   const [posts, setPosts] = useState([]);
   const [postPreviews, setPostPreviews] = useState({});
-  const [pageLoading, setPageLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState();
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -38,18 +37,17 @@ const PlaygroundPage = () => {
       const response = await callServerless(arr.map(i => i.url));
       setPostPreviews(response);
       setPosts(arr);
-      setPageLoading(false);
     };
     getPreviews();
   }, [homeFeedPosts]);
 
   return (
     <div className="playground-page">
-      {pageLoading ? (
+      {homeFeedPosts.length === 0 ? (
         <div>Loading Posts!</div>
       ) : (
         <main>
-          {posts.map((post, index) => (
+          {posts.map(post => (
             <LinkCard
               cardData={post}
               key={post.id}

@@ -25,10 +25,12 @@ const options = [
 ];
 
 const CreatePost = () => {
-  const { editingPost, changeEditingPost, showHomeTextInput } = useContext(
-    ApplicationContext
-  );
-  const [showTextInputOverride, setOverride] = useState(false);
+  const {
+    editingPost,
+    changeEditingPost,
+    showHomeTextInput,
+    setShowTextInputValue
+  } = useContext(ApplicationContext);
   const [linkText, setLinkText] = useState("");
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState({});
@@ -68,6 +70,7 @@ const CreatePost = () => {
     setLinkText("");
     setPreview({});
     setSelectedUsers([]);
+    setShowTextInputValue(false);
   };
   const onSelectedUserChange = users =>
     users === null ? setSelectedUsers([]) : setSelectedUsers(users);
@@ -84,7 +87,7 @@ const CreatePost = () => {
     >
       <div
         className={clsx({ addPostButton: true, hide: showHomeTextInput })}
-        onClick={() => setOverride(true)}
+        onClick={() => setShowTextInputValue(true)}
       >
         <AddIcon title="Add Icon" />
       </div>
@@ -137,7 +140,8 @@ const CreatePost = () => {
         onBlur={onBlur}
         className={clsx({
           createPost__linkTextbox: true,
-          hide: !showHomeTextInput && !showTextInputOverride
+          // hide: !showHomeTextInput && !showTextInputOverride
+          hide: !showHomeTextInput
         })}
         placeholder="Type or paste a link here"
       />
