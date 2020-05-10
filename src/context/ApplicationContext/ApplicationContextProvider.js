@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 
-import useIntersect from "../../hooks/useObserver";
 import ApplicationContext from "./ApplicationContext";
 
 const initialHomeFeedState = new Map();
@@ -34,21 +33,12 @@ initialHomeFeedState.set("5", {
 });
 
 const ApplicationContextProvider = ({ children }) => {
-  const [setIntersectRef, entry] = useIntersect({
-    threshold: 0
-  });
   const [showHomeTextInput, setShowTextInput] = useState(true);
   const [darkTheme, setDarkTheme] = useState(false);
   const [desktopSelectedPost, setSelectedPost] = useState();
   const [editingPost, setEditingPost] = useState();
-  const [homeRef, setRef] = useState();
   const [homeFeedPosts] = useState(initialHomeFeedState);
 
-  const setHomeRef = ref => {
-    if (isMobile) {
-      setRef(ref);
-    }
-  };
   const changeEditingPost = id => {
     setEditingPost(id ? homeFeedPosts.get(id) : undefined);
   };
@@ -60,15 +50,11 @@ const ApplicationContextProvider = ({ children }) => {
     document.documentElement.classList.toggle("theme-light");
     document.documentElement.classList.toggle("theme-dark");
   };
-  useEffect(() => {
-    setIntersectRef(homeRef);
-  }, [homeRef]);
-  useEffect(() => {
-    setShowTextInput(!showHomeTextInput);
-  }, [entry]);
+  const setShowTextInputValue = bool => setShowTextInput(bool);
   useEffect(() => {
     document.documentElement.classList.toggle("theme-light");
   }, []);
+
   return (
     <ApplicationContext.Provider
       value={{
@@ -80,8 +66,8 @@ const ApplicationContextProvider = ({ children }) => {
         isMobile,
         desktopSelectedPost,
         setDesktopSelectedPost,
-        setHomeRef,
-        showHomeTextInput
+        showHomeTextInput,
+        setShowTextInputValue
       }}
     >
       {children}

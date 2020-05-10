@@ -12,8 +12,7 @@ const PlaygroundPage = () => {
   const {
     homeFeedPosts,
     desktopSelectedPost,
-    setDesktopSelectedPost,
-    setHomeRef
+    setDesktopSelectedPost
   } = useContext(ApplicationContext);
   const [posts, setPosts] = useState([]);
   const [postPreviews, setPostPreviews] = useState({});
@@ -40,7 +39,6 @@ const PlaygroundPage = () => {
       setPostPreviews(response);
       setPosts(arr);
       setPageLoading(false);
-      setHomeRef(document.querySelectorAll(".post__container")[1]);
     };
     getPreviews();
   }, [homeFeedPosts]);

@@ -56,16 +56,19 @@ input {
   display: flex;
 }
 .page-container {
-  padding: 15px;
   width: 100%;
-  @media screen and (orientation: landscape) {
-    width: 80vw;
-    margin: auto;
-    padding: 50px 0;
-  }
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.route-container {
+  padding: 0 15px 15px 15px;
+  @media screen and (orientation: landscape) {
+    width: 80vw;
+    margin: auto;
+    padding-bottom: 50px;
+  }
 }
