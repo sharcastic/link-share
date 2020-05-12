@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { string, shape, bool, number, oneOfType } from "prop-types";
+import { string, shape, bool } from "prop-types";
 import clsx from "clsx";
 import { useToasts } from "react-toast-notifications";
 
@@ -8,6 +8,7 @@ import ProfileIcon from "../ProfileIcon";
 import Panel, { PanelItem } from "../../components/OptionsPanel";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
+import LinkCardPanel from "../LinkCardPanel";
 
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
@@ -32,9 +33,6 @@ const LinkCard = ({
   );
   const { addToast } = useToasts();
 
-  const [imageLoading, setLoading] = useState(true);
-
-  const onLoad = () => setLoading(false);
   const onEditPostClick = () => {
     changeEditingPost(id);
   };
@@ -58,13 +56,11 @@ const LinkCard = ({
     <div className="post__container">
       <div className="post">
         <div>
-          {imageLoading && <LinkCardLoader />}
+          {previewData === undefined && <LinkCardLoader />}
           <PostPreview
             linkURL={url}
-            className={clsx({ hide: imageLoading })}
-            onLoad={onLoad}
+            className={clsx({ hide: previewData === undefined })}
             preview={previewData}
-            initialLoad={previewData === undefined}
             previewTop={
               <div className="details-top">
                 <div className="creationDetails">
@@ -174,32 +170,7 @@ const LinkCard = ({
             hide: !extraPanelSelected
           })}
         >
-          <div className="tabarea-content">
-            {/* {extraPanelSelected === "comments" && "Comments Tab"}
-            {extraPanelSelected === "friends" && "Friends Tab"}
-            {extraPanelSelected === "tags" && "Tags Tab"} */}
-            <div className="comment-item">
-              <ProfileIcon className="author-icon" />
-              <div className="comment-details">
-                <span className="comment-author">Friend name</span>
-                <span className="comment-text">Comment content!</span>
-              </div>
-            </div>
-            <div className="comment-item">
-              <span className="author-icon">
-                <ProfileIcon className="author-icon" />
-              </span>
-              <div className="comment-details">
-                <span className="comment-author">Fricken Chicken</span>
-                <span className="comment-text">
-                  This another comment to add to the previous one. This can be a
-                  longer comment, and that’s ok. Because we can handle it.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <TextInput value="" placeholder="Add a comment" />
+          <LinkCardPanel panelSelected={extraPanelSelected} />
         </div>
       </div>
     </div>

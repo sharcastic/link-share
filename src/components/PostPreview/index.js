@@ -1,37 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { func, string, node, object, bool } from "prop-types";
+import React, { useState } from "react";
+import { string, node, object } from "prop-types";
+import clsx from "clsx";
 
 import DefaultImage from "../../assets/icons/previewImgMissing.svg";
 import "../../styles/PostPreview.scss";
 
-const PostPreview = ({
-  onLoad,
-  previewTop,
-  preview,
-  className,
-  linkURL,
-  initialLoad
-}) => {
-  const { title, description } = preview;
-  const [imgSrc, setImgSrc] = useState(DefaultImage);
-
-  useEffect(() => {
-    const { image } = preview;
-    if (initialLoad || !image) {
-      setImgSrc(DefaultImage);
-    } else {
-      setImgSrc(image);
-    }
-  }, [preview]);
-  const LinkTitleAndDescription = () => (
-    <>
-      <span className="linkDetails__title">{title}</span>
-      <span className="linkDetails__description">{description}</span>
-    </>
-  );
-  const onImageLoad = () => {
-    if (!initialLoad) {
-      onLoad();
+const PostPreview = ({ previewTop, preview, className, linkURL }) => {
+  const { title, description, image } = preview;
+  const [showActualImage, setShowImage] = useState(false);
+  const onImageLoad = () => setShowImage(true);
+  const onAnchorClick = e => {
+    if (linkURL) {
+      e.preventDefault();
     }
   };
   return (
@@ -40,42 +20,43 @@ const PostPreview = ({
       <div className="post-preview__details">
         {previewTop}
         <div className="linkDetails">
-          {linkURL ? (
-            <a href={linkURL} target="_blank" rel="noopener noreferrer">
-              <LinkTitleAndDescription />
-            </a>
-          ) : (
-            <LinkTitleAndDescription />
-          )}
+          <a
+            href={linkURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onAnchorClick}
+          >
+            <span className="linkDetails__title">{title}</span>
+            <span className="linkDetails__description">{description}</span>
+          </a>
         </div>
       </div>
-      <img
-        src={imgSrc}
-        alt="backdrop"
-        onLoad={onImageLoad}
-        onError={() => setImgSrc(DefaultImage)}
-      />
+      {image && (
+        <img
+          src={image}
+          alt="backdrop"
+          onLoad={onImageLoad}
+          className={clsx({ hide: !showActualImage })}
+        />
+      )}
+      {!showActualImage && <img src={DefaultImage} alt="backdrop" />}
     </div>
   );
 };
 
 PostPreview.propTypes = {
   src: string,
-  onLoad: func,
   previewTop: node,
   preview: object,
   className: string,
-  linkURL: string,
-  initialLoad: bool
+  linkURL: string
 };
 
 PostPreview.defaultProps = {
   previewTop: null,
-  onLoad: () => {},
   className: "",
   preview: {},
-  linkURL: "",
-  initialLoad: false
+  linkURL: ""
 };
 
 export default PostPreview;
