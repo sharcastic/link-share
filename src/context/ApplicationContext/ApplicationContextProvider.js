@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { isMobile } from "react-device-detect";
 
 import ApplicationContext from "./ApplicationContext";
@@ -39,18 +39,21 @@ const ApplicationContextProvider = ({ children }) => {
   const [editingPost, setEditingPost] = useState();
   const [homeFeedPosts] = useState(initialHomeFeedState);
 
-  const changeEditingPost = id => {
+  const changeEditingPost = useCallback(id => {
     setEditingPost(id ? homeFeedPosts.get(id) : undefined);
-  };
-  const setDesktopSelectedPost = (id = undefined, panel = undefined) => {
-    setSelectedPost(id ? { id, panel } : undefined);
-  };
-  const toggleDarkTheme = () => {
+  }, []);
+  const setDesktopSelectedPost = useCallback(
+    (id = undefined, panel = undefined) => {
+      setSelectedPost(id ? { id, panel } : undefined);
+    },
+    []
+  );
+  const toggleDarkTheme = useCallback(() => {
     setDarkTheme(!darkTheme);
     document.documentElement.classList.toggle("theme-light");
     document.documentElement.classList.toggle("theme-dark");
-  };
-  const setShowTextInputValue = bool => setShowTextInput(bool);
+  }, []);
+  const setShowTextInputValue = useCallback(bool => setShowTextInput(bool), []);
   useEffect(() => {
     document.documentElement.classList.toggle("theme-light");
   }, []);

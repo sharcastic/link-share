@@ -72,3 +72,10 @@ code {
     padding-bottom: 50px;
   }
 }
+
+.hide {
+  visibility: hidden;
+  * {
+    visibility: hidden;
+  }
+}

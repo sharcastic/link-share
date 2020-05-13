@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useRef } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useCallback
+} from "react";
 import clsx from "clsx";
 
 import Button from "../Button";
@@ -6,16 +12,13 @@ import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import "../../styles/OptionsPanel.scss";
 
-const PanelContext = createContext({
-  isOpen: false,
-  setIsOpen: () => {}
-});
+const PanelContext = createContext();
 
 const PanelContextProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const setOpen = (state = undefined) => {
+  const setOpen = useCallback((state = undefined) => {
     setIsOpen(state === undefined ? !isOpen : state);
-  };
+  }, []);
   return (
     <PanelContext.Provider value={{ isOpen, setOpen }}>
       {children}
@@ -29,12 +32,15 @@ const VisibleComponent = ({ children }) => {
 
 const HiddenComponent = ({ children, headerElement = null }) => {
   const { isOpen } = useContext(PanelContext);
-  return (
-    <div className={isOpen ? "hidden-component" : "hide hidden-component"}>
-      {headerElement}
-      <ul>{children}</ul>
-    </div>
-  );
+  if (isOpen) {
+    return (
+      <div className="hidden-component">
+        {headerElement}
+        <ul>{children}</ul>
+      </div>
+    );
+  }
+  return null;
 };
 
 export const PanelItem = ({ children, onClick }) => {
