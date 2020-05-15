@@ -93,19 +93,19 @@
       }
 
       .friends__iconContainer {
-        margin-right: 15px;
+        margin-right: 5px;
         position: relative;
 
         div {
           width: 21px;
           height: 21px;
-          &:last-of-type {
-            position: absolute;
-            top: 0;
-            left: 10px;
-            width: 22px;
-            height: 22px;
-          }
+          // &:last-of-type {
+          //   position: absolute;
+          //   top: 0;
+          //   left: 10px;
+          //   width: 22px;
+          //   height: 22px;
+          // }
         }
       }
       .comments__icon,
@@ -113,7 +113,7 @@
         width: 20px;
         height: 20px;
         cursor: pointer;
-        margin-right: 4px;
+        margin-right: 5px;
         @include theme-aware("fill", "primary");
       }
 

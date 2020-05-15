@@ -1,17 +1,21 @@
 import React from "react";
 import { func } from "prop-types";
+import { motion } from "framer-motion";
 
 import "../../styles/Modal.scss";
 
 const Modal = ({ onCloseClick, children }) => (
-  <div className="modal-container">
+  <motion.div 
+    animate={{ scale: 1.25 }}
+    transition={{ duration: 0.3 }}  
+    className="modal-container">
     <div className="modal-content">
-      {children}
-      <span className="close" onClick={onCloseClick}>
+    <span className="close-modal" onClick={onCloseClick}>
         Close [X]
       </span>
+      {children}
     </div>
-  </div>
+  </motion.div>
 );
 
 Modal.propTypes = {

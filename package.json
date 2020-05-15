@@ -10,6 +10,7 @@
     "body-scroll-lock": "^3.0.1",
     "clsx": "^1.1.0",
     "domino": "^2.1.4",
+    "framer-motion": "^1.10.3",
     "graphql": "^15.0.0",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",

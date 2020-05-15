@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { string, shape, bool } from "prop-types";
 import clsx from "clsx";
 import { useToasts } from "react-toast-notifications";
-
 import TextInput from "../TextInput";
 import ProfileIcon from "../ProfileIcon";
 import Panel, { PanelItem } from "../../components/OptionsPanel";
@@ -156,7 +155,7 @@ const LinkCard = ({
                 onClick={toggleExtraPanel("friends")}
               >
                 <div className="friends__iconContainer">
-                  <ProfileIcon />
+                  {/* <ProfileIcon /> */}
                   <ProfileIcon />
                 </div>
                 <span className="friends__number">1</span>
@@ -165,11 +164,11 @@ const LinkCard = ({
           </div>
         </div>
         <div
-          className={clsx({
-            post__bottom__tabarea: true,
-            hide: !extraPanelSelected
-          })}
-        >
+            className={clsx({
+              post__bottom__tabarea: true,
+              hide: !extraPanelSelected
+            })}
+            >
           <LinkCardPanel panelSelected={extraPanelSelected} />
         </div>
       </div>
