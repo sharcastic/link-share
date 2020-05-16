@@ -1,5 +1,28 @@
 const cache = {};
 
+const SERVERLESSCONDITION =
+  process.env.NODE_ENV === "production" || process.env.REACT_APP_DEV_SERVERLESS;
+
+const fakeServerless = validURLs =>
+  new Promise(resolve => {
+    resolve({
+      json: () =>
+        new Promise(resol =>
+          resol(
+            validURLs.map(i => ({
+              url: i,
+              metadata: {
+                title: "GENERIC TITLE",
+                description: "GENERIC DESCRIPTION",
+                image:
+                  "https://assets.guim.co.uk/images/eada8aa27c12fe2d5afa3a89d3fbae0d/fallback-logo.png"
+              }
+            }))
+          )
+        )
+    });
+  });
+
 export const callServerless = async arrayOfURLs => {
   const validURLs = new Set();
   const invalidURLs = [];
@@ -17,16 +40,16 @@ export const callServerless = async arrayOfURLs => {
       invalidURLs.push(url);
     }
   });
-
   if (validURLs.size > 0) {
-    console.log("MAKING REQUEST FROM NETWORK.JS");
-    const res = await fetch("/api/getPreviews", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(Array.from(validURLs))
-    });
+    const res = SERVERLESSCONDITION
+      ? await fetch("/api/getPreviews", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(Array.from(validURLs))
+        })
+      : await fakeServerless(Array.from(validURLs));
     const responseArr = await res.json();
     console.log("responseArr", responseArr);
     responseArr.forEach(({ url, error, metadata }) => {
