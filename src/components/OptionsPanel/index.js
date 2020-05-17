@@ -3,10 +3,13 @@ import React, {
   useContext,
   useState,
   useRef,
-  useCallback
+  useCallback,
+  useEffect
 } from "react";
 import clsx from "clsx";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
+import { REQUEST_RECEIVED, TAGGED_POST, UNREAD } from "../../constants";
 import Button from "../Button";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
@@ -16,6 +19,9 @@ const PanelContext = createContext();
 
 const PanelContextProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    isOpen ? disableBodyScroll() : enableBodyScroll();
+  }, [isOpen]);
   const setOpen = useCallback((state = undefined) => {
     setIsOpen(state === undefined ? !isOpen : state);
   }, []);
@@ -36,7 +42,7 @@ const HiddenComponent = ({ children, headerElement = null }) => {
     return (
       <div className="hidden-component">
         {headerElement}
-        <ul>{children}</ul>
+        {children}
       </div>
     );
   }
@@ -56,44 +62,65 @@ export const PanelItem = ({ children, onClick }) => {
   );
 };
 
-export const NotificationItem = ({ id, type }) => {
-  switch (type) {
-    case "request": {
-      return (
-        <li className="notification-item request-notification">
-          <span>Request Notification</span>
-          <div className="button-section">
-            <Button className="ignore-button" type="plain">
-              Ignore
-            </Button>
-            <Button className="accept-button">Accept</Button>
-          </div>
-        </li>
-      );
-    }
-    case "unread": {
-      return (
-        <li className="notification-item unread-notification">
-          <span>Unread Notification</span>
-          <div className="button-section">
-            <Button className="mark-button" type="plain">
-              Mark as Read
-            </Button>
-          </div>
-        </li>
-      );
-    }
-    case "read": {
-      return (
-        <li className="notification-item read-notification">
-          Read Notification
-        </li>
-      );
-    }
-    default: {
-      return <li />;
-    }
+const NotificationItem = ({
+  data: {
+    content_id,
+    notification_created_by: { name },
+    status,
+    type
   }
+}) => {
+  const renderNotificationText = () => {
+    if (type === REQUEST_RECEIVED) {
+      return `${name} sent you a friend request`;
+    }
+    if (type === TAGGED_POST) {
+      return `${name} tagged you in a post`;
+    }
+  };
+
+  const renderNotificationButtons = () => {
+    if (type === REQUEST_RECEIVED) {
+      return (
+        <div className="button-section">
+          <Button className="ignore-button" type="plain">
+            Ignore
+          </Button>
+          <Button className="accept-button">Accept</Button>
+        </div>
+      );
+    }
+    if (status === UNREAD) {
+      return (
+        <div className="button-section">
+          <Button className="mark-button" type="plain">
+            Mark as Read
+          </Button>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <li className={`notification-item ${status.toLowerCase()}-item`}>
+      {renderNotificationText()}
+      {renderNotificationButtons()}
+    </li>
+  );
+};
+
+export const NotificationItems = ({ data }) => {
+  if (data.length === 0) {
+    return <div>No Notifications!</div>;
+  }
+  return (
+    <ul>
+      {data.map(i => (
+        <NotificationItem key={i.id} data={i} />
+      ))}
+    </ul>
+  );
 };
 
 const Panel = ({ parentChildren, className }) => {

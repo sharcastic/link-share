@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { isMobile } from "react-device-detect";
+import { useAuth0 } from "../../utils/Auth0";
+import { useQuery, useSubscription } from "urql";
 
+import { handleNotificationsSubscription } from "../../utils/methods";
+import {
+  getConnectionsAndRequestsQuery,
+  getNotificationsSubscriptionQuery
+} from "../../queries";
 import ApplicationContext from "./ApplicationContext";
 
 const initialHomeFeedState = new Map();
@@ -33,11 +40,30 @@ initialHomeFeedState.set("5", {
 });
 
 const ApplicationContextProvider = ({ children }) => {
+  const { user = {} } = useAuth0();
   const [showHomeTextInput, setShowTextInput] = useState(true);
   const [darkTheme, setDarkTheme] = useState(false);
   const [desktopSelectedPost, setSelectedPost] = useState();
   const [editingPost, setEditingPost] = useState();
   const [homeFeedPosts] = useState(initialHomeFeedState);
+
+  const [
+    {
+      data: { connections = [] } = {} // this object has fetching and error and reExecuteQuery is the 2nd array item from useQuery
+    }
+  ] = useQuery({
+    query: getConnectionsAndRequestsQuery,
+    variables: { user_id: user.sub },
+    pause: !user.sub
+  });
+  const [{ data: notifications }] = useSubscription(
+    // This object has fetching, stale and error
+    {
+      query: getNotificationsSubscriptionQuery,
+      variables: { user_id: user.sub }
+    },
+    handleNotificationsSubscription
+  );
 
   const changeEditingPost = useCallback(id => {
     setEditingPost(id ? homeFeedPosts.get(id) : undefined);
@@ -54,6 +80,7 @@ const ApplicationContextProvider = ({ children }) => {
     document.documentElement.classList.toggle("theme-dark");
   }, []);
   const setShowTextInputValue = useCallback(bool => setShowTextInput(bool), []);
+
   useEffect(() => {
     document.documentElement.classList.toggle("theme-light");
   }, []);
@@ -70,7 +97,9 @@ const ApplicationContextProvider = ({ children }) => {
         desktopSelectedPost,
         setDesktopSelectedPost,
         showHomeTextInput,
-        setShowTextInputValue
+        setShowTextInputValue,
+        connections,
+        notifications
       }}
     >
       {children}

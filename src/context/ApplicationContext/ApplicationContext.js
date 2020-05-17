@@ -10,7 +10,9 @@ const AppliationContext = createContext({
   desktopSelectedPost: undefined,
   setDesktopSelectedPost: () => {},
   showHomeTextInput: true,
-  setShowTextInputValue: () => {}
+  setShowTextInputValue: () => {},
+  connections: [],
+  notifications: []
 });
 
 export default AppliationContext;

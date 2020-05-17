@@ -31,3 +31,7 @@ export const navItems = [
     title: "Friends"
   }
 ];
+
+export const REQUEST_RECEIVED = "REQUEST_RECEIVED";
+export const TAGGED_POST = "TAGGED_POST";
+export const UNREAD = "UNREAD";

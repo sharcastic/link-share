@@ -9,7 +9,7 @@ import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
 
 import Panel, {
   PanelItem,
-  NotificationItem
+  NotificationItems
 } from "../../components/OptionsPanel";
 import ProfileIcon from "../../components/ProfileIcon";
 import IconButton from "../../components/IconButton";
@@ -26,8 +26,12 @@ const Header = () => {
     darkTheme,
     toggleDarkTheme,
     isMobile,
-    setShowTextInputValue
+    setShowTextInputValue,
+    notifications
   } = useContext(ApplicationContext);
+  const showUnreadNotificationIndicator =
+    notifications !== undefined &&
+    !!notifications.find(i => i.status.toLowerCase() === "unread");
   const toggleThemes = () => toggleDarkTheme();
   const toggleShowInput = bool => () => {
     if (isMobile) {
@@ -49,7 +53,9 @@ const Header = () => {
                 title="Notifications"
                 className="notifications-icon"
               />
-              <span className="unread-indicator" />
+              {showUnreadNotificationIndicator && (
+                <span className="unread-indicator" />
+              )}
             </Panel.VisibleComponent>
             <Panel.HiddenComponent
               headerElement={
@@ -59,9 +65,11 @@ const Header = () => {
                 </div>
               }
             >
-              <NotificationItem type="request" id="1" />
-              <NotificationItem type="unread" id="1" />
-              <NotificationItem type="read" id="1" />
+              {notifications === undefined ? (
+                <div>Loading Notification data!</div>
+              ) : (
+                <NotificationItems data={notifications} />
+              )}
             </Panel.HiddenComponent>
           </Panel>
           <Panel className="profile-container">
@@ -71,17 +79,19 @@ const Header = () => {
             <Panel.HiddenComponent
               headerElement={<div className="hidden-header">@username</div>}
             >
-              <PanelItem onClick={() => console.log("Clicked on Share")}>
-                <PreferencesIcon title="Preferences Icon" />
-                Preferences
-              </PanelItem>
-              <PanelItem onClick={toggleThemes}>
-                <TorchIcon title="Mode switch icon" />
-                <p>{darkTheme ? "Light Mode" : "Dark Mode"}</p>
-              </PanelItem>
-              <PanelItem onClick={logoutUser}>
-                <LogoutIcon title="Logout icon" /> Logout
-              </PanelItem>
+              <ul>
+                <PanelItem onClick={() => console.log("Clicked on Share")}>
+                  <PreferencesIcon title="Preferences Icon" />
+                  Preferences
+                </PanelItem>
+                <PanelItem onClick={toggleThemes}>
+                  <TorchIcon title="Mode switch icon" />
+                  <p>{darkTheme ? "Light Mode" : "Dark Mode"}</p>
+                </PanelItem>
+                <PanelItem onClick={logoutUser}>
+                  <LogoutIcon title="Logout icon" /> Logout
+                </PanelItem>
+              </ul>
             </Panel.HiddenComponent>
           </Panel>
         </div>

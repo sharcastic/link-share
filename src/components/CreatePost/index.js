@@ -29,11 +29,13 @@ const CreatePost = () => {
     editingPost,
     changeEditingPost,
     showHomeTextInput,
-    setShowTextInputValue
+    setShowTextInputValue,
+    connections: connectionsArr
   } = useContext(ApplicationContext);
   const [linkText, setLinkText] = useState("");
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState({});
+  const [connections, setConnections] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   useEffect(() => {
     if (linkText) {
@@ -50,6 +52,15 @@ const CreatePost = () => {
       getPreviewDetails(editingPost.url);
     }
   }, [editingPost]);
+  useEffect(() => {
+    setConnections(
+      connectionsArr.map(({ user_connected: { id, name, email } }) => ({
+        id,
+        value: email,
+        label: name
+      }))
+    );
+  }, [connectionsArr]);
   const getPreviewDetails = async (text = undefined) => {
     setPreview({ responseReceived: false });
     const url = text ? text : linkText;
@@ -125,7 +136,7 @@ const CreatePost = () => {
             ))}
           </div>
           <Select
-            options={options}
+            options={connections}
             isMulti
             onChange={onSelectedUserChange}
             menuPlacement="top"

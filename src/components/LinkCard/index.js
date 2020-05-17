@@ -81,20 +81,24 @@ const LinkCard = ({
                     />
                   </Panel.VisibleComponent>
                   <Panel.HiddenComponent>
-                    <PanelItem onClick={() => console.log("Clicked on Share")}>
-                      <ShareIcon title="Share Icon" />
-                      Share Post
-                    </PanelItem>
-                    <PanelItem onClick={onEditPostClick}>
-                      <EditIcon title="Edit Icon" />
-                      Edit Post
-                    </PanelItem>
-                    <PanelItem
-                      onClick={() => console.log("Clicked on Delete!")}
-                    >
-                      <DeleteIcon title="Delete Icon" />
-                      Delete Post
-                    </PanelItem>
+                    <ul>
+                      <PanelItem
+                        onClick={() => console.log("Clicked on Share")}
+                      >
+                        <ShareIcon title="Share Icon" />
+                        Share Post
+                      </PanelItem>
+                      <PanelItem onClick={onEditPostClick}>
+                        <EditIcon title="Edit Icon" />
+                        Edit Post
+                      </PanelItem>
+                      <PanelItem
+                        onClick={() => console.log("Clicked on Delete!")}
+                      >
+                        <DeleteIcon title="Delete Icon" />
+                        Delete Post
+                      </PanelItem>
+                    </ul>
                   </Panel.HiddenComponent>
                 </Panel>
               </div>
@@ -164,11 +168,11 @@ const LinkCard = ({
           </div>
         </div>
         <div
-            className={clsx({
-              post__bottom__tabarea: true,
-              hide: !extraPanelSelected
-            })}
-            >
+          className={clsx({
+            post__bottom__tabarea: true,
+            hide: !extraPanelSelected
+          })}
+        >
           <LinkCardPanel panelSelected={extraPanelSelected} />
         </div>
       </div>
