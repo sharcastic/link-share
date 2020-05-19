@@ -37,9 +37,9 @@ const RoutesComponent = () => {
     );
   }
   return (
-    <ApplicationContextProvider>
-      <ProfileDetailsProvider>
-        <ToastProvider autoDismiss autoDismissTimeout={3000}>
+    <ToastProvider autoDismiss autoDismissTimeout={3000}>
+      <ApplicationContextProvider>
+        <ProfileDetailsProvider>
           <Suspense fallback={<div>Loading your route...!</div>}>
             <div className="page-container">
               <Header />
@@ -59,9 +59,9 @@ const RoutesComponent = () => {
               <CreatePost />
             </div>
           </Suspense>
-        </ToastProvider>
-      </ProfileDetailsProvider>
-    </ApplicationContextProvider>
+        </ProfileDetailsProvider>
+      </ApplicationContextProvider>
+    </ToastProvider>
   );
 };
 

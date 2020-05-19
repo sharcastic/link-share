@@ -1,18 +1,19 @@
 import { createContext } from "react";
 
 const AppliationContext = createContext({
-  darkTheme: false,
-  toggleDarkTheme: () => {},
-  homeFeedPosts: [],
+  darkTheme: undefined,
+  toggleDarkTheme: undefined,
+  homeFeedPosts: undefined,
   editingPost: undefined,
-  changeEditingPost: () => {},
-  isMobile: true,
+  changeEditingPost: undefined,
+  isMobile: undefined,
   desktopSelectedPost: undefined,
-  setDesktopSelectedPost: () => {},
-  showHomeTextInput: true,
-  setShowTextInputValue: () => {},
-  connections: [],
-  notifications: []
+  setDesktopSelectedPost: undefined,
+  showHomeTextInput: undefined,
+  setShowTextInputValue: undefined,
+  connections: undefined,
+  notifications: undefined,
+  deletePost: undefined
 });
 
 export default AppliationContext;

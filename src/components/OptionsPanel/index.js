@@ -51,10 +51,11 @@ const HiddenComponent = ({ children, headerElement = null }) => {
 
 export const PanelItem = ({ children, onClick }) => {
   const { setOpen } = useContext(PanelContext);
-  const onItemClick = () => {
-    setOpen(false);
+  const onItemClick = useCallback(e => {
+    e.stopPropagation();
     onClick();
-  };
+    setOpen(false);
+  }, []);
   return (
     <li onClick={onItemClick} className="panel-item">
       {children}
@@ -124,13 +125,18 @@ export const NotificationItems = ({ data }) => {
 };
 
 const Panel = ({ parentChildren, className }) => {
-  const { setOpen } = useContext(PanelContext);
+  const { isOpen, setOpen } = useContext(PanelContext);
   const ref = useRef();
-  useOnClickOutside(ref, () => setOpen(false));
+  useOnClickOutside(ref, () => {
+    if (isOpen) {
+      setOpen(false);
+    }
+  });
+  const onClick = useCallback(() => setOpen(), []);
   return (
     <div
       ref={ref}
-      onClick={() => setOpen()}
+      onClick={onClick}
       className={clsx(["panel-container", className])}
     >
       {parentChildren}

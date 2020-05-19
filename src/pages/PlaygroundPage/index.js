@@ -14,7 +14,7 @@ const PlaygroundPage = () => {
     desktopSelectedPost,
     setDesktopSelectedPost
   } = useContext(ApplicationContext);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(undefined);
   const [postPreviews, setPostPreviews] = useState({});
   const [selectedPost, setSelectedPost] = useState();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,22 +29,26 @@ const PlaygroundPage = () => {
   }, [desktopSelectedPost]);
 
   useEffect(() => {
+    console.log("homeFeedPosts from useEffect", homeFeedPosts);
+
     const getPreviews = async () => {
-      const arr = [];
-      homeFeedPosts.forEach(value => {
-        arr.push(value);
-      });
-      const response = await callServerless(arr.map(i => i.url));
+      const response = await callServerless(homeFeedPosts.map(i => i.link));
       setPostPreviews(response);
-      setPosts(arr);
+      setPosts(homeFeedPosts);
     };
-    getPreviews();
+    if (homeFeedPosts !== undefined) {
+      getPreviews();
+    }
   }, [homeFeedPosts]);
+
+  if (posts === undefined) {
+    return <div className="playground-page">Loading Posts!!</div>;
+  }
 
   return (
     <div className="playground-page">
-      {homeFeedPosts.length === 0 ? (
-        <div>Loading Posts!</div>
+      {posts.length === 0 ? (
+        <div>No Posts to display!</div>
       ) : (
         <main>
           {posts.map(post => (

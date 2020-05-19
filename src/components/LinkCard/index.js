@@ -1,14 +1,15 @@
 import React, { useState, useContext } from "react";
-import { string, shape, bool } from "prop-types";
+import { string, shape, bool, number } from "prop-types";
 import clsx from "clsx";
 import { useToasts } from "react-toast-notifications";
-import TextInput from "../TextInput";
 import ProfileIcon from "../ProfileIcon";
 import Panel, { PanelItem } from "../../components/OptionsPanel";
 import LinkCardLoader from "../LinkCardLoader";
 import PostPreview from "../PostPreview";
 import LinkCardPanel from "../LinkCardPanel";
 
+import { getTimeAndDate } from "../../utils/methods";
+import { useAuth0 } from "../../utils/Auth0";
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 
 import { ReactComponent as OptionsIcon } from "../../assets/icons/options.svg";
@@ -22,20 +23,28 @@ import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({
-  cardData: { postDescription, url, id },
+  cardData: { description, link, id, author, created_at },
   previewData,
   fromModal,
   selectedPanel
 }) => {
-  const { changeEditingPost, isMobile, setDesktopSelectedPost } = useContext(
-    ApplicationContext
-  );
+  const {
+    changeEditingPost,
+    isMobile,
+    setDesktopSelectedPost,
+    deletePost
+  } = useContext(ApplicationContext);
+  const { user = {} } = useAuth0();
   const { addToast } = useToasts();
 
+  const [extraPanelSelected, setExtraPanel] = useState(selectedPanel);
+
+  const onPostDelete = () => {
+    deletePost(id);
+  };
   const onEditPostClick = () => {
     changeEditingPost(id);
   };
-  const [extraPanelSelected, setExtraPanel] = useState(selectedPanel);
   const toggleExtraPanel = panel => () => {
     if (isMobile || fromModal) {
       if (extraPanelSelected === panel) {
@@ -51,13 +60,15 @@ const LinkCard = ({
     }
   };
 
+  const [time, date] = getTimeAndDate(created_at);
+
   return (
     <div className="post__container">
       <div className="post">
         <div>
           {previewData === undefined && <LinkCardLoader />}
           <PostPreview
-            linkURL={url}
+            linkURL={link}
             className={clsx({ hide: previewData === undefined })}
             preview={previewData}
             previewTop={
@@ -66,10 +77,10 @@ const LinkCard = ({
                   <ProfileIcon className="creationDetails__authorIcon" />
                   <div className="creationDetails__text">
                     <span className="creationDetails__text__authorName">
-                      Author name
+                      {author.name}
                     </span>
                     <span className="creationDetails__text__timeCreated">
-                      at 14:07 on 01 Apr 2020
+                      {`at ${time} on ${date}`}
                     </span>
                   </div>
                 </div>
@@ -92,12 +103,12 @@ const LinkCard = ({
                         <EditIcon title="Edit Icon" />
                         Edit Post
                       </PanelItem>
-                      <PanelItem
-                        onClick={() => console.log("Clicked on Delete!")}
-                      >
-                        <DeleteIcon title="Delete Icon" />
-                        Delete Post
-                      </PanelItem>
+                      {user.sub === author.id && (
+                        <PanelItem onClick={onPostDelete}>
+                          <DeleteIcon title="Delete Icon" />
+                          Delete Post
+                        </PanelItem>
+                      )}
                     </ul>
                   </Panel.HiddenComponent>
                 </Panel>
@@ -112,12 +123,12 @@ const LinkCard = ({
                 title="HTTPS Icon"
                 className="link-info__url__httpsIcon"
               />
-              <div className="link-info__url__text">{url}</div>
+              <div className="link-info__url__text">{link}</div>
               <CopyIcon
                 title="Copy Icon"
                 className="link-info__url__copyIcon"
                 onClick={() =>
-                  navigator.clipboard.writeText(url).then(() => {
+                  navigator.clipboard.writeText(link).then(() => {
                     addToast(<p>Copied to Clipboard!</p>, {
                       appearance: "info"
                     });
@@ -125,7 +136,7 @@ const LinkCard = ({
                 }
               />
             </div>
-            <div className="link-info__description">{postDescription}</div>
+            <div className="link-info__description">{description}</div>
           </div>
           <div className="post-iconRow">
             <div className="iconRow__left">
@@ -182,9 +193,14 @@ const LinkCard = ({
 
 LinkCard.propTypes = {
   cardData: shape({
-    postDescription: string,
-    url: string,
-    id: string
+    description: string,
+    link: string,
+    id: number,
+    created_at: string,
+    author: shape({
+      id: string,
+      name: string
+    })
   }).isRequired,
   previewData: shape({ imgSrc: string, description: string, title: string }),
   fromModal: bool,

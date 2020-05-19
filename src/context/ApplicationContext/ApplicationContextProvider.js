@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { isMobile } from "react-device-detect";
 import { useAuth0 } from "../../utils/Auth0";
-import { useQuery, useSubscription } from "urql";
+import { useQuery, useSubscription, useMutation } from "urql";
+import { useToasts } from "react-toast-notifications";
 
-import { handleNotificationsSubscription } from "../../utils/methods";
+import {
+  handleNotificationsSubscription,
+  handleFeedPostsSubscription
+} from "../../utils/methods";
 import {
   getConnectionsAndRequestsQuery,
-  getNotificationsSubscriptionQuery
+  getNotificationsSubscriptionQuery,
+  getPostsForFeedSubscriptionQuery,
+  deletePostMutation
 } from "../../queries";
 import ApplicationContext from "./ApplicationContext";
 
@@ -41,11 +47,12 @@ initialHomeFeedState.set("5", {
 
 const ApplicationContextProvider = ({ children }) => {
   const { user = {} } = useAuth0();
+  const { addToast } = useToasts();
   const [showHomeTextInput, setShowTextInput] = useState(true);
   const [darkTheme, setDarkTheme] = useState(false);
   const [desktopSelectedPost, setSelectedPost] = useState();
   const [editingPost, setEditingPost] = useState();
-  const [homeFeedPosts] = useState(initialHomeFeedState);
+  // const [homeFeedPosts] = useState(new Map());
 
   const [
     {
@@ -56,6 +63,8 @@ const ApplicationContextProvider = ({ children }) => {
     variables: { user_id: user.sub },
     pause: !user.sub
   });
+  const [, deletePostFromDatabase] = useMutation(deletePostMutation);
+  // HAVE TO HANDLE LOADING STATE WHILE LOADING!
   const [{ data: notifications }] = useSubscription(
     // This object has fetching, stale and error
     {
@@ -64,9 +73,16 @@ const ApplicationContextProvider = ({ children }) => {
     },
     handleNotificationsSubscription
   );
+  const [{ data: homeFeedPosts = undefined }] = useSubscription(
+    {
+      query: getPostsForFeedSubscriptionQuery,
+      variables: { user_id: user.sub }
+    },
+    handleFeedPostsSubscription
+  );
 
   const changeEditingPost = useCallback(id => {
-    setEditingPost(id ? homeFeedPosts.get(id) : undefined);
+    setEditingPost(id ? homeFeedPosts.find(i => i.id === id) : undefined);
   }, []);
   const setDesktopSelectedPost = useCallback(
     (id = undefined, panel = undefined) => {
@@ -80,6 +96,14 @@ const ApplicationContextProvider = ({ children }) => {
     document.documentElement.classList.toggle("theme-dark");
   }, []);
   const setShowTextInputValue = useCallback(bool => setShowTextInput(bool), []);
+  const deletePost = postID => {
+    deletePostFromDatabase({ postID }).then(res => {
+      if (!res.error) {
+        console.log(res);
+        addToast("Deleted your post!", { appearance: "success" });
+      }
+    });
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle("theme-light");
@@ -99,7 +123,8 @@ const ApplicationContextProvider = ({ children }) => {
         showHomeTextInput,
         setShowTextInputValue,
         connections,
-        notifications
+        notifications,
+        deletePost
       }}
     >
       {children}

@@ -10,7 +10,7 @@ const PostPreview = ({ previewTop, preview, className, linkURL }) => {
   const [showActualImage, setShowImage] = useState(false);
   const onImageLoad = () => setShowImage(true);
   const onAnchorClick = e => {
-    if (linkURL) {
+    if (!linkURL) {
       e.preventDefault();
     }
   };
@@ -25,6 +25,7 @@ const PostPreview = ({ previewTop, preview, className, linkURL }) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={onAnchorClick}
+            
           >
             <span className="linkDetails__title">{title}</span>
             <span className="linkDetails__description">{description}</span>

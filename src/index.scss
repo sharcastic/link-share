@@ -74,7 +74,7 @@ code {
 }
 
 .hide {
-  display: none;
+  display: none !important;
   * {
     display: none;
   }
