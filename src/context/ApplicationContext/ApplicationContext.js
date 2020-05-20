@@ -15,7 +15,8 @@ const AppliationContext = createContext({
   notifications: undefined,
   deletePost: undefined,
   createPost: undefined,
-  updatePost: undefined
+  updatePost: undefined,
+  addComment: undefined
 });
 
 export default AppliationContext;

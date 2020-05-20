@@ -14,7 +14,8 @@ import {
   getPostsForFeedSubscriptionQuery,
   createPostMutation,
   deletePostMutation,
-  updatePostMutation
+  updatePostMutation,
+  addCommentMutation
 } from "../../queries";
 import ApplicationContext from "./ApplicationContext";
 
@@ -68,6 +69,7 @@ const ApplicationContextProvider = ({ children }) => {
   const [, deletePostFromDatabase] = useMutation(deletePostMutation);
   const [, createPostInDatabase] = useMutation(createPostMutation);
   const [, updatePostInDatabase] = useMutation(updatePostMutation);
+  const [, addCommentInDatabase] = useMutation(addCommentMutation);
   // HAVE TO HANDLE LOADING STATE WHILE LOADING FOR THE MUTATIONS!!
   const [{ data: notifications }] = useSubscription(
     // This object has fetching, stale and error
@@ -143,6 +145,36 @@ const ApplicationContextProvider = ({ children }) => {
     [user, updatePostInDatabase, editingPost]
   );
 
+  const addComment = useCallback(
+    (content, postID) => {
+      const { author, post_tagged_users } = homeFeedPosts.find(
+        i => i.id === postID
+      );
+      const peopleToNotify = [
+        author.id,
+        ...post_tagged_users.map(({ user }) => user.id)
+      ].filter(i => i !== user.sub);
+      return addCommentInDatabase({
+        userID: user.sub,
+        postID: postID,
+        content,
+        addNotifications: peopleToNotify.map(i => ({
+          targeted_user_id: i,
+          status: "UNREAD",
+          type: "COMMENT_CREATED",
+          created_by_id: user.sub,
+          content_id: postID
+        }))
+      }).then(res => {
+        if (!res.error) {
+          addToast("Added a comment!", { appearance: "success" });
+        }
+        return res;
+      });
+    },
+    [user, homeFeedPosts, addCommentInDatabase]
+  );
+
   const createPost = useCallback(
     (description, link, selectedUsers = []) =>
       createPostInDatabase({
@@ -186,7 +218,8 @@ const ApplicationContextProvider = ({ children }) => {
         notifications,
         deletePost,
         createPost,
-        updatePost
+        updatePost,
+        addComment
       }}
     >
       {children}

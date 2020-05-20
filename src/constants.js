@@ -34,6 +34,7 @@ export const navItems = [
 
 export const REQUEST_RECEIVED = "REQUEST_RECEIVED";
 export const TAGGED_POST = "TAGGED_POST";
+export const COMMENT_CREATED = "COMMENT_CREATED";
 export const UNREAD = "UNREAD";
 export const monthNames = [
   "Jan",

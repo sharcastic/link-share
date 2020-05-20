@@ -35,6 +35,14 @@ subscription ($user_id: String!){
         email
       }
     }
+    comments {
+      id
+      content
+      created_by {
+        id
+        name
+      }
+    }
   }
 }
 `;
@@ -118,10 +126,21 @@ query ($searchTerm: String!, $userID: String!) {
 
 export const addRequestMutation = `
 mutation ($userID: String!, $requestedUserID: String!) {
-  insert_connection_request(objects: {sent_by_id: $userID, sent_to_id: $requestedUserID}) {
+  insert_connection_request(objects: {sent_by_id: $userID, sent_to_id: $requestedUserID }) {
     affected_rows
   }
   insert_notifications(objects: {created_by_id: $userID, targeted_user_id: $requestedUserID, type: REQUEST_RECEIVED}) {
+    affected_rows
+  }
+}
+`;
+
+export const addCommentMutation = `
+mutation ($userID: String!, $postID: Int!, $content: String!, $addNotifications: [notifications_insert_input!]!) {
+  insert_comments(objects: { content: $content, created_by_id: $userID, post_id: $postID }) {
+    affected_rows
+  }
+  insert_notifications(objects: $addNotifications) {
     affected_rows
   }
 }

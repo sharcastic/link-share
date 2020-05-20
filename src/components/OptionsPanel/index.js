@@ -9,7 +9,12 @@ import React, {
 import clsx from "clsx";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
-import { REQUEST_RECEIVED, TAGGED_POST, UNREAD } from "../../constants";
+import {
+  REQUEST_RECEIVED,
+  TAGGED_POST,
+  UNREAD,
+  COMMENT_CREATED
+} from "../../constants";
 import Button from "../Button";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
@@ -77,6 +82,9 @@ const NotificationItem = ({
     }
     if (type === TAGGED_POST) {
       return `${name} tagged you in a post`;
+    }
+    if (type === COMMENT_CREATED) {
+      return `${name} commented on a post`;
     }
   };
 

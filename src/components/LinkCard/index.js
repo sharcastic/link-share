@@ -23,7 +23,15 @@ import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import "../../styles/LinkCard.scss";
 
 const LinkCard = ({
-  cardData: { description, link, id, author, created_at },
+  cardData: {
+    description,
+    link,
+    id,
+    author,
+    created_at,
+    post_tagged_users = [],
+    comments
+  },
   previewData,
   fromModal,
   selectedPanel
@@ -32,7 +40,8 @@ const LinkCard = ({
     changeEditingPost,
     isMobile,
     setDesktopSelectedPost,
-    deletePost
+    deletePost,
+    addComment
   } = useContext(ApplicationContext);
   const { user = {} } = useAuth0();
   const { addToast } = useToasts();
@@ -58,6 +67,9 @@ const LinkCard = ({
     } else {
       setDesktopSelectedPost(id, panel);
     }
+  };
+  const onAddComment = content => {
+    return addComment(content, id);
   };
 
   const [time, date] = getTimeAndDate(created_at);
@@ -175,7 +187,9 @@ const LinkCard = ({
                   {/* <ProfileIcon /> */}
                   <ProfileIcon />
                 </div>
-                <span className="friends__number">1</span>
+                <span className="friends__number">
+                  {post_tagged_users.length}
+                </span>
               </div>
             </div>
           </div>
@@ -186,7 +200,11 @@ const LinkCard = ({
             hide: !extraPanelSelected
           })}
         >
-          <LinkCardPanel panelSelected={extraPanelSelected} />
+          <LinkCardPanel
+            panelSelected={extraPanelSelected}
+            comments={comments}
+            addComment={onAddComment}
+          />
         </div>
       </div>
     </div>

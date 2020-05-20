@@ -22,7 +22,7 @@ const subscriptionClient = new SubscriptionClient(
     reconnect: true,
     connectionParams: setTokenInHeader,
     lazy: true,
-    reconnectionAttempts: 3
+    reconnectionAttempts: 10
   }
 );
 

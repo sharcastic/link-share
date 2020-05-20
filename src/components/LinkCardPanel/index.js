@@ -1,16 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
 import ProfileIcon from "../ProfileIcon";
 import TextInput from "../TextInput";
+import Button from "../Button";
 
 import "../../styles/LinkCardPanel.scss";
 
-const LinkCardPanel = ({ panelSelected }) => {
+const LinkCardPanel = ({ panelSelected, comments, addComment }) => {
+  const [commentValue, setComment] = useState("");
+  const onCommentChange = value => setComment(value);
+  const onAddComment = () => {
+    addComment(commentValue).then(res => {
+      if (!res.error) {
+        setComment("");
+      }
+    });
+  };
   return (
     <div className="panel-content">
+      {comments.length === 0 ? (
+        <div>No Comments on this post!</div>
+      ) : (
+        comments.map(({ content, created_by: { name } }) => (
+          <div className="comment-item">
+            <span className="author-icon">
+              <ProfileIcon className="author-icon" />
+            </span>
+            <div className="comment-details">
+              <span className="comment-author">{name}</span>
+              <span className="comment-text">{content}</span>
+            </div>
+          </div>
+        ))
+      )}
       {/* {extraPanelSelected === "comments" && "Comments Tab"}
   {extraPanelSelected === "friends" && "Friends Tab"}
-  {extraPanelSelected === "tags" && "Tags Tab"} */}
+  {extraPanelSelected === "tags" && "Tags Tab"} 
       <div className="comment-item">
         <ProfileIcon className="author-icon" />
         <div className="comment-details">
@@ -53,8 +78,15 @@ const LinkCardPanel = ({ panelSelected }) => {
             longer comment, and that’s ok. Because we can handle it.
           </span>
         </div>
+      </div> */}
+      <div className="comment-textbox-container">
+        <TextInput
+          value={commentValue}
+          placeholder="Add a comment"
+          onChange={onCommentChange}
+        />
+        <Button onClick={onAddComment}>Comment!</Button>
       </div>
-      <TextInput value="" placeholder="Add a comment" />
     </div>
   );
 };

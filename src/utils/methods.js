@@ -1,9 +1,8 @@
 import { monthNames } from "../constants";
 
-export const handleNotificationsSubscription = (
-  notifications = [],
-  response
-) => [...response.notifications, ...notifications];
+export const handleNotificationsSubscription = (_, response) => [
+  ...response.notifications
+];
 
 export const handleFeedPostsSubscription = (_, response) => {
   return response.links;
