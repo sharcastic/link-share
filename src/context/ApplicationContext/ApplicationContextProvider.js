@@ -12,7 +12,9 @@ import {
   getConnectionsAndRequestsQuery,
   getNotificationsSubscriptionQuery,
   getPostsForFeedSubscriptionQuery,
-  deletePostMutation
+  createPostMutation,
+  deletePostMutation,
+  updatePostMutation
 } from "../../queries";
 import ApplicationContext from "./ApplicationContext";
 
@@ -64,7 +66,9 @@ const ApplicationContextProvider = ({ children }) => {
     pause: !user.sub
   });
   const [, deletePostFromDatabase] = useMutation(deletePostMutation);
-  // HAVE TO HANDLE LOADING STATE WHILE LOADING!
+  const [, createPostInDatabase] = useMutation(createPostMutation);
+  const [, updatePostInDatabase] = useMutation(updatePostMutation);
+  // HAVE TO HANDLE LOADING STATE WHILE LOADING FOR THE MUTATIONS!!
   const [{ data: notifications }] = useSubscription(
     // This object has fetching, stale and error
     {
@@ -81,9 +85,10 @@ const ApplicationContextProvider = ({ children }) => {
     handleFeedPostsSubscription
   );
 
-  const changeEditingPost = useCallback(id => {
-    setEditingPost(id ? homeFeedPosts.find(i => i.id === id) : undefined);
-  }, []);
+  const changeEditingPost = useCallback(
+    id => setEditingPost(id ? homeFeedPosts.find(i => i.id === id) : undefined),
+    [homeFeedPosts]
+  );
   const setDesktopSelectedPost = useCallback(
     (id = undefined, panel = undefined) => {
       setSelectedPost(id ? { id, panel } : undefined);
@@ -96,14 +101,69 @@ const ApplicationContextProvider = ({ children }) => {
     document.documentElement.classList.toggle("theme-dark");
   }, []);
   const setShowTextInputValue = useCallback(bool => setShowTextInput(bool), []);
-  const deletePost = postID => {
-    deletePostFromDatabase({ postID }).then(res => {
-      if (!res.error) {
-        console.log(res);
-        addToast("Deleted your post!", { appearance: "success" });
+  const deletePost = useCallback(
+    postID => {
+      deletePostFromDatabase({ postID }).then(res => {
+        if (!res.error) {
+          console.log(res);
+          addToast("Deleted your post!", { appearance: "success" });
+        }
+      });
+    },
+    [deletePostFromDatabase]
+  );
+  const updatePost = useCallback(
+    (description, link, newlyTaggedUsers, removedUsers) => {
+      const { id: postID = undefined } = editingPost;
+      if (postID) {
+        return updatePostInDatabase({
+          postID,
+          description,
+          link,
+          removedUsers,
+          addingTags: newlyTaggedUsers.map(i => ({
+            user_id: i,
+            post_id: postID
+          })),
+          addNotifications: newlyTaggedUsers.map(i => ({
+            targeted_user_id: i,
+            status: "UNREAD",
+            type: "TAGGED_POST",
+            created_by_id: user.sub,
+            content_id: postID
+          }))
+        }).then(res => {
+          if (!res.error) {
+            addToast("Updated your post!", { appearance: "success" });
+          }
+          return res;
+        });
       }
-    });
-  };
+    },
+    [user, updatePostInDatabase, editingPost]
+  );
+
+  const createPost = useCallback(
+    (description, link, selectedUsers = []) =>
+      createPostInDatabase({
+        userId: user.sub,
+        description,
+        link,
+        taggedUsers: selectedUsers.map(i => ({ user_id: i.id })),
+        notifications: selectedUsers.map(i => ({
+          targeted_user_id: i.id,
+          status: "UNREAD",
+          type: "TAGGED_POST",
+          created_by_id: user.sub
+        }))
+      }).then(res => {
+        if (!res.error) {
+          addToast("Added a post!", { appearance: "success" });
+        }
+        return res;
+      }),
+    [createPostInDatabase, user]
+  );
 
   useEffect(() => {
     document.documentElement.classList.toggle("theme-light");
@@ -124,7 +184,9 @@ const ApplicationContextProvider = ({ children }) => {
         setShowTextInputValue,
         connections,
         notifications,
-        deletePost
+        deletePost,
+        createPost,
+        updatePost
       }}
     >
       {children}

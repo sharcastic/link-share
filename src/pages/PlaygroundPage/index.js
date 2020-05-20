@@ -55,7 +55,7 @@ const PlaygroundPage = () => {
             <LinkCard
               cardData={post}
               key={post.id}
-              previewData={postPreviews[post.url]}
+              previewData={postPreviews[post.link]}
             />
           ))}
           {isModalOpen && (

@@ -19,3 +19,9 @@ export const getTimeAndDate = dateString => {
   const year = date.getFullYear();
   return [`${hours}:${minutes}`, `${day} ${month} ${year}`];
 };
+
+export const selectComponentSerializer = ({ id, name, email }) => ({
+  id,
+  value: email,
+  label: name
+});

@@ -4,6 +4,7 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 import { callServerless } from "../../utils/network";
+import { selectComponentSerializer } from "../../utils/methods";
 
 import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
 import { ReactComponent as AddIcon } from "../../assets/icons/add.svg";
@@ -18,19 +19,15 @@ import logo from "../../assets/icons/logo.svg";
 
 import "../../styles/CreatePost.scss";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
-
 const CreatePost = () => {
   const {
     editingPost,
     changeEditingPost,
     showHomeTextInput,
     setShowTextInputValue,
-    connections: connectionsArr
+    connections: connectionsArr,
+    createPost,
+    updatePost
   } = useContext(ApplicationContext);
   const [linkText, setLinkText] = useState("");
   const [description, setDescription] = useState("");
@@ -47,18 +44,21 @@ const CreatePost = () => {
   }, [linkText]);
   useEffect(() => {
     if (editingPost) {
-      setLinkText(editingPost.url);
-      setDescription(editingPost.postDescription);
-      getPreviewDetails(editingPost.url);
+      setLinkText(editingPost.link);
+      setDescription(editingPost.description);
+      getPreviewDetails(editingPost.link);
+      setSelectedUsers(
+        editingPost.post_tagged_users.map(({ user }) =>
+          selectComponentSerializer(user)
+        )
+      );
     }
   }, [editingPost]);
   useEffect(() => {
     setConnections(
-      connectionsArr.map(({ user_connected: { id, name, email } }) => ({
-        id,
-        value: email,
-        label: name
-      }))
+      connectionsArr.map(({ user_connected }) =>
+        selectComponentSerializer(user_connected)
+      )
     );
   }, [connectionsArr]);
   const getPreviewDetails = async (text = undefined) => {
@@ -82,6 +82,38 @@ const CreatePost = () => {
     setPreview({});
     setSelectedUsers([]);
     setShowTextInputValue(false);
+  };
+  const onCreatePost = () => {
+    let promise;
+    if (editingPost) {
+      const newlyTaggedUsers = selectedUsers.map(i => i.id);
+      const removedUsers = editingPost.post_tagged_users.reduce(
+        (acc, { user }) => {
+          const index = newlyTaggedUsers.indexOf(user.id);
+          if (index > -1) {
+            newlyTaggedUsers.splice(index, 1);
+            return acc;
+          }
+          return [...acc, user.id];
+        },
+        []
+      );
+      promise = updatePost(
+        description,
+        linkText,
+        newlyTaggedUsers,
+        removedUsers
+      );
+    } else {
+      promise = createPost(description, linkText, selectedUsers);
+    }
+    promise.then(res => {
+      if (!res.error) {
+        setLinkText("");
+        setPreview({});
+        setSelectedUsers([]);
+      }
+    });
   };
   const onSelectedUserChange = users =>
     users === null ? setSelectedUsers([]) : setSelectedUsers(users);
@@ -121,7 +153,7 @@ const CreatePost = () => {
           <div className="selected-users">
             {selectedUsers.map(i => (
               <PillLabel
-                id={i.value}
+                id={i.id}
                 value={i.value}
                 key={i.id}
                 removable
@@ -160,7 +192,9 @@ const CreatePost = () => {
         <Button type="plain" onClick={onCancelClick}>
           Cancel
         </Button>
-        <Button type="primary">Save Post</Button>
+        <Button type="primary" onClick={onCreatePost}>
+          Save Post
+        </Button>
       </div>
     </div>
   );

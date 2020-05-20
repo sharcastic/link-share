@@ -32,6 +32,7 @@ subscription ($user_id: String!){
       user {
         id
         name
+        email
       }
     }
   }

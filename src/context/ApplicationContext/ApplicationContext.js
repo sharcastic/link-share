@@ -13,7 +13,9 @@ const AppliationContext = createContext({
   setShowTextInputValue: undefined,
   connections: undefined,
   notifications: undefined,
-  deletePost: undefined
+  deletePost: undefined,
+  createPost: undefined,
+  updatePost: undefined
 });
 
 export default AppliationContext;

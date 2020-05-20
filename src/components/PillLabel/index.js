@@ -6,7 +6,9 @@ import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import "../../styles/PillLabel.scss";
 
 const PillLabel = ({ value, id, onRemove, className, removable, leftIcon }) => {
-  const onRemoveClick = () => onRemove(id);
+  const onRemoveClick = () => {
+    onRemove(id);
+  };
   return (
     <div className={`pill-label ${className}`}>
       {leftIcon}

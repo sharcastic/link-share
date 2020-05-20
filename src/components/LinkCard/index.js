@@ -99,15 +99,17 @@ const LinkCard = ({
                         <ShareIcon title="Share Icon" />
                         Share Post
                       </PanelItem>
-                      <PanelItem onClick={onEditPostClick}>
-                        <EditIcon title="Edit Icon" />
-                        Edit Post
-                      </PanelItem>
                       {user.sub === author.id && (
-                        <PanelItem onClick={onPostDelete}>
-                          <DeleteIcon title="Delete Icon" />
-                          Delete Post
-                        </PanelItem>
+                        <>
+                          <PanelItem onClick={onEditPostClick}>
+                            <EditIcon title="Edit Icon" />
+                            Edit Post
+                          </PanelItem>
+                          <PanelItem onClick={onPostDelete}>
+                            <DeleteIcon title="Delete Icon" />
+                            Delete Post
+                          </PanelItem>
+                        </>
                       )}
                     </ul>
                   </Panel.HiddenComponent>
