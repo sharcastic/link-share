@@ -2,7 +2,6 @@
 
 .createPost {
   z-index: 3;
-  width: 100%;
   margin-bottom: 10px;
   position: fixed;
   bottom: 0;
@@ -18,7 +17,9 @@
     z-index: 1;
     top: 0;
     padding-top: 50px;
-    min-width: 500px;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
     align-items: center;
     & .createPost__post-info {
       order: 2;

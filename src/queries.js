@@ -26,6 +26,7 @@ subscription ($user_id: String!){
     author {
       name
       id
+      display_picture_url
     }
     post_tagged_users {
       id
@@ -33,6 +34,7 @@ subscription ($user_id: String!){
         id
         name
         email
+        display_picture_url
       }
     }
     comments {

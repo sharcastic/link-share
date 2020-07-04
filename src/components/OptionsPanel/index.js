@@ -4,7 +4,7 @@ import React, {
   useState,
   useRef,
   useCallback,
-  useEffect
+  useEffect,
 } from "react";
 import clsx from "clsx";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
@@ -13,9 +13,10 @@ import {
   REQUEST_RECEIVED,
   TAGGED_POST,
   UNREAD,
-  COMMENT_CREATED
+  COMMENT_CREATED,
 } from "../../constants";
 import Button from "../Button";
+import ApplicationContext from "../../context/ApplicationContext/ApplicationContext";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 import "../../styles/OptionsPanel.scss";
@@ -23,10 +24,13 @@ import "../../styles/OptionsPanel.scss";
 const PanelContext = createContext();
 
 const PanelContextProvider = ({ children }) => {
+  const { isMobile } = useContext(ApplicationContext);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    isOpen ? disableBodyScroll() : enableBodyScroll();
-  }, [isOpen]);
+    if (isMobile) {
+      isOpen ? disableBodyScroll() : enableBodyScroll();
+    }
+  }, [isOpen, isMobile]);
   const setOpen = useCallback((state = undefined) => {
     setIsOpen(state === undefined ? !isOpen : state);
   }, []);
@@ -56,7 +60,7 @@ const HiddenComponent = ({ children, headerElement = null }) => {
 
 export const PanelItem = ({ children, onClick }) => {
   const { setOpen } = useContext(PanelContext);
-  const onItemClick = useCallback(e => {
+  const onItemClick = useCallback((e) => {
     e.stopPropagation();
     onClick();
     setOpen(false);
@@ -73,8 +77,8 @@ const NotificationItem = ({
     content_id,
     notification_created_by: { name },
     status,
-    type
-  }
+    type,
+  },
 }) => {
   const renderNotificationText = () => {
     if (type === REQUEST_RECEIVED) {
@@ -125,7 +129,7 @@ export const NotificationItems = ({ data }) => {
   }
   return (
     <ul>
-      {data.map(i => (
+      {data.map((i) => (
         <NotificationItem key={i.id} data={i} />
       ))}
     </ul>

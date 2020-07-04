@@ -5,6 +5,10 @@
 }
 
 .post {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   &__container {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
     @include theme-aware("background", "cardBg");
@@ -18,6 +22,10 @@
 
   &__bottom {
     padding: 12px 15px 10px 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .link-info {
       font-family: "Goldplay-Medium";
@@ -95,10 +103,11 @@
       .friends__iconContainer {
         margin-right: 5px;
         position: relative;
-
+        display: flex;
         div {
           width: 21px;
           height: 21px;
+          margin-left: -5px;
           // &:last-of-type {
           //   position: absolute;
           //   top: 0;
@@ -165,6 +174,11 @@
         width: 24px;
         margin-right: 8px;
         @include theme-aware("fill", "primary");
+        img {
+          height: inherit;
+          border-radius: 100%;
+          width: inherit;
+        }
       }
 
       &__text {
