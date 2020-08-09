@@ -7,7 +7,7 @@ import { callServerless } from "../../utils/network";
 import { selectComponentSerializer } from "../../utils/methods";
 
 import { ReactComponent as DefaultPersonIcon } from "../../assets/icons/default-person.svg";
-import { ReactComponent as AddIcon } from "../../assets/icons/add.svg";
+import { ReactComponent as CreateIcon } from "../../assets/icons/create.svg";
 
 import Button from "../Button";
 import TextInput from "../TextInput";
@@ -132,7 +132,7 @@ const CreatePost = () => {
         className={clsx({ addPostButton: true, hide: showHomeTextInput })}
         onClick={() => setShowTextInputValue(true)}
       >
-        <AddIcon title="Add Icon" />
+        <CreateIcon title="Add Icon" />
       </div>
       {preview.responseReceived !== undefined && (
         <div

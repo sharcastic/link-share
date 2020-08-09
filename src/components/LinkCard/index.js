@@ -54,6 +54,17 @@ const LinkCard = ({
   const onEditPostClick = () => {
     changeEditingPost(id);
   };
+  const onSharePostClick = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Sheritto',
+        text: 'Check out Sheritto',
+        url: 'http://sheritto.webflow.io/',
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
+  }
   const toggleExtraPanel = panel => () => {
     if (isMobile || fromModal) {
       if (extraPanelSelected === panel) {
@@ -106,7 +117,7 @@ const LinkCard = ({
                   <Panel.HiddenComponent>
                     <ul>
                       <PanelItem
-                        onClick={() => console.log("Clicked on Share")}
+                        onClick={onSharePostClick}
                       >
                         <ShareIcon title="Share Icon" />
                         Share Post

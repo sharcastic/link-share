@@ -48,11 +48,11 @@ const RoutesComponent = () => {
                   <Route path="/" element={<LoginPage />} />
                   <Route
                     path="/home"
-                    element={<ProtectedRoute component={HomePage} />}
+                    element={<ProtectedRoute component={PlaygroundPage} />}
                   />
                   <Route
                     path="/playground"
-                    element={<ProtectedRoute component={PlaygroundPage} />}
+                    element={<ProtectedRoute component={HomePage} />}
                   />
                 </Routes>
               </div>

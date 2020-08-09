@@ -1,6 +1,17 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "manifest_version": 2,
+  "short_name": "Sheritto",
+  "name": "One link to save them all",
+  "description": "the latest attempt to solve a link saving and sharing problem",
+    "version": "0.1",
+    "browser_action": {
+        "default_popup": "index.html"
+    },
+    "permissions": [
+        "activeTab"
+    ],
+    "content_security_policy": "script-src 'self' 'sha256-5As******'; object-src 'self'",
+    "author": "Sharana kumar and Pradyumna Surampudi",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +29,17 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/home",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "share_target": {
+    "action": "/share-target/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
