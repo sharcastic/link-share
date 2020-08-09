@@ -17,9 +17,9 @@
     z-index: 1;
     top: 0;
     padding-top: 50px;
-    width: fit-content;
-    left: 50%;
-    transform: translateX(-50%);
+    min-width: 500px;
+    left: 35vh;
+    width: 70%;
     align-items: center;
     & .createPost__post-info {
       order: 2;
