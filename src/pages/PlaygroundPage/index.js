@@ -12,7 +12,7 @@ const PlaygroundPage = () => {
   const {
     homeFeedPosts,
     desktopSelectedPost,
-    setDesktopSelectedPost
+    setDesktopSelectedPost,
   } = useContext(ApplicationContext);
   const [posts, setPosts] = useState(undefined);
   const [postPreviews, setPostPreviews] = useState({});
@@ -23,16 +23,14 @@ const PlaygroundPage = () => {
     setModalOpen(!!desktopSelectedPost);
     setSelectedPost(
       desktopSelectedPost
-        ? homeFeedPosts.get(desktopSelectedPost.id)
+        ? homeFeedPosts.find((i) => i.id === desktopSelectedPost.id)
         : undefined
     );
-  }, [desktopSelectedPost]);
+  }, [desktopSelectedPost, homeFeedPosts]);
 
   useEffect(() => {
-    console.log("homeFeedPosts from useEffect", homeFeedPosts);
-
     const getPreviews = async () => {
-      const response = await callServerless(homeFeedPosts.map(i => i.link));
+      const response = await callServerless(homeFeedPosts.map((i) => i.link));
       setPostPreviews(response);
       setPosts(homeFeedPosts);
     };
@@ -51,7 +49,7 @@ const PlaygroundPage = () => {
         <div>No Posts to display!</div>
       ) : (
         <main>
-          {posts.map(post => (
+          {posts.map((post) => (
             <LinkCard
               cardData={post}
               key={post.id}

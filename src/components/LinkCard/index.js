@@ -30,18 +30,18 @@ const LinkCard = ({
     author,
     created_at,
     post_tagged_users = [],
-    comments
+    comments = [],
   },
   previewData,
   fromModal,
-  selectedPanel
+  selectedPanel,
 }) => {
   const {
     changeEditingPost,
     isMobile,
     setDesktopSelectedPost,
     deletePost,
-    addComment
+    addComment,
   } = useContext(ApplicationContext);
   const { user = {} } = useAuth0();
   const { addToast } = useToasts();
@@ -79,7 +79,7 @@ const LinkCard = ({
       setDesktopSelectedPost(id, panel);
     }
   };
-  const onAddComment = content => {
+  const onAddComment = (content) => {
     return addComment(content, id);
   };
 
@@ -97,7 +97,10 @@ const LinkCard = ({
             previewTop={
               <div className="details-top">
                 <div className="creationDetails">
-                  <ProfileIcon className="creationDetails__authorIcon" />
+                  <ProfileIcon
+                    className="creationDetails__authorIcon"
+                    img={author.display_picture_url}
+                  />
                   <div className="creationDetails__text">
                     <span className="creationDetails__text__authorName">
                       {author.name}
@@ -155,7 +158,7 @@ const LinkCard = ({
                 onClick={() =>
                   navigator.clipboard.writeText(link).then(() => {
                     addToast(<p>Copied to Clipboard!</p>, {
-                      appearance: "info"
+                      appearance: "info",
                     });
                   })
                 }
@@ -168,17 +171,17 @@ const LinkCard = ({
               <div
                 className={clsx({
                   iconRow__left__comments: true,
-                  active: extraPanelSelected === "comments"
+                  active: extraPanelSelected === "comments",
                 })}
                 onClick={toggleExtraPanel("comments")}
               >
                 <CommentIcon title="Comment Icon" className="comments__icon" />
-                <span className="comments__number">5</span>
+                <span className="comments__number">{comments.length}</span>
               </div>
               <div
                 className={clsx({
                   iconRow__left__tags: true,
-                  active: extraPanelSelected === "tags"
+                  active: extraPanelSelected === "tags",
                 })}
                 onClick={toggleExtraPanel("tags")}
               >
@@ -190,16 +193,19 @@ const LinkCard = ({
               <div
                 className={clsx({
                   iconRow__right__taggedFriends: true,
-                  active: extraPanelSelected === "friends"
+                  active: extraPanelSelected === "friends",
                 })}
                 onClick={toggleExtraPanel("friends")}
               >
                 <div className="friends__iconContainer">
-                  {/* <ProfileIcon /> */}
-                  <ProfileIcon />
+                  {post_tagged_users
+                    .slice(0, 3)
+                    .map(({ user: { display_picture_url } }) => (
+                      <ProfileIcon img={display_picture_url} />
+                    ))}
                 </div>
                 <span className="friends__number">
-                  {post_tagged_users.length}
+                  {post_tagged_users.length !== 0 && post_tagged_users.length}
                 </span>
               </div>
             </div>
@@ -208,13 +214,14 @@ const LinkCard = ({
         <div
           className={clsx({
             post__bottom__tabarea: true,
-            hide: !extraPanelSelected
+            hide: !extraPanelSelected,
           })}
         >
           <LinkCardPanel
             panelSelected={extraPanelSelected}
             comments={comments}
             addComment={onAddComment}
+            users={post_tagged_users}
           />
         </div>
       </div>
@@ -230,18 +237,18 @@ LinkCard.propTypes = {
     created_at: string,
     author: shape({
       id: string,
-      name: string
-    })
+      name: string,
+    }),
   }).isRequired,
   previewData: shape({ imgSrc: string, description: string, title: string }),
   fromModal: bool,
-  selectedPanel: string
+  selectedPanel: string,
 };
 
 LinkCard.defaultProps = {
   fromModal: false,
   selectedPanel: "",
-  previewData: {}
+  previewData: {},
 };
 
 export default LinkCard;
