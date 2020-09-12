@@ -71,6 +71,21 @@ const CreatePost = () => {
       setPreview({});
     }
   };
+  
+    window.addEventListener('fetch', event => {
+      if (event.request.method !== 'POST') {
+        event.respondWith(fetch(event.request));
+        return;
+      }
+  
+    event.respondWith((async () => {
+      const formData = await event.request.formData();
+      const link = formData.get('link') || '';
+      const responseUrl = await setLinkText(link);
+      return Response.redirect(responseUrl, 303);
+    })());
+  });
+
   const onBlur = () => getPreviewDetails();
   const onLinkTextChange = text => setLinkText(text);
   const onDescriptionChange = text => setDescription(text);

@@ -1,7 +1,6 @@
 {
   "manifest_version": 2,
   "short_name": "Sheritto",
-  "name": "One link to save them all",
   "description": "the latest attempt to solve a link saving and sharing problem",
     "version": "0.1",
     "browser_action": {
@@ -33,6 +32,8 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
+  "prefer_related_applications": false,
+  "name": "Sheritto",
   "share_target": {
     "action": "/share-target/",
     "method": "POST",
