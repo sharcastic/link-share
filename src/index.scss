@@ -25,9 +25,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   padding: 0;
-  font-family: "Goldplay-Regular", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "Goldplay-Regular", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
@@ -43,10 +41,6 @@ li {
   margin: 0;
   padding: 0;
 }
-svg {
-  // fill: $blue;
-  // @include theme-aware('fill', 'primary');
-}
 
 input {
   outline: none;
@@ -60,8 +54,7 @@ input {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .route-container {
