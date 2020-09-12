@@ -10,6 +10,7 @@ import CreatePost from "./components/CreatePost";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
+const ConnectionPage = lazy(() => import("./pages/ConnectionsPage"));
 
 const ProtectedRoute = ({ component: Component }) => {
   const { isAuthenticated } = useAuth0();
@@ -53,6 +54,10 @@ const RoutesComponent = () => {
                   <Route
                     path="/playground"
                     element={<ProtectedRoute component={HomePage} />}
+                  />
+                  <Route
+                    path="/connections"
+                    element={<ProtectedRoute component={ConnectionPage} />}
                   />
                 </Routes>
               </div>

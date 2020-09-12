@@ -19,6 +19,8 @@ const ApplicationContext = createContext({
   addComment: undefined,
   acceptRequest: undefined,
   onMarkAsReadClick: undefined,
+  connectionRequests: undefined,
+  handleAddRequest: undefined,
 });
 
 export default ApplicationContext;

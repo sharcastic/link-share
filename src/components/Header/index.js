@@ -38,12 +38,13 @@ const Header = () => {
       setShowTextInputValue(bool);
     }
   };
+  const currentPage = window.location.pathname.substring(1);
   return (
     <Headroom onPin={toggleShowInput(true)} onUnpin={toggleShowInput(false)}>
       <header>
         <div className="header-left">
           <LogoIcon className="mobile-icon" title="Logo" />
-          <h2 className="header-title">Playground</h2>
+          <h2 className="header-title">{currentPage}</h2>
         </div>
         <div className="header-right">
           <Panel className="notification-container">

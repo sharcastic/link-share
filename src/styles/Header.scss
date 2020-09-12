@@ -18,6 +18,7 @@ header {
     @include theme-aware("color", "text0");
     font-family: "Goldplay-Semibold";
     font-size: 2rem;
+    text-transform: capitalize;
   }
   .header-left {
     display: flex;

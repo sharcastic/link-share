@@ -16,12 +16,14 @@ const LinkCardPanel = ({
   const [commentValue, setComment] = useState("");
   const onCommentChange = (value) => setComment(value);
   const onAddComment = () => {
-    addComment(commentValue).then((res) => {
+    /* addComment(commentValue).then((res) => {
       if (!res.error) {
         setComment("");
       }
-    });
+    }); */
+    console.log(!commentValue);
   };
+  console.log()
   if (panelSelected === "comments") {
     return (
       <div className="panel-content">
@@ -46,7 +48,7 @@ const LinkCardPanel = ({
             placeholder="Add a comment"
             onChange={onCommentChange}
           />
-          <Button onClick={onAddComment}>Comment!</Button>
+          <Button disabled={!commentValue} onClick={onAddComment}>Comment!</Button>
         </div>
       </div>
     );

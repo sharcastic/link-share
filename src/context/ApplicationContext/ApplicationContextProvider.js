@@ -18,6 +18,7 @@ import {
   addCommentMutation,
   readNotificationMutation,
   addConnectionMutation,
+  addRequestMutation,
 } from "../../queries";
 import ApplicationContext from "./ApplicationContext";
 
@@ -61,13 +62,14 @@ const ApplicationContextProvider = ({ children }) => {
 
   const [
     {
-      data: { connections = [] } = {} // this object has fetching and error and reExecuteQuery is the 2nd array item from useQuery
+      data: { connections = [], connection_request = []  } = {} // this object has fetching and error and reExecuteQuery is the 2nd array item from useQuery
     }, refetchConnectionsAndRequests
   ] = useQuery({
     query: getConnectionsAndRequestsQuery,
     variables: { user_id: user.sub },
     pause: !user.sub
   });
+  const [, sendRequest] = useMutation(addRequestMutation);
   const [, deletePostFromDatabase] = useMutation(deletePostMutation);
   const [, createPostInDatabase] = useMutation(createPostMutation);
   const [, updatePostInDatabase] = useMutation(updatePostMutation);
@@ -90,6 +92,16 @@ const ApplicationContextProvider = ({ children }) => {
     },
     handleFeedPostsSubscription
   );
+  const handleAddRequest = connectionId => {
+    sendRequest({
+      requestedUserID: connectionId,
+      userID: user.sub
+    }).then(res => {
+      if (!res.error) {
+        updateConnectionsAndRequests();
+      }
+    });
+  };
 
   const updateConnectionsAndRequests = () =>
     refetchConnectionsAndRequests({ requestPolicy: "network-only" });
@@ -247,6 +259,7 @@ const onMarkAsReadClick = notificationID =>
         showHomeTextInput,
         setShowTextInputValue,
         connections,
+        connectionRequests: connection_request,
         notifications,
         deletePost,
         createPost,
@@ -254,6 +267,7 @@ const onMarkAsReadClick = notificationID =>
         addComment,
         acceptRequest,
         onMarkAsReadClick,
+        handleAddRequest,
       }}
     >
       {children}
