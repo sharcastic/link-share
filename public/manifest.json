@@ -33,14 +33,12 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "prefer_related_applications": false,
-  "name": "Sheritto",
+  "name": "Bookmark",
   "share_target": {
-    "action": "/share-target/",
+    "action": "/bookmark",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {
-      "title": "description",
-      "text": "text",
       "url": "link"
     }
   }
