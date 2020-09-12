@@ -75,11 +75,17 @@ export const PanelItem = ({ children, onClick }) => {
 const NotificationItem = ({
   data: {
     content_id,
-    notification_created_by: { name },
+    notification_created_by: { name, id },
     status,
     type,
+    id: notificationId,
   },
 }) => {
+  const { acceptRequest, onMarkAsReadClick } = useContext(ApplicationContext);
+  const onAcceptRequestClick = () => acceptRequest(id);
+  const handleMarkAsRead = () => {
+    onMarkAsReadClick(notificationId);
+  }
   const renderNotificationText = () => {
     if (type === REQUEST_RECEIVED) {
       return `${name} sent you a friend request`;
@@ -99,14 +105,14 @@ const NotificationItem = ({
           <Button className="ignore-button" type="plain">
             Ignore
           </Button>
-          <Button className="accept-button">Accept</Button>
+          <Button className="accept-button" onClick={onAcceptRequestClick}>Accept</Button>
         </div>
       );
     }
     if (status === UNREAD) {
       return (
         <div className="button-section">
-          <Button className="mark-button" type="plain">
+          <Button className="mark-button" type="plain" onClick={handleMarkAsRead}>
             Mark as Read
           </Button>
         </div>

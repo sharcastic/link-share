@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-const AppliationContext = createContext({
+const ApplicationContext = createContext({
   darkTheme: undefined,
   toggleDarkTheme: undefined,
   homeFeedPosts: undefined,
@@ -16,7 +16,9 @@ const AppliationContext = createContext({
   deletePost: undefined,
   createPost: undefined,
   updatePost: undefined,
-  addComment: undefined
+  addComment: undefined,
+  acceptRequest: undefined,
+  onMarkAsReadClick: undefined,
 });
 
-export default AppliationContext;
+export default ApplicationContext;

@@ -15,7 +15,9 @@ import {
   createPostMutation,
   deletePostMutation,
   updatePostMutation,
-  addCommentMutation
+  addCommentMutation,
+  readNotificationMutation,
+  addConnectionMutation,
 } from "../../queries";
 import ApplicationContext from "./ApplicationContext";
 
@@ -60,7 +62,7 @@ const ApplicationContextProvider = ({ children }) => {
   const [
     {
       data: { connections = [] } = {} // this object has fetching and error and reExecuteQuery is the 2nd array item from useQuery
-    }
+    }, refetchConnectionsAndRequests
   ] = useQuery({
     query: getConnectionsAndRequestsQuery,
     variables: { user_id: user.sub },
@@ -70,6 +72,8 @@ const ApplicationContextProvider = ({ children }) => {
   const [, createPostInDatabase] = useMutation(createPostMutation);
   const [, updatePostInDatabase] = useMutation(updatePostMutation);
   const [, addCommentInDatabase] = useMutation(addCommentMutation);
+  const [, addConnection] = useMutation(addConnectionMutation);
+  const [, markNotificationAsRead] = useMutation(readNotificationMutation);
   // HAVE TO HANDLE LOADING STATE WHILE LOADING FOR THE MUTATIONS!!
   const [{ data: notifications }] = useSubscription(
     // This object has fetching, stale and error
@@ -87,6 +91,34 @@ const ApplicationContextProvider = ({ children }) => {
     handleFeedPostsSubscription
   );
 
+  const updateConnectionsAndRequests = () =>
+    refetchConnectionsAndRequests({ requestPolicy: "network-only" });
+
+  const acceptRequest = (requestedUserID) => {
+    addConnection({
+      requestedUserID,
+      userID: user.sub,
+      connectionObject: [
+        {
+          user_id: requestedUserID,
+          connected_user_id: user.sub
+        },
+        {
+          user_id: user.sub,
+          connected_user_id: requestedUserID
+        }
+      ]
+    }).then(res => {
+      if (!res.error) {
+        updateConnectionsAndRequests();
+      }
+    });
+  };
+const onMarkAsReadClick = notificationID => 
+  markNotificationAsRead({
+    notificationID,
+  });
+
   const changeEditingPost = useCallback(
     id => setEditingPost(id ? homeFeedPosts.find(i => i.id === id) : undefined),
     [homeFeedPosts]
@@ -101,7 +133,7 @@ const ApplicationContextProvider = ({ children }) => {
     setDarkTheme(!darkTheme);
     document.documentElement.classList.toggle("theme-light");
     document.documentElement.classList.toggle("theme-dark");
-  }, []);
+  }, [darkTheme]);
   const setShowTextInputValue = useCallback(bool => setShowTextInput(bool), []);
   const deletePost = useCallback(
     postID => {
@@ -112,7 +144,7 @@ const ApplicationContextProvider = ({ children }) => {
         }
       });
     },
-    [deletePostFromDatabase]
+    [addToast, deletePostFromDatabase]
   );
   const updatePost = useCallback(
     (description, link, newlyTaggedUsers, removedUsers) => {
@@ -142,7 +174,7 @@ const ApplicationContextProvider = ({ children }) => {
         });
       }
     },
-    [user, updatePostInDatabase, editingPost]
+    [editingPost, updatePostInDatabase, user.sub, addToast]
   );
 
   const addComment = useCallback(
@@ -172,7 +204,7 @@ const ApplicationContextProvider = ({ children }) => {
         return res;
       });
     },
-    [user, homeFeedPosts, addCommentInDatabase]
+    [homeFeedPosts, addCommentInDatabase, user.sub, addToast]
   );
 
   const createPost = useCallback(
@@ -194,7 +226,7 @@ const ApplicationContextProvider = ({ children }) => {
         }
         return res;
       }),
-    [createPostInDatabase, user]
+    [addToast, createPostInDatabase, user.sub]
   );
 
   useEffect(() => {
@@ -219,7 +251,9 @@ const ApplicationContextProvider = ({ children }) => {
         deletePost,
         createPost,
         updatePost,
-        addComment
+        addComment,
+        acceptRequest,
+        onMarkAsReadClick,
       }}
     >
       {children}
