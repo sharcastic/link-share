@@ -57,9 +57,9 @@ const LinkCard = ({
   const onSharePostClick = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'Sheritto',
-        text: 'Check out Sheritto',
-        url: 'http://sheritto.webflow.io/',
+        title: description,
+        text: 'Check this link i saved on Sheritto',
+        url: link,
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));

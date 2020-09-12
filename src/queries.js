@@ -18,7 +18,7 @@ query ($user_id: String!) {
 
 export const getPostsForFeedSubscriptionQuery = `
 subscription ($user_id: String!){
-  links(where: {_or: [{created_by: {_eq: $user_id}}, {post_tagged_users: { user_id: { _eq: $user_id }}}]}, order_by: {id: desc}, limit: 20) {
+  links(where: {_or: [{created_by: {_eq: $user_id}}, {post_tagged_users: { user_id: { _eq: $user_id }}}]}, order_by: {id: desc}, limit: 50) {
     description
     id
     link
