@@ -3,7 +3,7 @@ import { ReactComponent as SearchIcon } from "./assets/icons/search.svg";
 import { ReactComponent as FriendsIcon } from "./assets/icons/friends.svg";
 
 export const OAUTH_DOMAIN = "linkshare.au.auth0.com";
-export const OAUTH_CLIENT_ID = "OiQpOQkpE8y3xVsPhDi4TGPhiHd01cxO";
+export const OAUTH_CLIENT_ID = "BMZEqJzkbDG0xa9TsiEJhkNE4Wl5Sntq";
 export const OAUTH_AUDIENCE = "hasura";
 export const OAUTH_REDIRECT_URL = `${process.env.REACT_APP_BASE_PATH}/callback`;
 export const GRAPHQL_ENDPOINT =
